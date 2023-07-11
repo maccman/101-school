@@ -2,7 +2,6 @@ import first from 'lodash/first'
 import {headers} from 'next/headers'
 import {redirect} from 'next/navigation'
 
-import {getUserIdFromApiKey} from '@/server/db/api-keys/getters'
 import {getUserById} from '@/server/db/users/getters'
 
 import {getEmailsFromSessionToken, safeGetUserIdFromSessionToken} from './session'
@@ -102,15 +101,9 @@ async function getUserId(
   token: string,
 ): Promise<string | null> {
   switch (authType) {
-    case 'api':
-      return getUserIdFromApiToken(token)
     case 'session':
       return safeGetUserIdFromSessionToken(token)
     default:
       throw new Error('Invalid token')
   }
-}
-
-async function getUserIdFromApiToken(token: string) {
-  return getUserIdFromApiKey({apiKey: token})
 }

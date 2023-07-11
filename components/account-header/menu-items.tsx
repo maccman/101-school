@@ -66,7 +66,7 @@ export function AccountHeaderMenuItems() {
         <Menu.Item>
           {({active}) => (
             <a
-              href="mailto:support@openpm.ai"
+              href="mailto:support@101.school"
               className={clsx(
                 active
                   ? 'bg-slate-100 text-slate-900 dark:bg-white/5 dark:text-white'

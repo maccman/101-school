@@ -39,6 +39,7 @@ CREATE TABLE courses (
   body TEXT NOT NULL,
 );
 
+-- Each section is spread over 13 weeks
 CREATE TABLE sections (
   -- uuid id
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -49,6 +50,7 @@ CREATE TABLE sections (
   course_id UUID REFERENCES courses(id) NOT NULL,
 );
 
+-- Each section has 2-4 sessions
 CREATE TABLE sessions (
   -- uuid id
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

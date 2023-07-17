@@ -9,3 +9,5 @@ Forge is an online system for creating and attending courses. It's essentially a
 - https://ui.shadcn.com/
 - https://feather.so/355129393901732429/dashboard
 - duolingo
+- https://phosphoricons.com/
+- https://github.com/vercel-labs/ai-chatbot

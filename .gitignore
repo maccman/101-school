@@ -37,3 +37,5 @@ next-env.d.ts
 
 .vscode
 TODO.md
+
+server/db/schema-generated.ts

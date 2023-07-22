@@ -76,6 +76,7 @@ export interface CourseModule {
 
 export interface CourseModuleUnit {
   id: Generated<string>
+  number: number
   title: string
   body: string
   moduleId: string

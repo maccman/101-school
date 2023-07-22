@@ -1,7 +1,7 @@
 import { assert } from '@/lib/assert'
 import { getCourseByTitle } from '@/server/db/courses/getters'
 import { getModuleByWeek } from '@/server/db/sections/getters'
-import { createUnit } from '@/server/db/units/setters'
+import { setUnit } from '@/server/db/units/setters'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 
 async function main() {
@@ -25,7 +25,8 @@ async function main() {
         unitNumber: parsedUnit.number,
       })
 
-      createUnit({
+      await setUnit({
+        number: parsedUnit.number,
         title: parsedUnit.title,
         body: unitBody,
         moduleId: section.id,

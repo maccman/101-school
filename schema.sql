@@ -48,9 +48,13 @@ CREATE TABLE course_modules (
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+-- create index
+CREATE UNIQUE INDEX course_modules_week_index ON course_modules (course_id, week);
+
 CREATE TABLE course_module_units (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
+  number INT NOT NULL,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   module_id UUID REFERENCES course_modules(id) NOT NULL,
@@ -62,6 +66,9 @@ CREATE TABLE course_module_units (
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Create index
+CREATE INDEX course_module_units_number_module_id_index ON course_module_units (number, module_id);
 
 -- Trigger to update updated_at column
 CREATE OR REPLACE FUNCTION touch_updated_at()   

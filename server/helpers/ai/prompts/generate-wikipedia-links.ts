@@ -13,7 +13,7 @@ const schema = z.object({
   ),
 })
 
-export async function generateWikipediaLinks(body: string) {
+export async function generateWikipediaLinks(body: string): Promise<string[]> {
   const result = await fetchCompletion({
     messages: generatePrompt(body),
     functions: getChatFunctions(),
@@ -21,7 +21,9 @@ export async function generateWikipediaLinks(body: string) {
 
   assert(result.function_call, 'No function call found')
 
-  return parseChatFunctionArgs(result.function_call.arguments, schema)
+  const parsed = parseChatFunctionArgs(result.function_call.arguments, schema)
+
+  return parsed.wikipediaLinks.map((link) => link.url)
 }
 
 function generatePrompt(body: string): ChatMessage[] {

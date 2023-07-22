@@ -1,11 +1,7 @@
--- Postgres Schema for openpm's database
+-- Postgres schema
+-- 101 school is an online system for creating and attending courses. It's essentially an online university. Students can enroll in various subjects and learn about them.
 
 -- Drop tables
-
--- DROP TABLE IF EXISTS package_versions;
--- DROP TABLE IF EXISTS packages;
--- DROP TABLE IF EXISTS api_keys;
--- DROP TABLE IF EXISTS users;
 
 -- Enable uuid
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -27,8 +23,6 @@ CREATE TABLE users (
   last_sign_in_at TIMESTAMP
 );
 
--- Forge is an online system for creating and attending courses. It's essentially an online university. Students can enroll in various subjects and learn about them.
-
 CREATE TABLE courses (
   -- uuid id
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -39,8 +33,8 @@ CREATE TABLE courses (
   body TEXT NOT NULL,
 );
 
--- Each section is spread over 13 weeks
-CREATE TABLE sections (
+-- Each module is spread over 13 weeks
+CREATE TABLE modules (
   -- uuid id
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   week INT NOT NULL,
@@ -51,11 +45,11 @@ CREATE TABLE sections (
 );
 
 -- Each section has 2-4 sessions
-CREATE TABLE sessions (
+CREATE TABLE units (
   -- uuid id
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
   title TEXT NOT NULL,
   body TEXT NOT NULL,
-  section_id UUID REFERENCES sections(id) NOT NULL,
+  module_id UUID REFERENCES modules(id) NOT NULL,
 );

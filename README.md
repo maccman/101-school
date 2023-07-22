@@ -18,7 +18,7 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Prompt: Generate a course
 - [x] Prompt: Parse a course
 - [x] Prompt: Generate a session (teach week 1)
-- [ ] Prompt: Generate a list of suggested readings
-- [ ] Assets
+- [x] Prompt: Generate a list of suggested readings
+- [x] Pull in Assets
 
 Should it be a class or a session?

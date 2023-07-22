@@ -1,4 +1,5 @@
 import { generateWikipediaLinks } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
+import { fetchImageForWikpediaUrl } from '@/server/lib/wikipedia'
 
 const body = `
 Unit 2: Types of Galaxies
@@ -30,6 +31,30 @@ async function main() {
   const result = await generateWikipediaLinks(body)
 
   console.log(JSON.stringify(result, null, 2))
+
+  const image = await fetchImage(result)
+
+  console.log({ image })
+}
+
+async function fetchImage(urls: string[]) {
+  for (const url of urls) {
+    try {
+      const image = await fetchImageForWikpediaUrl(url)
+
+      if (image) {
+        const test = await fetch(image.source)
+
+        if (test.ok) {
+          return image
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return null
 }
 
 main()

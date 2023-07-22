@@ -34,7 +34,7 @@ CREATE TABLE courses (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
   title TEXT NOT NULL,
-  objective TEXT NOT NULL,
+  description TEXT NOT NULL,
 
   body TEXT NOT NULL,
 );

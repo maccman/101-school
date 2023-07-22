@@ -55,6 +55,9 @@ dependencies:
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
+  json-schema:
+    specifier: ^0.4.0
+    version: 0.4.0
   jsonpointer:
     specifier: ^5.0.1
     version: 5.0.1
@@ -115,6 +118,9 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.6
     version: 1.0.6(tailwindcss@3.3.3)
+  ts-retry:
+    specifier: ^4.2.1
+    version: 4.2.1
   typescript:
     specifier: 5.1.6
     version: 5.1.6
@@ -130,6 +136,9 @@ dependencies:
   zod:
     specifier: ^3.21.4
     version: 3.21.4
+  zod-to-json-schema:
+    specifier: ^3.21.4
+    version: 3.21.4(zod@3.21.4)
 
 devDependencies:
   '@tailwindcss/typography':
@@ -138,6 +147,9 @@ devDependencies:
   '@types/dompurify':
     specifier: ^3.0.2
     version: 3.0.2
+  '@types/json-schema':
+    specifier: ^7.0.12
+    version: 7.0.12
   '@types/lodash':
     specifier: ^4.14.195
     version: 4.14.195
@@ -4747,6 +4759,10 @@ packages:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
     dev: false
 
+  /json-schema@0.4.0:
+    resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
+    dev: false
+
   /json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
@@ -6665,6 +6681,10 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
+  /ts-retry@4.2.1:
+    resolution: {integrity: sha512-Q6vaHQZL6pEHYts75M6GvC6eSnnZwGOxLIz9Lva/22JvvcOdy7/pSmwhr/fOdz7zHoNDMKoq4mCJ+E+DSFtG/Q==}
+    dev: false
+
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -7131,6 +7151,14 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  /zod-to-json-schema@3.21.4(zod@3.21.4):
+    resolution: {integrity: sha512-fjUZh4nQ1s6HMccgIeE0VP4QG/YRGPmyjO9sAh890aQKPEk3nqbfUXhMFaC+Dr5KvYBm8BCyvfpZf2jY9aGSsw==}
+    peerDependencies:
+      zod: ^3.21.4
+    dependencies:
+      zod: 3.21.4
+    dev: false
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}

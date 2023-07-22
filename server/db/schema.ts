@@ -1,9 +1,35 @@
 import type { ColumnType } from 'kysely'
 
+// JSON types:
+
 export interface UnitImage {
   source: string
   description: string
 }
+
+export interface CourseParsedBody {
+  outline: string
+  targeting: string
+  modules: CourseParsedModuleSection[]
+  recommendedReading: CourseParsedBodyRecommendedReading[]
+}
+
+export interface CourseParsedModuleSection {
+  week: number
+  title: string
+  units: CourseParsedBodySectionUnit[]
+}
+
+export interface CourseParsedBodySectionUnit {
+  number: number
+  title: string
+}
+
+export interface CourseParsedBodyRecommendedReading {
+  title: string
+}
+
+// Semi-generated types:
 
 // Update process
 // - Copy across schema-generated.ts
@@ -33,11 +59,12 @@ export interface Course {
   title: string
   description: string
   body: string
+  parsedBody: Generated<CourseParsedBody>
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }
 
-export interface Module {
+export interface Section {
   id: Generated<string>
   week: number
   title: string
@@ -51,7 +78,7 @@ export interface Unit {
   id: Generated<string>
   title: string
   body: string
-  moduleId: string
+  sectionId: string
   wikipediaUrls: Generated<string[]>
   images: Generated<UnitImage[]>
   createdAt: Generated<Timestamp>
@@ -66,7 +93,7 @@ export interface User {
 
 export interface DB {
   courses: Course
-  modules: Module
+  sections: Section
   units: Unit
   users: User
 }

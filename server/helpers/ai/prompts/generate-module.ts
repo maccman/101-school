@@ -7,7 +7,7 @@ import { generateCoursePrompt } from './generate-course'
 interface Params {
   courseDescription: string
   courseBody: string
-  sectionCount: number
+  moduleNumber: number
 }
 
 interface Options {
@@ -15,16 +15,16 @@ interface Options {
   targeting?: string
 }
 
-export async function generateCourseSection(params: Params, options: Options = {}) {
+export async function generateModule(params: Params, options: Options = {}) {
   const message = await fetchCompletion({
-    messages: generateCourseSectionPrompt(params, options),
+    messages: generateModulePrompt(params, options),
   })
   assertString(message.content)
   return message.content
 }
 
-export function generateCourseSectionPrompt(
-  { courseDescription, courseBody, sectionCount }: Params,
+export function generateModulePrompt(
+  { courseDescription, courseBody, moduleNumber }: Params,
   options: Options = {},
 ): ChatMessage[] {
   return [
@@ -35,7 +35,7 @@ export function generateCourseSectionPrompt(
     },
     {
       role: 'user',
-      content: `Now teach module ${sectionCount} of the course.`,
+      content: `Now teach module ${moduleNumber} of the course.`,
     },
   ]
 }

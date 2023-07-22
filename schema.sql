@@ -30,11 +30,13 @@ CREATE TABLE courses (
 
   body TEXT,
 
+  parsed_body JSONB,
+
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE modules (
+CREATE TABLE sections (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   week INT NOT NULL,
 
@@ -51,7 +53,7 @@ CREATE TABLE units (
 
   title TEXT NOT NULL,
   body TEXT NOT NULL,
-  module_id UUID REFERENCES modules(id) NOT NULL,
+  section_id UUID REFERENCES sections(id) NOT NULL,
 
   wikipedia_urls TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,
 
@@ -72,6 +74,6 @@ $$ language 'plpgsql';
 
 CREATE TRIGGER users_touch_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 CREATE TRIGGER courses_touch_updated_at BEFORE UPDATE ON courses FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
-CREATE TRIGGER modules_touch_updated_at BEFORE UPDATE ON modules FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
+CREATE TRIGGER sections_touch_updated_at BEFORE UPDATE ON sections FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 CREATE TRIGGER units_touch_updated_at BEFORE UPDATE ON units FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 

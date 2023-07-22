@@ -2,7 +2,7 @@ import { db } from '../db'
 import { UnitImage } from '../schema'
 
 export async function createUnit(attrs: {
-  moduleId: string
+  sectionId: string
   title: string
   body: string
 }) {

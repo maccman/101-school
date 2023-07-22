@@ -12,3 +12,13 @@ Forge is an online system for creating and attending courses. It's essentially a
 - https://phosphoricons.com/
 - https://github.com/vercel-labs/ai-chatbot
 - https://www.radix-ui.com/
+
+# TODO
+
+- [x] Prompt: Generate a course
+- [x] Prompt: Parse a course
+- [x] Prompt: Generate a session (teach week 1)
+- [ ] Prompt: Generate a list of suggested readings
+- [ ] Assets
+
+Should it be a class or a session?

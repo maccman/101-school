@@ -1,8 +1,8 @@
 import { db } from '../db'
 
-export async function getSectionsByCourseId(courseId: string) {
+export async function getModulesByCourseId(courseId: string) {
   const records = await db
-    .selectFrom('sections')
+    .selectFrom('course_modules')
     .where('courseId', '=', courseId)
     .selectAll()
     .execute()
@@ -10,9 +10,9 @@ export async function getSectionsByCourseId(courseId: string) {
   return records
 }
 
-export async function getSectionByWeek(courseId: string, weekNumber: number) {
+export async function getModuleByWeek(courseId: string, weekNumber: number) {
   const record = await db
-    .selectFrom('sections')
+    .selectFrom('course_modules')
     .where('courseId', '=', courseId)
     .where('week', '=', weekNumber)
     .selectAll()

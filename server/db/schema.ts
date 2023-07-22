@@ -10,22 +10,22 @@ export interface UnitImage {
 export interface CourseParsedBody {
   outline: string
   targeting: string
-  modules: CourseParsedModuleSection[]
-  recommendedReading: CourseParsedBodyRecommendedReading[]
+  modules: CourseParsedModule[]
+  recommendedReading: CourseParsedRecommendedReading[]
 }
 
-export interface CourseParsedModuleSection {
+export interface CourseParsedModule {
   week: number
   title: string
-  units: CourseParsedBodySectionUnit[]
+  units: CourseParsedUnit[]
 }
 
-export interface CourseParsedBodySectionUnit {
+export interface CourseParsedUnit {
   number: number
   title: string
 }
 
-export interface CourseParsedBodyRecommendedReading {
+export interface CourseParsedRecommendedReading {
   title: string
 }
 
@@ -64,7 +64,7 @@ export interface Course {
   updatedAt: Generated<Timestamp>
 }
 
-export interface Section {
+export interface CourseModule {
   id: Generated<string>
   week: number
   title: string
@@ -74,11 +74,11 @@ export interface Section {
   updatedAt: Generated<Timestamp>
 }
 
-export interface Unit {
+export interface CourseModuleUnit {
   id: Generated<string>
   title: string
   body: string
-  sectionId: string
+  moduleId: string
   wikipediaUrls: Generated<string[]>
   images: Generated<UnitImage[]>
   createdAt: Generated<Timestamp>
@@ -93,7 +93,7 @@ export interface User {
 
 export interface DB {
   courses: Course
-  sections: Section
-  units: Unit
+  course_modules: CourseModule
+  course_module_units: CourseModuleUnit
   users: User
 }

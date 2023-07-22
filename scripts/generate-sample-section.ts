@@ -1,6 +1,6 @@
 import { assert } from '@/lib/assert'
 import { getCourseByTitle } from '@/server/db/courses/getters'
-import { createSection } from '@/server/db/sections/setters'
+import { createModule } from '@/server/db/sections/setters'
 import { generateModule } from '@/server/helpers/ai/prompts/generate-module'
 
 async function main() {
@@ -17,7 +17,7 @@ async function main() {
       moduleNumber: parsedModule.week,
     })
 
-    await createSection({
+    await createModule({
       courseId: course.id,
       title: parsedModule.title,
       body: moduleBody,

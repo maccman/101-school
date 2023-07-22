@@ -2,12 +2,12 @@ import { db } from '../db'
 import { UnitImage } from '../schema'
 
 export async function createUnit(attrs: {
-  sectionId: string
+  moduleId: string
   title: string
   body: string
 }) {
   const { id } = await db
-    .insertInto('units')
+    .insertInto('course_module_units')
     .values(attrs)
     .returning('id')
     .executeTakeFirstOrThrow()
@@ -19,5 +19,9 @@ export async function updateUnitImages(
   unitId: string,
   attrs: { images: UnitImage[]; wikipediaUrls: string[] },
 ) {
-  await db.updateTable('units').set(attrs).where('id', '=', unitId).execute()
+  await db
+    .updateTable('course_module_units')
+    .set(attrs)
+    .where('id', '=', unitId)
+    .execute()
 }

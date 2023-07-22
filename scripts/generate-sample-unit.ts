@@ -1,6 +1,6 @@
 import { assert } from '@/lib/assert'
 import { getCourseByTitle } from '@/server/db/courses/getters'
-import { getSectionByWeek } from '@/server/db/sections/getters'
+import { getModuleByWeek } from '@/server/db/sections/getters'
 import { createUnit } from '@/server/db/units/setters'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 
@@ -11,7 +11,7 @@ async function main() {
   for (const courseModule of course.parsedBody.modules) {
     console.log(`Generating unit for module ${courseModule.week}...`)
 
-    const section = await getSectionByWeek(course.id, courseModule.week)
+    const section = await getModuleByWeek(course.id, courseModule.week)
     assert(section)
 
     for (const parsedUnit of courseModule.units) {
@@ -28,7 +28,7 @@ async function main() {
       createUnit({
         title: parsedUnit.title,
         body: unitBody,
-        sectionId: section.id,
+        moduleId: section.id,
       })
     }
   }

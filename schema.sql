@@ -31,10 +31,11 @@ CREATE TABLE courses (
 
   title TEXT NOT NULL,
   description TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
 
-  body TEXT,
+  content TEXT,
 
-  parsed_body JSONB,
+  parsed_content JSONB,
 
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
@@ -42,10 +43,12 @@ CREATE TABLE courses (
 
 CREATE TABLE course_modules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  week INT NOT NULL,
+
+  -- Equiv to the week number
+  number INT NOT NULL,
 
   title TEXT NOT NULL,
-  body TEXT NOT NULL,
+  content TEXT NOT NULL,
   course_id UUID REFERENCES courses(id) NOT NULL,
   
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -53,14 +56,14 @@ CREATE TABLE course_modules (
 );
 
 -- create index
-CREATE UNIQUE INDEX course_modules_week_index ON course_modules (course_id, week);
+CREATE UNIQUE INDEX course_modules_number_index ON course_modules (course_id, number);
 
 CREATE TABLE course_module_units (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
   number INT NOT NULL,
   title TEXT NOT NULL,
-  body TEXT NOT NULL,
+  content TEXT NOT NULL,
   module_id UUID REFERENCES course_modules(id) NOT NULL,
 
   wikipedia_urls TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,

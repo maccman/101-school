@@ -42,6 +42,7 @@ export function generateCoursePrompt(
       There will be no exams so do not include those in the outline.
 
       Put a recommended reading list at the end of the outline.
+      Output the result as Markdown.
   `,
     },
   ]

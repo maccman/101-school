@@ -29,6 +29,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@readme/openapi-parser": "^2.5.0",
+    "@sindresorhus/slugify": "^2.2.1",
     "@teamhanko/hanko-elements": "0.8.0",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "20.4.4",

@@ -1,6 +1,6 @@
 import { db } from '../db'
 
-export async function getModulesByCourseId(courseId: string) {
+export async function getModulesByCourse(courseId: string) {
   const records = await db
     .selectFrom('course_modules')
     .where('courseId', '=', courseId)

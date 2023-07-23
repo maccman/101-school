@@ -1,52 +1,35 @@
 import React from 'react'
 
-interface SectionProps {
-  name: string
-  active: boolean
-  description: string
-}
-
-interface CourseProps {
-  name: string
-  progress: number
-  sections: SectionProps[]
-}
+import { Course, CourseUnits } from '@/server/db/courses/types'
 
 interface SidebarProps {
-  courses: CourseProps[]
+  course: Course
+  courseUnits: CourseUnits
 }
 
-const CourseSidebar: React.FC<SidebarProps> = ({courses}) => {
+const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits }) => {
   return (
     <div className="w-1/4 bg-white rounded shadow-lg p-5">
-      <h2 className="font-semibold text-xl mb-4">Courses</h2>
-      {courses.map((course) => (
-        <div key={course.name} className="mb-4">
-          <div className="font-medium text-lg mb-2">
-            {course.name}{' '}
-            <span className="text-sm text-gray-500">({course.progress}% complete)</span>
-          </div>
-          <div className="w-full h-2 bg-gray-300 mb-4">
-            <div className="h-2 bg-blue-500" style={{width: `${course.progress}%`}}></div>
-          </div>
-          <div className="pl-4">
-            {course.sections.map((section) => (
-              <div key={section.name}>
-                <div
-                  className={`font-medium text-base mt-2 ${
-                    section.active ? 'text-blue-500' : ''
-                  }`}
-                >
-                  {section.name}
-                </div>
-                {section.active && (
-                  <p className="mt-1 text-sm text-gray-600">{section.description}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      <h2 className="font-semibold text-xl mb-4">{course.title}</h2>
+
+      <div className="my-5">
+        {Array.from(courseUnits).map(([moduleId, courseModule]) => (
+          <ul key={moduleId}>
+            <li key={moduleId}>
+              <div className="font-medium text-base mt-2">{courseModule.title}</div>
+              <ul>
+                {courseModule.units.map((courseUnit) => (
+                  <li key={courseUnit.id}>
+                    <div className="font-medium text-base mt-2">
+                      {courseModule.week}.{courseUnit.number} {courseUnit.title}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        ))}
+      </div>
     </div>
   )
 }

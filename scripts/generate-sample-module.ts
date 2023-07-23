@@ -1,13 +1,17 @@
+import slugify from '@sindresorhus/slugify'
 import { Selectable } from 'kysely'
 
 import { assert } from '@/lib/assert'
+import { prompt } from '@/lib/readline'
 import { getCourseBySlug } from '@/server/db/courses/getters'
 import { setModule } from '@/server/db/modules/setters'
 import { Course, CourseParsedModule } from '@/server/db/schema'
 import { generateModule } from '@/server/helpers/ai/prompts/generate-module'
 
 async function main() {
-  const course = await getCourseBySlug('astronomy-101')
+  const title = await prompt('Course title: ')
+
+  const course = await getCourseBySlug(slugify(title))
 
   assert(course)
 

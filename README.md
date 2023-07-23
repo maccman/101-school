@@ -24,7 +24,14 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Navigations
 - [x] Course slugs
 - [x] Markdown
+- [ ] Search
+- [ ] Chat
 - [ ] Initial design
+- [ ] Dedupe images
 - [ ] Auth / accounts
 - [ ] Track course progress
 - [ ] Course creation client-side
+
+# Future TODO
+
+- [ ] Translation?

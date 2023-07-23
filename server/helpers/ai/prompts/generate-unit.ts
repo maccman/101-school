@@ -37,7 +37,7 @@ function generatePrompt(
     },
     {
       role: 'user',
-      content: `Now teach module ${moduleNumber} unit ${unitNumber} of the course. Write a clear and comprehensive article covering all the information in the unit.`,
+      content: `Now generate module ${moduleNumber} unit ${unitNumber} of the course. Write a clear and comprehensive article covering all the information in the unit. Omit the module and unit numbers from the title.`,
     },
   ]
 }

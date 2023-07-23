@@ -1,7 +1,9 @@
+import slugify from '@sindresorhus/slugify'
 import { Selectable } from 'kysely'
 
 import { assert } from '@/lib/assert'
-import { getCourseByTitle } from '@/server/db/courses/getters'
+import { prompt } from '@/lib/readline'
+import { getCourseBySlug } from '@/server/db/courses/getters'
 import { getModuleByNumber } from '@/server/db/modules/getters'
 import {
   Course,
@@ -15,7 +17,9 @@ import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wiki
 import { pickImageForWikpediaUrls } from '@/server/lib/wikipedia'
 
 async function main() {
-  const course = await getCourseByTitle('Astronomy 101')
+  const title = await prompt('Course title: ')
+
+  const course = await getCourseBySlug(slugify(title))
   assert(course)
 
   await Promise.all(

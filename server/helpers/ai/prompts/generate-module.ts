@@ -35,7 +35,7 @@ export function generateModulePrompt(
     },
     {
       role: 'user',
-      content: `Now teach module ${moduleNumber} of the course.`,
+      content: `Now expand on module ${moduleNumber} of the course. Write a clear and comprehensive overview list of the information covered in the module.`,
     },
   ]
 }

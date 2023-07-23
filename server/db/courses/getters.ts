@@ -1,5 +1,15 @@
 import { db } from '../db'
 
+export async function getCourses() {
+  const records = await db
+    .selectFrom('courses')
+    .selectAll()
+    .orderBy('title', 'asc')
+    .execute()
+
+  return records
+}
+
 export async function getCourseByTitle(courseTitle: string) {
   const record = await db
     .selectFrom('courses')

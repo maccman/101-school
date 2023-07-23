@@ -1,25 +1,18 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { getModuleByNumber } from '@/server/db/modules/getters'
 import { getUnitsByModule } from '@/server/db/units/getters'
-import { generateHrefForCourseUnit } from '@/server/helpers/links'
-import { getNumberFromSlug } from '@/server/helpers/slug'
+import { getHrefForCourseUnit } from '@/server/helpers/links'
+import { getCourseContext } from '@/server/helpers/params-getters'
 
 export default async function CourseModulePage({
   params,
 }: {
-  params: { courseId: string; moduleSlug: string }
+  params: { courseSlug: string; moduleSlug: string }
 }) {
-  const moduleNumber = getNumberFromSlug(params.moduleSlug)
+  const { course, courseModule } = await getCourseContext(params)
 
-  if (!moduleNumber) {
-    return notFound()
-  }
-
-  const courseModule = await getModuleByNumber(params.courseId, moduleNumber)
-
-  if (!courseModule) {
+  if (!course || !courseModule) {
     return notFound()
   }
 
@@ -33,8 +26,8 @@ export default async function CourseModulePage({
         {courseUnits.map((courseUnit) => (
           <li key={courseUnit.id}>
             <Link
-              href={generateHrefForCourseUnit({
-                course: { id: params.courseId },
+              href={getHrefForCourseUnit({
+                course,
                 courseModule,
                 courseUnit,
               })}

@@ -7,7 +7,7 @@ export async function getUnit(unitId: string) {
     .selectAll()
     .executeTakeFirst()
 
-  return record
+  return record ?? null
 }
 
 export async function getUnitByNumber(moduleId: string, number: number) {
@@ -18,7 +18,7 @@ export async function getUnitByNumber(moduleId: string, number: number) {
     .selectAll()
     .executeTakeFirst()
 
-  return record
+  return record ?? null
 }
 
 export async function getUnitsByModule(moduleId: string) {

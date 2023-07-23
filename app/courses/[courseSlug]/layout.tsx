@@ -1,24 +1,23 @@
-import { notFound } from 'next/navigation'
 import React, { ReactNode } from 'react'
 
 import CourseSidebar from '@/components/course-sidebar/course-sidebar'
-import { getCourse, getCourseUnits } from '@/server/db/courses/getters'
+import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
 export default async function CourseShowLayout({
   children,
   params,
 }: {
   children: ReactNode
-  params: { courseId: string }
+  params: { courseSlug: string }
 }) {
-  const [course, courseUnits] = await Promise.all([
-    getCourse(params.courseId),
-    getCourseUnits(params.courseId),
-  ])
+  const course = await getCourseBySlug(params.courseSlug)
 
   if (!course) {
-    return notFound()
+    console.warn(`Course with slug "${params.courseSlug}" not found`)
+    return null
   }
+
+  const courseUnits = await getCourseUnits(course.id)
 
   return (
     <div className="flex flex-1 overflow-hidden">

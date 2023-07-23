@@ -1,5 +1,5 @@
 export function getNumberFromSlug(slug: string): number | null {
-  const firstPart = slug.split('-').pop()
+  const firstPart = slug.split('-').shift()
 
   if (!firstPart) {
     return null

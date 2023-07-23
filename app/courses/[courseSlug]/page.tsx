@@ -2,15 +2,18 @@ import { notFound } from 'next/navigation'
 
 import { UnitContent } from '@/components/course-units/unit-content'
 import { UnitImage } from '@/components/course-units/unit-image'
-import { getCourse, getFirstCourseUnit } from '@/server/db/courses/getters'
+import { getCourseBySlug, getFirstCourseUnit } from '@/server/db/courses/getters'
 
-export default async function CoursePage({ params }: { params: { courseId: string } }) {
-  const [course, courseUnit] = await Promise.all([
-    getCourse(params.courseId),
-    getFirstCourseUnit(params.courseId),
-  ])
+export default async function CoursePage({ params }: { params: { courseSlug: string } }) {
+  const course = await getCourseBySlug(params.courseSlug)
 
-  if (!course || !courseUnit) {
+  if (!course) {
+    return notFound()
+  }
+
+  const courseUnit = await getFirstCourseUnit(course.id)
+
+  if (!courseUnit) {
     return notFound()
   }
 

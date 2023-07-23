@@ -1,15 +1,5 @@
 import { db } from '../db'
 
-export async function getUnitsForModule(moduleId: string) {
-  const records = await db
-    .selectFrom('course_module_units')
-    .where('moduleId', '=', moduleId)
-    .selectAll()
-    .execute()
-
-  return records
-}
-
 export async function getUnit(unitId: string) {
   const record = await db
     .selectFrom('course_module_units')
@@ -18,4 +8,25 @@ export async function getUnit(unitId: string) {
     .executeTakeFirst()
 
   return record
+}
+
+export async function getUnitByNumber(moduleId: string, number: number) {
+  const record = await db
+    .selectFrom('course_module_units')
+    .where('moduleId', '=', moduleId)
+    .where('number', '=', number)
+    .selectAll()
+    .executeTakeFirst()
+
+  return record
+}
+
+export async function getUnitsByModule(moduleId: string) {
+  const records = await db
+    .selectFrom('course_module_units')
+    .where('moduleId', '=', moduleId)
+    .selectAll()
+    .execute()
+
+  return records
 }

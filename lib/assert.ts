@@ -16,3 +16,9 @@ export function assertString(value: any, message?: string): asserts value is str
     throw new AssertError(message)
   }
 }
+
+export function assertNumber(value: any, message?: string): asserts value is number {
+  if (typeof value !== 'number' || isNaN(value)) {
+    throw new AssertError(message)
+  }
+}

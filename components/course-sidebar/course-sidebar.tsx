@@ -2,6 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 
 import { Course, CourseUnits } from '@/server/db/courses/types'
+import {
+  generateHrefForCourseModule,
+  generateHrefForCourseUnit,
+} from '@/server/helpers/links'
 
 interface SidebarProps {
   course: Course
@@ -18,7 +22,7 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits }) => {
           <ul key={moduleId}>
             <li key={moduleId}>
               <Link
-                href={`/courses/${course.id}/modules/${moduleId}`}
+                href={generateHrefForCourseModule({ course, courseModule })}
                 className="font-medium text-base mt-2"
               >
                 {courseModule.title}
@@ -28,7 +32,11 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits }) => {
                 {courseModule.units.map((courseUnit) => (
                   <li key={courseUnit.id}>
                     <Link
-                      href={`/courses/${course.id}/modules/${courseModule.number}/units/${courseUnit.id}`}
+                      href={generateHrefForCourseUnit({
+                        course,
+                        courseModule,
+                        courseUnit,
+                      })}
                       className="font-medium text-base mt-2"
                     >
                       {courseModule.number}.{courseUnit.number} {courseUnit.title}

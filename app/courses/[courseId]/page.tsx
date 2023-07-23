@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
 
+import { UnitContent } from '@/components/course-units/unit-content'
+import { UnitImage } from '@/components/course-units/unit-image'
 import { getCourse, getFirstCourseUnit } from '@/server/db/courses/getters'
 
 export default async function CoursePage({ params }: { params: { courseId: string } }) {
@@ -17,7 +19,9 @@ export default async function CoursePage({ params }: { params: { courseId: strin
       <h1>{course.title}</h1>
       <p>{courseUnit.unitTitle}</p>
 
-      <p>{courseUnit.unitBody}</p>
+      {courseUnit.unitImage && <UnitImage image={courseUnit.unitImage} />}
+
+      {courseUnit.unitBody && <UnitContent content={courseUnit.unitBody} />}
     </div>
   )
 }

@@ -20,7 +20,7 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Prompt: Generate a session (teach week 1)
 - [x] Prompt: Generate a list of suggested readings
 - [x] Pull in Assets
-- [ ] Create course in db
+- [x] Create course in db
 - [ ] Initial design
 - [ ] Auth / accounts
 - [ ] Track course progress

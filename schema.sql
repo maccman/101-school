@@ -2,6 +2,10 @@
 -- 101 school is an online system for creating and attending courses. It's essentially an online university. Students can enroll in various subjects and learn about them.
 
 -- Drop tables
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS courses CASCADE;
+DROP TABLE IF EXISTS course_modules CASCADE;
+DROP TABLE IF EXISTS course_module_units CASCADE;
 
 -- Enable uuid
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -61,14 +65,14 @@ CREATE TABLE course_module_units (
 
   wikipedia_urls TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,
 
-  images JSONB DEFAULT '[]'::JSONB,
+  image JSONB,
 
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Create index
-CREATE INDEX course_module_units_number_module_id_index ON course_module_units (number, module_id);
+CREATE UNIQUE INDEX course_module_units_module_id_number_index ON course_module_units (module_id, number);
 
 -- Trigger to update updated_at column
 CREATE OR REPLACE FUNCTION touch_updated_at()   
@@ -82,5 +86,5 @@ $$ language 'plpgsql';
 CREATE TRIGGER users_touch_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 CREATE TRIGGER courses_touch_updated_at BEFORE UPDATE ON courses FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 CREATE TRIGGER course_modules_touch_updated_at BEFORE UPDATE ON course_modules FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
-CREATE TRIGGER units_touch_updated_at BEFORE UPDATE ON units FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
+CREATE TRIGGER course_module_units_touch_updated_at BEFORE UPDATE ON course_module_units FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 

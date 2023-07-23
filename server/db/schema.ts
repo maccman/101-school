@@ -4,7 +4,7 @@ import type { ColumnType } from 'kysely'
 
 export interface UnitImage {
   source: string
-  description: string
+  description: string | null
 }
 
 export interface CourseParsedBody {
@@ -81,7 +81,7 @@ export interface CourseModuleUnit {
   body: string
   moduleId: string
   wikipediaUrls: Generated<string[]>
-  images: Generated<UnitImage[]>
+  image: Generated<UnitImage | null>
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }

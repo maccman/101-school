@@ -13,7 +13,7 @@ const schema = z.object({
   ),
 })
 
-export async function generateWikipediaLinks(body: string): Promise<string[]> {
+export async function generateWikipediaUrls(body: string): Promise<string[]> {
   const result = await fetchCompletion({
     messages: generatePrompt(body),
     functions: getChatFunctions(),

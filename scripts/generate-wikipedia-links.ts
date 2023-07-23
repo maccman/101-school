@@ -1,4 +1,4 @@
-import { generateWikipediaLinks } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
+import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
 import { fetchImageForWikpediaUrl } from '@/server/lib/wikipedia'
 
 const body = `
@@ -28,7 +28,7 @@ In conclusion, understanding the types and structures of galaxies is crucial in 
 `
 
 async function main() {
-  const result = await generateWikipediaLinks(body)
+  const result = await generateWikipediaUrls(body)
 
   console.log(JSON.stringify(result, null, 2))
 

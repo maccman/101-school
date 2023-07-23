@@ -14,8 +14,8 @@
     "test": "TZ=UTC vitest",
     "check:types": "tsc --noEmit",
     "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/schema-generated.ts --exclude-pattern spatial_ref_sys --camel-case",
-    "scripts:generate-sample-section": "env-cmd -f .env.local tsx scripts/generate-sample-section.ts",
-    "scripts:generate-sample-section-session": "env-cmd -f .env.local tsx scripts/generate-sample-section-session.ts",
+    "scripts:generate-sample-unit": "env-cmd -f .env.local tsx scripts/generate-sample-unit.ts",
+    "scripts:generate-sample-module": "env-cmd -f .env.local tsx scripts/generate-sample-module.ts",
     "scripts:generate-sample-course": "env-cmd -f .env.local tsx scripts/generate-sample-course.ts",
     "scripts:parse-sample-course": "env-cmd -f .env.local tsx scripts/parse-sample-course.ts",
     "scripts:generate-wikipedia-links": "env-cmd -f .env.local tsx scripts/generate-wikipedia-links.ts"

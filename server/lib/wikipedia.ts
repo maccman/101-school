@@ -3,6 +3,26 @@ export async function fetchImageForWikpediaUrl(url: string) {
   return fetchImageForWikipediaPage(pageName)
 }
 
+export async function pickImageForWikpediaUrls(urls: string[]) {
+  for (const url of urls) {
+    try {
+      const image = await fetchImageForWikpediaUrl(url)
+
+      if (image) {
+        const test = await fetch(image.source)
+
+        if (test.ok) {
+          return image
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return null
+}
+
 function getPageNameFromWikipediaUrl(url: string) {
   const match = url.match(/\/wiki\/(.*)$/)
 
@@ -13,7 +33,7 @@ function getPageNameFromWikipediaUrl(url: string) {
   return match[1]
 }
 
-interface Image {
+interface WikipediaImage {
   source: string
   description: string | null
 }
@@ -21,7 +41,7 @@ interface Image {
 async function fetchImageForWikipediaPage(
   pageName: string,
   size = 500,
-): Promise<Image | null> {
+): Promise<WikipediaImage | null> {
   const url = getUrlForPageImageQuery(pageName, size)
   const res = await fetch(url, { headers: { 'User-Agent': '101.school' } })
 

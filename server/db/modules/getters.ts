@@ -10,11 +10,21 @@ export async function getModulesByCourse(courseId: string) {
   return records
 }
 
-export async function getModuleByWeek(courseId: string, weekNumber: number) {
+export async function getModuleByNumber(courseId: string, number: number) {
   const record = await db
     .selectFrom('course_modules')
     .where('courseId', '=', courseId)
-    .where('week', '=', weekNumber)
+    .where('number', '=', number)
+    .selectAll()
+    .executeTakeFirst()
+
+  return record ?? null
+}
+
+export async function getModule(moduleId: string) {
+  const record = await db
+    .selectFrom('course_modules')
+    .where('id', '=', moduleId)
     .selectAll()
     .executeTakeFirst()
 

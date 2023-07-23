@@ -26,7 +26,7 @@ export function generateCoursePrompt(
     {
       role: 'system',
       content:
-        'You are a university course generator. You are given a description of a course and you have to generate a course outline.',
+        'You are a university course generator. You are given a description of a course and you have to generate a course outline. Format output as Markdown.',
     },
     {
       role: 'user',
@@ -42,7 +42,6 @@ export function generateCoursePrompt(
       There will be no exams so do not include those in the outline.
 
       Put a recommended reading list at the end of the outline.
-      Output the result as Markdown.
   `,
     },
   ]

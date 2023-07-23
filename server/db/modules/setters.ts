@@ -1,30 +1,23 @@
-import { db } from '../db'
+import { Insertable } from 'kysely'
 
-export async function createModule(attrs: {
-  courseId: string
-  week: number
-  title: string
-  body: string
-}) {
+import { db } from '../db'
+import { CourseModule } from '../schema'
+
+export async function createModule(values: Insertable<CourseModule>) {
   const { id } = await db
     .insertInto('course_modules')
-    .values(attrs)
+    .values(values)
     .returning('id')
     .executeTakeFirstOrThrow()
 
   return id
 }
 
-export async function setModule(attrs: {
-  courseId: string
-  week: number
-  title: string
-  body: string
-}) {
+export async function setModule(values: Insertable<CourseModule>) {
   const { id } = await db
     .insertInto('course_modules')
-    .values(attrs)
-    .onConflict((oc) => oc.columns(['courseId', 'week']).doUpdateSet(attrs))
+    .values(values)
+    .onConflict((oc) => oc.columns(['courseId', 'number']).doUpdateSet(values))
     .returning('id')
     .executeTakeFirstOrThrow()
 

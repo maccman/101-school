@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 import { Course, CourseUnits } from '@/server/db/courses/types'
@@ -16,13 +17,22 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits }) => {
         {Array.from(courseUnits).map(([moduleId, courseModule]) => (
           <ul key={moduleId}>
             <li key={moduleId}>
-              <div className="font-medium text-base mt-2">{courseModule.title}</div>
+              <Link
+                href={`/courses/${course.id}/modules/${moduleId}`}
+                className="font-medium text-base mt-2"
+              >
+                {courseModule.title}
+              </Link>
+
               <ul>
                 {courseModule.units.map((courseUnit) => (
                   <li key={courseUnit.id}>
-                    <div className="font-medium text-base mt-2">
-                      {courseModule.week}.{courseUnit.number} {courseUnit.title}
-                    </div>
+                    <Link
+                      href={`/courses/${course.id}/modules/${courseModule.number}/units/${courseUnit.id}`}
+                      className="font-medium text-base mt-2"
+                    >
+                      {courseModule.number}.{courseUnit.number} {courseUnit.title}
+                    </Link>
                   </li>
                 ))}
               </ul>

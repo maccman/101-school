@@ -7,7 +7,7 @@ export interface UnitImage {
   description: string | null
 }
 
-export interface CourseParsedBody {
+export interface CourseParsedContent {
   outline: string
   targeting: string
   modules: CourseParsedModule[]
@@ -56,19 +56,20 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>
 
 export interface Course {
   id: Generated<string>
+  slug: string
   title: string
   description: string
-  body: string
-  parsedBody: Generated<CourseParsedBody>
+  content: string
+  parsedContent: Generated<CourseParsedContent>
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }
 
 export interface CourseModule {
   id: Generated<string>
-  week: number
+  number: number
   title: string
-  body: string
+  content: string
   courseId: string
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
@@ -78,7 +79,7 @@ export interface CourseModuleUnit {
   id: Generated<string>
   number: number
   title: string
-  body: string
+  content: string
   moduleId: string
   wikipediaUrls: Generated<string[]>
   image: Generated<UnitImage | null>

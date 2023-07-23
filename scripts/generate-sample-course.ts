@@ -4,18 +4,19 @@ import { parseCourse } from '@/server/helpers/ai/prompts/parse-course'
 
 async function main() {
   console.log('Generating course...')
-  const body = await generateCourse('Astronomy 101')
+  const content = await generateCourse('Astronomy 101')
 
   const courseId = await createCourse({
     title: 'Astronomy 101',
+    slug: 'astronomy-101',
     description: 'Learn about the stars and planets',
-    body,
+    content,
   })
 
   console.log('Parsing course...')
-  const parsedBody = await parseCourse(body)
+  const parsedContent = await parseCourse(content)
 
-  await updateCourse(courseId, { parsedBody })
+  await updateCourse(courseId, { parsedContent })
 
   console.log('Done!')
 }

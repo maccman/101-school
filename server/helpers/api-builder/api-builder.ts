@@ -1,7 +1,7 @@
-import {z} from 'zod'
+import { z } from 'zod'
 
-import {ApiBuilderHandler} from './types'
-import {error} from '../error'
+import { ApiBuilderHandler } from './types'
+import { error } from '../error'
 
 /**
  * withApiBuilder makes it fun to build APIs! It does query and post
@@ -42,7 +42,7 @@ export const withApiBuilder = <TRequestParams, TRequestArgs = {}>(
 
     const rawParams = {
       ...searchParams,
-      ...bodyParams,
+      ...contentParams,
       ...pathArgs.params,
     }
 

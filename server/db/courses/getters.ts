@@ -10,6 +10,17 @@ export async function getCourseByTitle(courseTitle: string) {
   return record ?? null
 }
 
+export async function getCourseBySlug(courseSlug: string) {
+  const record = await db
+
+    .selectFrom('courses')
+    .selectAll()
+    .where('slug', '=', courseSlug)
+    .executeTakeFirst()
+
+  return record ?? null
+}
+
 export async function getCourse(courseId: string) {
   const record = await db
     .selectFrom('courses')
@@ -22,7 +33,7 @@ export async function getCourse(courseId: string) {
 
 interface CourseModule {
   id: string
-  week: number
+  number: number
   title: string
   units: {
     id: string
@@ -44,13 +55,13 @@ export async function getCourseUnits(
       'courses.title as courseTitle',
       'courses.description as courseDescription',
       'course_modules.id as moduleId',
-      'course_modules.week as moduleWeek',
+      'course_modules.number as moduleNumber',
       'course_modules.title as moduleTitle',
       'course_module_units.id as unitId',
       'course_module_units.number as unitNumber',
       'course_module_units.title as unitTitle',
     ])
-    .orderBy('course_modules.week', 'asc')
+    .orderBy('course_modules.number', 'asc')
     .orderBy('course_module_units.number', 'asc')
     .execute()
 
@@ -60,7 +71,7 @@ export async function getCourseUnits(
     if (!grouped.has(record.moduleId)) {
       grouped.set(record.moduleId, {
         id: record.moduleId,
-        week: record.moduleWeek,
+        number: record.moduleNumber,
         title: record.moduleTitle,
         units: [],
       })
@@ -87,15 +98,15 @@ export async function getFirstCourseUnit(courseId: string) {
       'courses.title as courseTitle',
       'courses.description as courseDescription',
       'course_modules.id as moduleId',
-      'course_modules.week as moduleWeek',
+      'course_modules.number as moduleNumber',
       'course_modules.title as moduleTitle',
       'course_module_units.id as unitId',
       'course_module_units.number as unitNumber',
       'course_module_units.title as unitTitle',
       'course_module_units.image as unitImage',
-      'course_module_units.body as unitBody',
+      'course_module_units.content as unitBody',
     ])
-    .orderBy('course_modules.week', 'asc')
+    .orderBy('course_modules.number', 'asc')
     .orderBy('course_module_units.number', 'asc')
     .executeTakeFirst()
 

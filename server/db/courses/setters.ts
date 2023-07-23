@@ -1,28 +1,18 @@
-import { db } from '../db'
-import { CourseParsedBody } from '../schema'
+import { Insertable, Updateable } from 'kysely'
 
-export async function createCourse(attrs: {
-  title: string
-  description: string
-  body: string
-}) {
+import { db } from '../db'
+import { Course } from '../schema'
+
+export async function createCourse(values: Insertable<Course>) {
   const { id } = await db
     .insertInto('courses')
-    .values(attrs)
+    .values(values)
     .returning('id')
     .executeTakeFirstOrThrow()
 
   return id
 }
 
-export async function updateCourse(
-  id: string,
-  attrs: {
-    title?: string
-    description?: string
-    body?: string
-    parsedBody?: CourseParsedBody
-  },
-) {
-  await db.updateTable('courses').set(attrs).where('id', '=', id).execute()
+export async function updateCourse(id: string, values: Updateable<Course>) {
+  await db.updateTable('courses').set(values).where('id', '=', id).execute()
 }

@@ -2,7 +2,7 @@ import { Selectable } from 'kysely'
 
 import { assert } from '@/lib/assert'
 import { getCourseByTitle } from '@/server/db/courses/getters'
-import { getModuleByWeek } from '@/server/db/modules/getters'
+import { getModuleByNumber } from '@/server/db/modules/getters'
 import {
   Course,
   CourseModule,
@@ -19,7 +19,7 @@ async function main() {
   assert(course)
 
   await Promise.all(
-    course.parsedBody.modules.map((mod) => generateAndSaveUnits(mod, course)),
+    course.parsedContent.modules.map((mod) => generateAndSaveUnits(mod, course)),
   )
 }
 
@@ -31,7 +31,7 @@ async function generateAndSaveUnits(
 ) {
   console.log(`Generating unit for module ${courseModule.week}...`)
 
-  const section = await getModuleByWeek(course.id, courseModule.week)
+  const section = await getModuleByNumber(course.id, courseModule.week)
   assert(section)
 
   for (const parsedUnit of courseModule.units) {
@@ -47,15 +47,15 @@ async function generateAndSaveUnit(
 ) {
   console.log(`Generating unit ${parsedUnit.number}...`)
 
-  const unitBody = await generateUnit({
+  const unitContent = await generateUnit({
     courseDescription: course.description,
-    courseBody: course.body,
-    moduleBody: module.body,
+    courseBody: course.content,
+    moduleBody: module.content,
     moduleNumber: courseModule.week,
     unitNumber: parsedUnit.number,
   })
 
-  const wikipediaUrls = await generateWikipediaUrls(unitBody)
+  const wikipediaUrls = await generateWikipediaUrls(unitContent)
 
   const image = await pickImageForWikpediaUrls(wikipediaUrls)
 
@@ -63,7 +63,7 @@ async function generateAndSaveUnit(
     moduleId: module.id,
     number: parsedUnit.number,
     title: parsedUnit.title,
-    body: unitBody,
+    content: unitContent,
     wikipediaUrls,
     image,
   })

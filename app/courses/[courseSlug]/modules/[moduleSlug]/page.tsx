@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { getUnitsByModule } from '@/server/db/units/getters'
-import { getHrefForCourseUnit } from '@/server/helpers/links'
+import { getPathForCourseUnit } from '@/server/helpers/links'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export default async function CourseModulePage({
@@ -26,7 +26,7 @@ export default async function CourseModulePage({
         {courseUnits.map((courseUnit) => (
           <li key={courseUnit.id}>
             <Link
-              href={getHrefForCourseUnit({
+              href={getPathForCourseUnit({
                 course,
                 courseModule,
                 courseUnit,

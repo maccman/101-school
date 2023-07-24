@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 
 interface KeyboardShortcutOptions {
   metaKey?: boolean
@@ -7,13 +7,17 @@ interface KeyboardShortcutOptions {
 export function useKeyboardShortcut(
   key: string,
   callback: () => void,
-  {metaKey = false}: KeyboardShortcutOptions = {},
+  { metaKey = false }: KeyboardShortcutOptions = {},
 ) {
-  // Add a cmd+k hotkey to focus the search input
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key !== key) return
-      if (metaKey && !event.metaKey) return
+      if (event.key !== key) {
+        return
+      }
+
+      if (metaKey && !event.metaKey) {
+        return
+      }
 
       event.preventDefault()
       callback()

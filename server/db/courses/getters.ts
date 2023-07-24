@@ -132,3 +132,14 @@ export async function getCoursesWithImages() {
 
   return records
 }
+
+export async function searchCourses(query: string) {
+  const records = await db
+    .selectFrom('courses')
+    .where('title', 'like', `%${query}%`)
+    .selectAll()
+    .limit(10)
+    .execute()
+
+  return records
+}

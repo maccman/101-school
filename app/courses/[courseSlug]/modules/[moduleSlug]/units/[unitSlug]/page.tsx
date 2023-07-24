@@ -42,7 +42,9 @@ export default async function CoursePage({
         {courseModule.title}
       </h3>
 
-      {courseUnit.image && <UnitImage image={courseUnit.image} className="float-right" />}
+      {courseUnit.image && (
+        <UnitImage image={courseUnit.image} className="float-right mt-28 ml-5 mb-10" />
+      )}
 
       {courseUnit.content && <UnitContent content={courseUnit.content} />}
     </div>

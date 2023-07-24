@@ -30,3 +30,21 @@ export async function getUnitsByModule(moduleId: string) {
 
   return records
 }
+
+export async function searchUnits({
+  courseId,
+  query,
+}: {
+  courseId: string
+  query: string
+}) {
+  const records = await db
+    .selectFrom('course_module_units')
+    .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
+    .where('content', 'like', `%${query}%`)
+    .where('course_modules.courseId', '=', courseId)
+    .selectAll()
+    .execute()
+
+  return records
+}

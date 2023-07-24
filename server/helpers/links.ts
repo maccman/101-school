@@ -1,6 +1,10 @@
 import slugify from '@sindresorhus/slugify'
 
-export function getHrefForCourseModule(params: {
+export function getPathForCourse(params: { course: { slug: string } }) {
+  return `/courses/${params.course.slug}`
+}
+
+export function getPathForCourseModule(params: {
   course: { slug: string }
   courseModule: { number: number; title: string }
 }) {
@@ -9,7 +13,7 @@ export function getHrefForCourseModule(params: {
   )}`
 }
 
-export function getHrefForCourseUnit(params: {
+export function getPathForCourseUnit(params: {
   course: { slug: string }
   courseModule: { number: number; title: string }
   courseUnit: { number: number; title: string }

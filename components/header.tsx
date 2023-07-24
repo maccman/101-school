@@ -8,7 +8,12 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Header({ className }: HeaderProps) {
   return (
-    <header className={cn('border-b px-2 flex space-x-3', className)}>
+    <header
+      className={cn(
+        'border-b px-2 flex space-x-3 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl',
+        className,
+      )}
+    >
       <Link href={'/'}>
         <span className="flex space-x-3 font-bold text-sm px-3 py-2">101.school</span>
       </Link>

@@ -5,7 +5,7 @@ import React from 'react'
 
 import { cn } from '@/lib/utils'
 import { Course, CourseUnits } from '@/server/db/courses/types'
-import { getHrefForCourseUnit } from '@/server/helpers/links'
+import { getPathForCourseUnit } from '@/server/helpers/links'
 
 import { Button } from '../ui/button'
 
@@ -31,7 +31,7 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits, className 
                 {courseModule.units.map((courseUnit) => (
                   <li key={courseUnit.id}>
                     <Link
-                      href={getHrefForCourseUnit({
+                      href={getPathForCourseUnit({
                         course,
                         courseModule,
                         courseUnit,

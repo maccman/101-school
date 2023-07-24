@@ -16,6 +16,10 @@ module.exports = {
       },
     },
     extend: {
+      spacing: {
+        'header-height': '37px',
+      },
+
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

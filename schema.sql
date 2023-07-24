@@ -41,6 +41,10 @@ CREATE TABLE courses (
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+-- Index title/desc so we can search it
+CREATE INDEX courses_title_index ON courses USING GIN (to_tsvector('english', title));
+CREATE INDEX courses_description_index ON courses USING GIN (to_tsvector('english', description));
+
 CREATE TABLE course_modules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
@@ -74,6 +78,9 @@ CREATE TABLE course_module_units (
 
   UNIQUE (module_id, number)
 );
+
+-- Index content so we can search it
+CREATE INDEX course_module_units_content_index ON course_module_units USING GIN (to_tsvector('english', content));
 
 CREATE TABLE user_courses (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import React, { ReactNode } from 'react'
 
+import ChatSidebar from '@/components/chat-sidebar/chat-sidebar'
 import CourseSidebar from '@/components/course-sidebar/course-sidebar'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
@@ -19,7 +20,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${course.title} | 101.school`,
+    title: `${course.title} - 101.school`,
     description: course.description,
   }
 }
@@ -48,9 +49,11 @@ export default async function CourseShowLayout({
         className="hidden lg:block"
       />
 
-      <div className="col-span-3 lg:col-span-4 lg:border-l overflow-auto pb-10">
+      <div className="col-span-2 lg:col-span-3 lg:border-l overflow-auto pb-10">
         {children}
       </div>
+
+      <ChatSidebar messages={[]} />
     </div>
   )
 }

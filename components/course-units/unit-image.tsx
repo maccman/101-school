@@ -11,7 +11,12 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export function UnitImage({ image, className }: Props) {
   return (
-    <div className={cn('rounded-md overflow-hidden max-w-[500px] border', className)}>
+    <div
+      className={cn(
+        'rounded-md overflow-hidden sm:max-w-[200px] lg:max-w-[450px] border',
+        className,
+      )}
+    >
       <img
         src={image.source}
         alt={image.description || ''}

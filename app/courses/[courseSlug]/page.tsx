@@ -24,7 +24,10 @@ export default async function CoursePage({ params }: { params: { courseSlug: str
       </h3>
 
       {courseUnit.unitImage && (
-        <UnitImage image={courseUnit.unitImage} className="float-right" />
+        <UnitImage
+          image={courseUnit.unitImage}
+          className="float-right mt-28 ml-5 mb-10"
+        />
       )}
 
       {courseUnit.unitContent && <UnitContent content={courseUnit.unitContent} />}

@@ -10,11 +10,11 @@ interface Props {
   messages: Message[]
 }
 
-const ChatSidebar: React.FC<Props> = ({messages}) => {
+const ChatSidebar: React.FC<Props> = ({ messages }) => {
   return (
-    <div className="w-1/4 bg-white rounded shadow-lg p-5 flex flex-col h-screen">
-      <h2 className="font-semibold text-xl mb-4">Chat</h2>
-      <div className="chatbox flex-grow overflow-auto p-3 space-y-4 mb-4 border rounded">
+    <div className="p-5 overflow-hidden border-l flex flex-col">
+      <h2 className="font-semibold text-xl mb-4 flex-none">Chat</h2>
+      <div className="flex-grow overflow-auto p-3 space-y-4 mb-4 border rounded">
         {messages.map((message, i) => (
           <div key={i} className={message.sender === 'Bot' ? 'text-right' : ''}>
             <div
@@ -34,7 +34,7 @@ const ChatSidebar: React.FC<Props> = ({messages}) => {
           </div>
         ))}
       </div>
-      <div className="chat-input">
+      <div className="chat-input flex-none">
         <input
           className="w-full rounded border p-2"
           type="text"

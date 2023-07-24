@@ -52,11 +52,10 @@ CREATE TABLE course_modules (
   course_id UUID REFERENCES courses(id) NOT NULL,
   
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
 
--- create index
-CREATE UNIQUE INDEX course_modules_number_index ON course_modules (course_id, number);
+  UNIQUE (course_id, number)
+);
 
 CREATE TABLE course_module_units (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -71,11 +70,26 @@ CREATE TABLE course_module_units (
   image JSONB,
 
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+  UNIQUE (module_id, number)
 );
 
--- Create index
-CREATE UNIQUE INDEX course_module_units_module_id_number_index ON course_module_units (module_id, number);
+CREATE TABLE user_courses (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) NOT NULL,
+  course_id UUID REFERENCES courses(id) NOT NULL,
+
+  enrolled_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+  -- Create a unique index to ensure a user can enroll in a course only once
+  UNIQUE (user_id, course_id)
+
+  progress JSONB DEFAULT '{}'::JSONB NOT NULL,
+);
+
+CREATE INDEX user_courses_user_id_index ON user_courses(user_id);
+CREATE INDEX user_courses_course_id_index ON user_courses(course_id);
 
 -- Trigger to update updated_at column
 CREATE OR REPLACE FUNCTION touch_updated_at()   
@@ -91,3 +105,13 @@ CREATE TRIGGER courses_touch_updated_at BEFORE UPDATE ON courses FOR EACH ROW EX
 CREATE TRIGGER course_modules_touch_updated_at BEFORE UPDATE ON course_modules FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 CREATE TRIGGER course_module_units_touch_updated_at BEFORE UPDATE ON course_module_units FOR EACH ROW EXECUTE PROCEDURE touch_updated_at();
 
+
+-- Create view of courses with an image (taken from the course's first module unit)
+
+CREATE OR REPLACE VIEW course_images AS
+SELECT
+  course_module_units.image, course_id
+FROM course_module_units
+LEFT JOIN course_modules ON course_modules.id = course_module_units.module_id
+WHERE course_module_units.image IS NOT NULL AND course_module_units.number = 1 AND course_modules.number = 1
+GROUP BY course_id, course_module_units.image;

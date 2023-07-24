@@ -93,9 +93,15 @@ export interface User {
   lastSignInAt: Timestamp | null
 }
 
+export interface CourseImage {
+  courseId: string
+  image: UnitImage
+}
+
 export interface DB {
   courses: Course
   course_modules: CourseModule
   course_module_units: CourseModuleUnit
   users: User
+  course_images: CourseImage
 }

@@ -1,18 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 
-interface Props {
+import { cn } from '@/lib/utils'
+
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   image: {
     source: string
     description: string | null
   }
 }
 
-export function UnitImage({ image }: Props) {
+export function UnitImage({ image, className }: Props) {
   return (
-    <div className="py-5 rounded-md bg-gray-50">
-      <img src={image.source} alt={image.description || ''} className="max-w-sm w-full" />
+    <div className={cn('rounded-md overflow-hidden max-w-[500px] border', className)}>
+      <img
+        src={image.source}
+        alt={image.description || ''}
+        className="h-auto w-auto object-cover transition-all aspect-video"
+      />
 
-      {image.description && <p className="text-sm text-gray-500">{image.description}</p>}
+      {image.description && (
+        <p className="text-sm text-gray-500 px-3 py-2">{image.description}</p>
+      )}
     </div>
   )
 }

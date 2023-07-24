@@ -18,13 +18,16 @@ export default async function CoursePage({ params }: { params: { courseSlug: str
   }
 
   return (
-    <div>
-      <h1>{course.title}</h1>
-      <p>{courseUnit.unitTitle}</p>
+    <div className="px-10 py-5 pb-10">
+      <h3 className="text-base tracking-tight pb-5 text-accent-foreground">
+        {courseUnit.moduleTitle}
+      </h3>
 
-      {courseUnit.unitImage && <UnitImage image={courseUnit.unitImage} />}
+      {courseUnit.unitImage && (
+        <UnitImage image={courseUnit.unitImage} className="float-right" />
+      )}
 
-      {courseUnit.unitBody && <UnitContent content={courseUnit.unitBody} />}
+      {courseUnit.unitContent && <UnitContent content={courseUnit.unitContent} />}
     </div>
   )
 }

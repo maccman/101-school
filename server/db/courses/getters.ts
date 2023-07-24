@@ -114,11 +114,21 @@ export async function getFirstCourseUnit(courseId: string) {
       'course_module_units.number as unitNumber',
       'course_module_units.title as unitTitle',
       'course_module_units.image as unitImage',
-      'course_module_units.content as unitBody',
+      'course_module_units.content as unitContent',
     ])
     .orderBy('course_modules.number', 'asc')
     .orderBy('course_module_units.number', 'asc')
     .executeTakeFirst()
 
   return record ?? null
+}
+
+export async function getCoursesWithImages() {
+  const records = await db
+    .selectFrom('courses')
+    .leftJoin('course_images', 'courses.id', 'course_images.courseId')
+    .selectAll()
+    .execute()
+
+  return records
 }

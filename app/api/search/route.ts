@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { SearchResult } from '@/app/types'
-import { searchCourses } from '@/server/db/courses/getters'
+import { getCourses, searchCourses } from '@/server/db/courses/getters'
 import { Course } from '@/server/db/courses/types'
 import { getUnitsByCourse, searchUnits } from '@/server/db/units/getters'
 import { CourseModuleUnit } from '@/server/db/units/types'
@@ -20,10 +20,10 @@ export async function GET(req: Request) {
 
   let results: SearchResult[] = []
 
-  if (courseId && !query) {
+  if (!query) {
     // Return all units for a course
-    results = await getAllUnitsSearchResults(courseId)
-  } else if (query) {
+    results = await getAllSearchResults(courseId)
+  } else {
     // Return matching units and courses
     results = await getMatchingSearchResults(query, courseId)
   }
@@ -33,9 +33,11 @@ export async function GET(req: Request) {
   })
 }
 
-async function getAllUnitsSearchResults(courseId: string): Promise<SearchResult[]> {
-  const allUnits = await getUnitsByCourse(courseId)
-  return allUnits.map(unitToSearchResult)
+async function getAllSearchResults(courseId: string | null): Promise<SearchResult[]> {
+  const allUnits = courseId ? await getUnitsByCourse(courseId) : []
+  const allCourses = await getCourses()
+
+  return [...allUnits.map(unitToSearchResult), ...allCourses.map(courseToSearchResult)]
 }
 
 async function getMatchingSearchResults(

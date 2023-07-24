@@ -42,7 +42,7 @@ export default async function CourseShowLayout({
   const courseUnits = await getCourseUnits(course.id)
 
   return (
-    <div className="overflow-hidden grid lg:grid-cols-5 h-screen">
+    <div className="flex-1 overflow-hidden grid lg:grid-cols-5">
       <CourseSidebar
         course={course}
         courseUnits={courseUnits}

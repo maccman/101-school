@@ -15,11 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-white/90 min-h-screen relative flex flex-col overflow-hidden`}
+        className={`${inter.className} bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-white/90 h-screen relative flex flex-col overflow-hidden`}
       >
         <Header className="shrink-0" />
 
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
 
         <CommandDialog />
       </body>

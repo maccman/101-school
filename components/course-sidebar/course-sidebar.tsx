@@ -19,7 +19,7 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits, className 
     <div className={cn('py-5 overflow-auto', className)}>
       <h2 className="font-semibold text-xl mb-2 tracking-tight px-5">{course.title}</h2>
 
-      <div className="my-2 space-y-2 px-2">
+      <div className="my-4 space-y-2 px-2">
         {Array.from(courseUnits).map(([moduleId, courseModule]) => (
           <ul key={moduleId} className="space-y-1">
             <li key={moduleId}>

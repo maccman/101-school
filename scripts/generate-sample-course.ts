@@ -1,6 +1,5 @@
-import slugify from '@sindresorhus/slugify'
-
 import { prompt } from '@/lib/readline'
+import { slugify } from '@/lib/slugify'
 import { createCourse, updateCourse } from '@/server/db/courses/setters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'
 import { parseCourse } from '@/server/helpers/ai/prompts/parse-course'

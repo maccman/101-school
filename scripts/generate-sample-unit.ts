@@ -1,8 +1,8 @@
-import slugify from '@sindresorhus/slugify'
 import { Selectable } from 'kysely'
 
 import { assert } from '@/lib/assert'
 import { prompt } from '@/lib/readline'
+import { slugify } from '@/lib/slugify'
 import { getCourseBySlug } from '@/server/db/courses/getters'
 import { getModuleByNumber } from '@/server/db/modules/getters'
 import {

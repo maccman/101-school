@@ -1,4 +1,4 @@
-import slugify from '@sindresorhus/slugify'
+import { slugify } from '@/lib/slugify'
 
 export function getPathForCourse(params: { course: { slug: string } }) {
   return `/courses/${params.course.slug}`

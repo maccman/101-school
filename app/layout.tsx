@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google'
 
 import './globals.css'
-import { CommandDialog } from '@/components/command-dialog'
 import { Header } from '@/components/header'
 
 export const metadata = {
@@ -20,8 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header className="shrink-0" />
 
         <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
-
-        <CommandDialog />
       </body>
     </html>
   )

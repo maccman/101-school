@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import React, { ReactNode } from 'react'
 
 import ChatSidebar from '@/components/chat-sidebar/chat-sidebar'
+import { CourseCommandDialog } from '@/components/course-command-dialog'
 import CourseSidebar from '@/components/course-sidebar/course-sidebar'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
@@ -54,6 +55,8 @@ export default async function CourseShowLayout({
       </div>
 
       <ChatSidebar messages={[]} />
+
+      <CourseCommandDialog courseId={course.id} />
     </div>
   )
 }

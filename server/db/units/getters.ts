@@ -10,6 +10,21 @@ export async function getUnit(unitId: string) {
   return record ?? null
 }
 
+export async function getUnitAndModule(unitId: string) {
+  const record = await db
+    .selectFrom('course_module_units')
+    .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
+    .where('course_module_units.id', '=', unitId)
+    .selectAll()
+    .select([
+      'course_modules.courseId as courseId',
+      'course_modules.number as moduleNumber',
+    ])
+    .executeTakeFirst()
+
+  return record ?? null
+}
+
 export async function getUnitByNumber(moduleId: string, number: number) {
   const record = await db
     .selectFrom('course_module_units')
@@ -52,10 +67,28 @@ export async function searchUnits({
   const records = await db
     .selectFrom('course_module_units')
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
-    .where('content', 'like', `%${query}%`)
+    .where('course_module_units.content', 'like', `%${query}%`)
     .where('course_modules.courseId', '=', courseId)
     .selectAll()
     .execute()
 
   return records
+}
+
+export async function getNextUnit(unitId: string) {
+  const currentUnit = await getUnitAndModule(unitId)
+
+  if (!currentUnit) {
+    return null
+  }
+
+  // Find either the unit with the next number or the next module
+  const nextUnit = await db
+    .selectFrom('course_module_units_next')
+    .where('id', '=', unitId)
+    .where('courseId', '=', currentUnit.courseId)
+    .selectAll()
+    .executeTakeFirst()
+
+  return nextUnit ?? null
 }

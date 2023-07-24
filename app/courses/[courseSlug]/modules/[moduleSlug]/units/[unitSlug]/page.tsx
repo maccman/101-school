@@ -1,8 +1,10 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 
 import { UnitContent } from '@/components/course-units/unit-content'
 import { UnitImage } from '@/components/course-units/unit-image'
+import { UnitPagination } from '@/components/course-units/unit-pagination'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export async function generateMetadata({
@@ -47,6 +49,10 @@ export default async function CoursePage({
       )}
 
       {courseUnit.content && <UnitContent content={courseUnit.content} />}
+
+      <Suspense>
+        <UnitPagination unitId={courseUnit.id} />
+      </Suspense>
     </div>
   )
 }

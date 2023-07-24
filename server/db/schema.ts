@@ -87,6 +87,17 @@ export interface CourseModuleUnit {
   updatedAt: Generated<Timestamp>
 }
 
+export interface CourseModuleUnitNext {
+  id: Generated<string>
+  title: string
+  courseId: string
+  moduleId: string
+  nextId: Generated<string>
+  nextModuleId: Generated<string>
+  nextCourseId: Generated<string>
+  nextTitle: string
+}
+
 export interface User {
   id: Generated<string>
   emails: Generated<string[]>
@@ -102,6 +113,7 @@ export interface DB {
   courses: Course
   course_modules: CourseModule
   course_module_units: CourseModuleUnit
+  course_module_units_next: CourseModuleUnitNext
   users: User
   course_images: CourseImage
 }

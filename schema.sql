@@ -122,3 +122,34 @@ FROM course_module_units
 LEFT JOIN course_modules ON course_modules.id = course_module_units.module_id
 WHERE course_module_units.image IS NOT NULL AND course_module_units.number = 1 AND course_modules.number = 1
 GROUP BY course_id, course_module_units.image;
+
+
+CREATE OR REPLACE VIEW course_module_units_next AS
+WITH ordered_units AS (
+  SELECT 
+      course_module_units.id, 
+      course_module_units.title, 
+      course_module_units.module_id,
+      course_module_units.number AS unit_number, 
+      course_modules.number AS module_number,
+      course_modules.course_id AS course_id
+  FROM 
+      course_module_units 
+  JOIN 
+      course_modules ON course_module_units.module_id = course_modules.id 
+  ORDER BY 
+      course_modules.course_id,
+      course_modules.number, 
+      course_module_units.number
+)
+SELECT 
+    id, 
+    title,
+    course_id,
+    module_id,
+    LEAD(id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_id,
+    LEAD(module_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_module_id,
+    LEAD(course_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_course_id,
+    LEAD(title) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_title
+FROM 
+    ordered_units

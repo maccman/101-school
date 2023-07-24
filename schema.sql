@@ -19,7 +19,7 @@ CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 
-  -- Array of jsonb objects, default []
+  -- Array of strings, default []
   emails TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,
 
   -- UTC timestamp

@@ -1,4 +1,4 @@
-import {db} from '../db'
+import { db } from '../db'
 
 export const setUser = async ({
   id,
@@ -14,13 +14,13 @@ export const setUser = async ({
     .insertInto('users')
     .values({
       id: id,
-      emails: JSON.stringify(emails),
-      last_sign_in_at: signInDate,
+      emails: emails,
+      lastSignInAt: signInDate,
     })
     .onConflict((oc) =>
       oc.column('id').doUpdateSet({
-        emails: JSON.stringify(emails),
-        last_sign_in_at: signInDate,
+        emails: emails,
+        lastSignInAt: signInDate,
       }),
     )
     .execute()

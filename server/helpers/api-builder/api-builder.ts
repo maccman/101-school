@@ -42,7 +42,7 @@ export const withApiBuilder = <TRequestParams, TRequestArgs = {}>(
 
     const rawParams = {
       ...searchParams,
-      ...contentParams,
+      ...bodyParams,
       ...pathArgs.params,
     }
 

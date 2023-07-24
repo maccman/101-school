@@ -128,7 +128,6 @@ CREATE OR REPLACE VIEW course_module_units_next AS
 WITH ordered_units AS (
   SELECT 
       course_module_units.id, 
-      course_module_units.title, 
       course_module_units.module_id,
       course_module_units.number AS unit_number, 
       course_modules.number AS module_number,
@@ -144,12 +143,10 @@ WITH ordered_units AS (
 )
 SELECT 
     id, 
-    title,
     course_id,
     module_id,
     LEAD(id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_id,
     LEAD(module_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_module_id,
     LEAD(course_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_course_id,
-    LEAD(title) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_title
 FROM 
     ordered_units

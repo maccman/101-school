@@ -39,15 +39,17 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
     }
   }, [courseId, query])
 
+  const lowerQuery = query.toLowerCase()
+
   // Top results match client-side by title
   const topResults = useMemo(
     () =>
-      query
+      lowerQuery
         ? allResults
-            .filter((result) => result.title.toLowerCase().includes(query))
+            .filter((result) => result.title.toLowerCase().includes(lowerQuery))
             .sort(sortSearchResults)
-        : [],
-    [allResults, query],
+        : allResults,
+    [allResults, lowerQuery],
   )
 
   // Filter other results to exclude top results

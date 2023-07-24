@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 

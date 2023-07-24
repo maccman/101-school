@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 
 import './globals.css'
-import { Header } from '@/components/header'
+import { Header } from '@/components/header/header'
 
 export const metadata = {
   title: '101.school',

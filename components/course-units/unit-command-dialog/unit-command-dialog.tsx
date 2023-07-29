@@ -3,7 +3,7 @@
 import { debounce } from 'lodash'
 import { Calendar } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { SearchResult } from '@/app/types'
 import {

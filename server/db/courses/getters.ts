@@ -127,7 +127,7 @@ export async function getCoursesWithImages() {
   const records = await db
     .selectFrom('courses')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
-    .selectAll()
+    .selectAll(['courses'])
     .execute()
 
   return records

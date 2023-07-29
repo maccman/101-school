@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import React, { ReactNode } from 'react'
 
 import ChatSidebar from '@/components/chat-sidebar/chat-sidebar'
-import { CourseCommandDialog } from '@/components/course-command-dialog'
 import CourseSidebar from '@/components/course-sidebar/course-sidebar'
+import { CourseCommandDialog } from '@/components/course-units/unit-command-dialog/unit-command-dialog'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
 export async function generateMetadata({

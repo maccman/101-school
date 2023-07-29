@@ -1,8 +1,9 @@
 'use client'
 
+import { debounce } from 'lodash'
 import { Calendar } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { use, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { SearchResult } from '@/app/types'
 import {
@@ -13,17 +14,43 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
+import { useEventListener } from '@/lib/use-event-listener'
 import { useKeyboardShortcut } from '@/lib/use-keyboard-shortcut'
+
+import { FetchResultsOptions, fetchResults, sortSearchResults } from './utils'
 
 export function CourseCommandDialog({ courseId }: { courseId?: string }) {
   const router = useRouter()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
-  const [results, setResults] = useState<SearchResult[]>([])
+  const [queryResults, setQueryResults] = useState<SearchResult[]>([])
   const [allResults, setAllResults] = useState<SearchResult[]>([])
+  const controllerRef = useRef<AbortController | undefined>()
 
   useKeyboardShortcut('k', () => setOpen((open) => !open), { metaKey: true })
   useKeyboardShortcut('Escape', () => setOpen(false))
+
+  useEventListener('command.dialog.open', () => setOpen(true))
+
+  const fetchAndSetQueryResults = useCallback(
+    (options: FetchResultsOptions) => fetchResults(options).then(setQueryResults),
+    [],
+  )
+
+  const debouncedFetchAndSetQueryResults = useMemo(
+    () => debounce(fetchAndSetQueryResults, 200),
+    [fetchAndSetQueryResults],
+  )
+
+  const abortAndFetchAndSetQueryResults = useCallback(
+    (options: FetchResultsOptions) => {
+      controllerRef.current?.abort()
+      const { signal } = (controllerRef.current = new AbortController())
+
+      debouncedFetchAndSetQueryResults({ ...options, signal })
+    },
+    [debouncedFetchAndSetQueryResults],
+  )
 
   useEffect(() => {
     if (open && allResults.length === 0) {
@@ -33,11 +60,11 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
 
   useEffect(() => {
     if (query) {
-      fetchResults({ courseId, query }).then(setResults)
+      abortAndFetchAndSetQueryResults({ courseId, query })
     } else {
-      setResults([])
+      setQueryResults([])
     }
-  }, [courseId, query])
+  }, [abortAndFetchAndSetQueryResults, courseId, query])
 
   const lowerQuery = query.toLowerCase()
 
@@ -56,10 +83,10 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
   // Sort results, put courses last
   const otherResults = useMemo(
     () =>
-      results
+      queryResults
         .filter((result) => !topResults.some((topResult) => topResult.id === result.id))
         .sort(sortSearchResults),
-    [results, topResults],
+    [queryResults, topResults],
   )
 
   const noResults = topResults.length === 0 && otherResults.length === 0
@@ -71,7 +98,11 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
 
   return (
     <UiCommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search..." onValueChange={setQuery} />
+      <CommandInput
+        placeholder="Type a command or search..."
+        value={query}
+        onValueChange={setQuery}
+      />
       <CommandList>
         {!query && (
           <CommandGroup heading="Suggestions">
@@ -86,7 +117,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
 
         {topResults.length > 0 && (
           <CommandGroup heading="Top matches">
-            {otherResults.map((result) => (
+            {topResults.map((result) => (
               <CommandItem
                 key={result.id}
                 value={`${result.type}-${result.id}`}
@@ -116,42 +147,4 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
       </CommandList>
     </UiCommandDialog>
   )
-}
-
-async function fetchResults({
-  courseId,
-  query = '',
-}: {
-  courseId?: string
-  query?: string
-}): Promise<SearchResult[]> {
-  const params = new URLSearchParams()
-
-  if (courseId) {
-    params.set('courseId', courseId)
-  }
-
-  if (query) {
-    params.set('q', query)
-  }
-
-  const response = await fetch(`/api/search?${params.toString()}`)
-
-  if (!response.ok) {
-    throw new Error(response.statusText)
-  }
-
-  return response.json()
-}
-
-function sortSearchResults(a: SearchResult, b: SearchResult) {
-  if (a.type === 'course' && b.type === 'unit') {
-    return 1
-  }
-
-  if (a.type === 'unit' && b.type === 'course') {
-    return -1
-  }
-
-  return 0
 }

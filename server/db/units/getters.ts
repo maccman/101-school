@@ -15,7 +15,7 @@ export async function getUnitAndModule(unitId: string) {
     .selectFrom('course_module_units')
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
     .where('course_module_units.id', '=', unitId)
-    .selectAll()
+    .selectAll(['course_module_units'])
     .select([
       'course_modules.courseId as courseId',
       'course_modules.number as moduleNumber',
@@ -32,7 +32,7 @@ export async function getUnitAndCourse(unitId: string) {
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
     .innerJoin('courses', 'course_modules.courseId', 'courses.id')
     .where('course_module_units.id', '=', unitId)
-    .selectAll()
+    .selectAll(['course_module_units'])
     .select([
       'courses.id as courseId',
       'courses.slug as courseSlug',
@@ -70,7 +70,7 @@ export async function getUnitsByCourse(courseId: string) {
     .selectFrom('course_module_units')
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
     .where('course_modules.courseId', '=', courseId)
-    .selectAll()
+    .selectAll(['course_module_units'])
     .execute()
 
   return records
@@ -88,7 +88,7 @@ export async function searchUnits({
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
     .where('course_module_units.content', 'like', `%${query}%`)
     .where('course_modules.courseId', '=', courseId)
-    .selectAll()
+    .selectAll(['course_module_units'])
     .execute()
 
   return records

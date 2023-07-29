@@ -1,73 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
- 
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
- 
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
- 
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
- 
+
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
- 
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
- 
+
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
- 
+
     --ring: 215 20.2% 65.1%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
- 
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
- 
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
- 
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
- 
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
- 
+
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
- 
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
- 
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
- 
+
     --ring: 217.2 32.6% 17.5%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -75,4 +75,93 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Hanko */
+
+hanko-auth,
+hanko-profile {
+  /* Color Scheme */
+  --color: #18181b;
+  --color-shade-1: #8f9095;
+  --color-shade-2: #e5e6ef;
+
+  --brand-color: #ec4899;
+  --brand-color-shade-1: rgb(39 39 42 / 2%);
+  --brand-contrast-color: #18181b;
+
+  --background-color: transparent;
+  --error-color: #e82020;
+  --link-color: #3b82f6;
+
+  /* Font Styles */
+  --font-weight: 400;
+  --font-size: 14px;
+  --font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* Border Styles */
+  --border-radius: 4px;
+  --border-style: solid;
+  --border-width: 1px;
+
+  /* Item Styles */
+  --item-height: 34px;
+  --item-margin: 0.5rem 0;
+
+  /* Container Styles */
+  --container-padding: 0;
+  --container-max-width: 600px;
+
+  /* Headline Styles */
+  --headline1-font-size: 16px;
+  --headline1-font-weight: 600;
+  --headline1-margin: 0 0 0.5rem;
+
+  --headline2-font-size: 14px;
+  --headline2-font-weight: 600;
+  --headline2-margin: 1rem 0 0.25rem;
+
+  /* Divider Styles */
+  --divider-padding: 0 42px;
+  --divider-display: block;
+  --divider-visibility: visible;
+
+  /* Link Styles */
+  --link-text-decoration: none;
+  --link-text-decoration-hover: underline;
+
+  /* Input Styles */
+  --input-min-width: 12em;
+
+  /* Button Styles */
+  --button-min-width: max-content;
+}
+
+hanko-auth::part(headline1),
+hanko-profile::part(headline1) {
+  margin-top: 30px;
+}
+
+hanko-auth::part(divider-line) {
+  display: none;
+}
+
+hanko-auth::part(divider-text) {
+  color: #18181b;
+  padding: 0;
+}
+
+.dark hanko-auth::part(divider-text) {
+  color: rgb(255 255 255 / 90%);
+}
+
+.dark hanko-auth,
+.dark hanko-profile {
+  /* Color Scheme */
+  --color: rgb(255 255 255 / 90%);
+
+  --brand-color-shade-1: rgb(255 255 255 / 5%);
+  --brand-contrast-color: white;
 }

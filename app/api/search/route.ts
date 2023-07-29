@@ -20,12 +20,12 @@ export async function GET(req: Request) {
 
   let results: SearchResult[] = []
 
-  if (!query) {
-    // Return all units for a course
-    results = await getAllSearchResults(courseId)
-  } else {
+  if (query) {
     // Return matching units and courses
     results = await getMatchingSearchResults(query, courseId)
+  } else {
+    // Return all units for a course
+    results = await getAllSearchResults(courseId)
   }
 
   return NextResponse.json(results, {

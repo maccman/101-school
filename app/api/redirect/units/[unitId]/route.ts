@@ -6,7 +6,7 @@ import { getUnit } from '@/server/db/units/getters'
 import { notFound } from '@/server/helpers/error'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 
-export async function GET(req: Request, { params }: { params: { unitId: string } }) {
+export async function GET(request: Request, { params }: { params: { unitId: string } }) {
   const courseUnit = await getUnit(params.unitId)
 
   if (!courseUnit) {
@@ -25,7 +25,10 @@ export async function GET(req: Request, { params }: { params: { unitId: string }
     return notFound()
   }
 
-  const url = getPathForCourseUnit({ course, courseModule, courseUnit })
+  const url = new URL(
+    getPathForCourseUnit({ course, courseModule, courseUnit }),
+    request.url,
+  )
 
   return NextResponse.redirect(url)
 }

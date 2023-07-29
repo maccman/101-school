@@ -86,7 +86,12 @@ export async function searchUnits({
   const records = await db
     .selectFrom('course_module_units')
     .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
-    .where('course_module_units.content', 'like', `%${query}%`)
+    .where((eb) =>
+      eb.or([
+        eb('course_module_units.content', 'like', `%${query}%`),
+        eb('course_module_units.title', 'like', `%${query}%`),
+      ]),
+    )
     .where('course_modules.courseId', '=', courseId)
     .selectAll(['course_module_units'])
     .execute()

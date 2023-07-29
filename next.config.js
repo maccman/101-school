@@ -9,6 +9,16 @@ const nextConfig = {
   },
 
   staticPageGenerationTimeout: 1000,
+
+  redirects: async () => {
+    return [
+      {
+        source: '/account',
+        destination: '/account/courses',
+        permanent: false,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

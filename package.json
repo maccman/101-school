@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier-write": "prettier --write app/ components/ lib/ server/ --ignore-path shiki",
+    "lint-write": "eslint --fix app/ components/ lib/ server/",
     "test": "TZ=UTC vitest",
     "check:types": "tsc --noEmit",
     "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/schema-generated.ts --exclude-pattern spatial_ref_sys --camel-case",

@@ -1,20 +1,25 @@
 'use client'
 
-import Link from 'next/link'
 import React from 'react'
 
 import { cn } from '@/lib/utils'
 import { Course, CourseUnits } from '@/server/db/courses/types'
-import { getPathForCourseUnit } from '@/server/helpers/links'
+import { CourseEnrollment } from '@/server/db/enrollment/types'
 
-import { Button } from '../ui/button'
+import { UnitListItem } from './unit-list-item'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   course: Course
   courseUnits: CourseUnits
+  courseEnrollment: CourseEnrollment | null
 }
 
-const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits, className }) => {
+const CourseSidebar: React.FC<SidebarProps> = ({
+  course,
+  courseUnits,
+  courseEnrollment,
+  className,
+}) => {
   return (
     <div className={cn('py-5 overflow-auto', className)}>
       <h2 className="font-semibold text-xl mb-2 tracking-tight px-5">{course.title}</h2>
@@ -29,29 +34,15 @@ const CourseSidebar: React.FC<SidebarProps> = ({ course, courseUnits, className 
 
               <ul className="space-y-1">
                 {courseModule.units.map((courseUnit) => (
-                  <li key={courseUnit.id}>
-                    <Link
-                      href={getPathForCourseUnit({
-                        course,
-                        courseModule,
-                        courseUnit,
-                      })}
-                    >
-                      <Button
-                        variant={'ghost'}
-                        size={'sm'}
-                        className="w-full justify-start"
-                        asChild
-                      >
-                        <span className="flex space-x-3">
-                          <span className="bg-gray-50 min-w-[5px] px-2 py-1 rounded-md">
-                            {courseModule.number}.{courseUnit.number}
-                          </span>
-                          <span>{courseUnit.title}</span>
-                        </span>
-                      </Button>
-                    </Link>
-                  </li>
+                  <UnitListItem
+                    key={courseUnit.id}
+                    course={course}
+                    courseModule={courseModule}
+                    courseUnit={courseUnit}
+                    completed={
+                      courseEnrollment?.completedUnitIds.includes(courseUnit.id) ?? false
+                    }
+                  />
                 ))}
               </ul>
             </li>

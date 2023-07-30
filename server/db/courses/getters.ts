@@ -1,3 +1,4 @@
+import { CourseModule } from './types'
 import { db } from '../db'
 
 export async function getCourses() {
@@ -39,17 +40,6 @@ export async function getCourse(courseId: string) {
     .executeTakeFirst()
 
   return record ?? null
-}
-
-interface CourseModule {
-  id: string
-  number: number
-  title: string
-  units: {
-    id: string
-    number: number
-    title: string
-  }[]
 }
 
 export async function getCourseUnits(

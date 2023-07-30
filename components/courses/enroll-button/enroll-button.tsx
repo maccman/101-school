@@ -1,4 +1,4 @@
-import { getCourseEnrollment } from '@/server/db/courses/getters'
+import { getCourseEnrollment } from '@/server/db/enrollment/getters'
 
 import { EnrollButtonClient } from './enroll-button-client'
 import { ButtonProps } from '../../ui/button'

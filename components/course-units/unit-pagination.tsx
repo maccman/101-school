@@ -1,11 +1,12 @@
 'use server'
 
-import { CheckCircle } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { getNextUnit, getUnitAndCourse } from '@/server/db/units/getters'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 
+import { CompleteButton } from './complete-button'
 import { Button } from '../ui/button'
 
 export async function UnitPagination({ unitId }: { unitId: string }) {
@@ -23,10 +24,13 @@ export async function UnitPagination({ unitId }: { unitId: string }) {
 
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm my-10 p-5 flex gap-5 items-center">
-      <Button>
-        <CheckCircle className="mr-2 w-4" />
-        Mark as complete
-      </Button>
+      <Suspense>
+        <CompleteButton
+          courseId={courseUnit.courseId}
+          unitId={courseUnit.id}
+          nextUnitId={nextUnit.id}
+        />
+      </Suspense>
 
       <div className="flex-1" />
 

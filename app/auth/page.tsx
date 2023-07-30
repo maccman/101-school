@@ -1,14 +1,22 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 import AccountAuth from '@/components/account-auth'
+import { auth } from '@/server/helpers/auth'
 
 export const metadata: Metadata = {
   title: 'Authentication',
   description: 'Authentication forms built using the components.',
 }
 
-export default function AuthenticationPage() {
+export default async function AuthenticationPage() {
+  const userId = await auth()
+
+  if (userId) {
+    redirect('/account')
+  }
+
   return (
     <>
       <div className="container relative hidden flex-1 flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">

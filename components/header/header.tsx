@@ -4,11 +4,14 @@ import { cn } from '@/lib/utils'
 
 import { Search } from './search'
 import { UserNav } from './user-nav/user-nav'
+import { CourseCommandDialog } from '../courses/command-dialog'
 import { buttonVariants } from '../ui/button'
 
-interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  courseId?: string
+}
 
-export function Header({ className }: HeaderProps) {
+export function Header({ className, courseId }: HeaderProps) {
   return (
     <header
       className={cn(
@@ -43,6 +46,8 @@ export function Header({ className }: HeaderProps) {
 
         <UserNav />
       </div>
+
+      <CourseCommandDialog courseId={courseId} />
     </header>
   )
 }

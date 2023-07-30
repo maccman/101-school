@@ -1,3 +1,5 @@
+import { HeaderLayout } from '@/components/layouts/header-layout'
+
 export default function About() {
-  return <div>TODO</div>
+  return <HeaderLayout>TODO</HeaderLayout>
 }

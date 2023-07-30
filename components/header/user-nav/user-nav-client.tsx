@@ -2,10 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 
-import { notEmpty } from '@/lib/not-empty'
-
-import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
-import { Button } from '../../ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
+import { notEmpty } from '@/lib/not-empty'
 
 interface Props {
   userId: string | null
@@ -25,7 +24,8 @@ interface Props {
 
 export function UserNavClient({ userId, userName, userEmail }: Props) {
   const router = useRouter()
-  const initials = userName ? getInitials(userName) : null
+  const initialsSource = userName || userEmail
+  const initials = initialsSource ? getInitials(initialsSource) : null
 
   return (
     <DropdownMenu>
@@ -93,7 +93,11 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
 }
 
 function getInitials(name: string): string {
-  const [given, family] = name.toUpperCase().split(' ', 2)
+  const initials = name
+    .split(' ')
+    .map((part) => part[0])
+    .filter(notEmpty)
+    .join('')
 
-  return [given?.[0], family?.[0]].filter(notEmpty).join('')
+  return initials
 }

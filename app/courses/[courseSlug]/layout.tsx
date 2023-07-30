@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 
 import ChatSidebar from '@/components/chat-sidebar/chat-sidebar'
 import CourseSidebar from '@/components/course-sidebar/course-sidebar'
-import { CourseCommandDialog } from '@/components/course-units/unit-command-dialog/unit-command-dialog'
+import { HeaderLayout } from '@/components/layouts/header-layout'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
 export async function generateMetadata({
@@ -43,20 +43,20 @@ export default async function CourseShowLayout({
   const courseUnits = await getCourseUnits(course.id)
 
   return (
-    <div className="flex-1 overflow-hidden grid lg:grid-cols-5">
-      <CourseSidebar
-        course={course}
-        courseUnits={courseUnits}
-        className="hidden lg:block"
-      />
+    <HeaderLayout courseId={course.id}>
+      <div className="flex-1 overflow-hidden grid lg:grid-cols-5">
+        <CourseSidebar
+          course={course}
+          courseUnits={courseUnits}
+          className="hidden lg:block"
+        />
 
-      <div className="col-span-2 lg:col-span-3 lg:border-l overflow-auto pb-10">
-        {children}
+        <div className="col-span-2 lg:col-span-3 lg:border-l overflow-auto pb-10">
+          {children}
+        </div>
+
+        <ChatSidebar messages={[]} />
       </div>
-
-      <ChatSidebar messages={[]} />
-
-      <CourseCommandDialog courseId={course.id} />
-    </div>
+    </HeaderLayout>
   )
 }

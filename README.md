@@ -25,7 +25,7 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Course slugs
 - [x] Markdown
 - [x] Search
-- [ ] Chat
+- [ ] Chat. Should transcript follow units?
 - [x] Pagination (next)
 - [ ] Initial design
 - [ ] Dedupe images
@@ -33,8 +33,13 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [ ] Track course progress
 - [ ] Course creation client-side (need a queue - cloudflare?)
 - [ ] Automatic course classification
+- [ ] Mobile
 
 # Future TODO
 
 - [ ] Translation?
 - [ ] Dark mode
+
+# Prompt
+
+- You are a helpful tutor. You give good, accurate, careful responses to student's questions. Think step by step.

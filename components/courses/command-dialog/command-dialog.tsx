@@ -75,7 +75,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
         ? allResults
             .filter((result) => result.title.toLowerCase().includes(lowerQuery))
             .sort(sortSearchResults)
-        : allResults,
+        : [],
     [allResults, lowerQuery],
   )
 
@@ -132,6 +132,21 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
 
         {otherResults.length > 0 && (
           <CommandGroup heading="Other matches">
+            {otherResults.map((result) => (
+              <CommandItem
+                key={result.id}
+                value={`${result.type}-${result.id}`}
+                onSelect={() => onSelectSearchResult(result)}
+              >
+                <Calendar className="mr-2 h-4 w-4" />
+                <span>{result.title}</span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+
+        {!query && (
+          <CommandGroup heading="All results">
             {otherResults.map((result) => (
               <CommandItem
                 key={result.id}

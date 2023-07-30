@@ -1,10 +1,8 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
 
-import { UnitContent } from '@/components/course-units/unit-content'
-import { UnitImage } from '@/components/course-units/unit-image'
-import { UnitPagination } from '@/components/course-units/unit-pagination'
+import { CourseUnit } from '@/components/course-units/course-unit'
+import { auth } from '@/server/helpers/auth'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export async function generateMetadata({
@@ -27,32 +25,26 @@ export async function generateMetadata({
   }
 }
 
-export default async function CoursePage({
+export default async function CourseModuleUnitPage({
   params,
 }: {
   params: { courseSlug: string; moduleSlug: string; unitSlug: string }
 }) {
-  const { course, courseModule, courseUnit } = await getCourseContext(params)
+  const [{ course, courseModule, courseUnit }, userId] = await Promise.all([
+    getCourseContext(params),
+    auth(),
+  ])
 
   if (!course || !courseModule || !courseUnit) {
     return notFound()
   }
 
   return (
-    <div className="px-10 py-5">
-      <h3 className="text-base tracking-tight pb-5 text-accent-foreground">
-        {courseModule.title}
-      </h3>
-
-      {courseUnit.image && (
-        <UnitImage image={courseUnit.image} className="float-right mt-28 ml-5 mb-10" />
-      )}
-
-      {courseUnit.content && <UnitContent content={courseUnit.content} />}
-
-      <Suspense>
-        <UnitPagination unitId={courseUnit.id} />
-      </Suspense>
-    </div>
+    <CourseUnit
+      courseId={course.id}
+      courseModule={courseModule}
+      courseUnit={courseUnit}
+      userId={userId}
+    />
   )
 }

@@ -91,21 +91,10 @@ export async function getFirstCourseUnit(courseId: string) {
   const record = await db
     .selectFrom('courses')
     .where('courses.id', '=', courseId)
-    .leftJoin('course_modules', 'courses.id', 'course_modules.courseId')
-    .leftJoin('course_module_units', 'course_modules.id', 'course_module_units.moduleId')
-    .select([
-      'courses.id as courseId',
-      'courses.title as courseTitle',
-      'courses.description as courseDescription',
-      'course_modules.id as moduleId',
-      'course_modules.number as moduleNumber',
-      'course_modules.title as moduleTitle',
-      'course_module_units.id as unitId',
-      'course_module_units.number as unitNumber',
-      'course_module_units.title as unitTitle',
-      'course_module_units.image as unitImage',
-      'course_module_units.content as unitContent',
-    ])
+    .innerJoin('course_modules', 'courses.id', 'course_modules.courseId')
+    .innerJoin('course_module_units', 'course_modules.id', 'course_module_units.moduleId')
+    .selectAll(['course_module_units'])
+    .select('course_modules.title as moduleTitle')
     .orderBy('course_modules.number', 'asc')
     .orderBy('course_module_units.number', 'asc')
     .executeTakeFirst()

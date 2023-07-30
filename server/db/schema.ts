@@ -102,6 +102,9 @@ export interface User {
   id: Generated<string>
   emails: Generated<string[]>
   lastSignInAt: Timestamp | null
+  name: string | null
+  createdAt: Generated<Timestamp>
+  updatedAt: Generated<Timestamp>
 }
 
 export interface CourseImage {

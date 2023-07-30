@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 import { Search } from './search'
-import { UserNav } from './user-nav'
+import { UserNav } from './user-nav/user-nav'
 import { buttonVariants } from '../ui/button'
 
 interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}

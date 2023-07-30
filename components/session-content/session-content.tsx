@@ -4,7 +4,7 @@ interface Props {
   content: string
 }
 
-const SessionContent: React.FC<Props> = ({content}) => {
+const SessionContent: React.FC<Props> = ({ content }) => {
   return (
     <div className="w-1/2 mx-6 bg-white rounded shadow-lg p-5 overflow-auto">
       {content.split('\n').map((para, i) => (

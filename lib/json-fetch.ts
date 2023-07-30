@@ -10,7 +10,7 @@ interface FetchError {
 
 export async function jsonFetch<R>(
   url: string,
-  {method, data}: FetchOptions = {},
+  { method, data }: FetchOptions = {},
 ): Promise<{
   error: FetchError | undefined
   response: R
@@ -18,7 +18,7 @@ export async function jsonFetch<R>(
   const response = await fetch(url, {
     method,
     headers: {
-      ...(data ? {'Content-Type': 'application/json'} : {}),
+      ...(data ? { 'Content-Type': 'application/json' } : {}),
     },
     body: data ? JSON.stringify(data) : undefined,
   })

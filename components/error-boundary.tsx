@@ -1,7 +1,7 @@
 'use client'
 
-import {ReactElement, ReactNode} from 'react'
-import {ErrorBoundary as ErrorBoundaryBase} from 'react-error-boundary'
+import { ReactElement, ReactNode } from 'react'
+import { ErrorBoundary as ErrorBoundaryBase } from 'react-error-boundary'
 
 export function ErrorBoundary({
   children,

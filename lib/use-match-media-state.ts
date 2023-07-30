@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
 export function useMatchMediaState(match: string): boolean | undefined {
   const [state, setState] = useState<boolean | undefined>(undefined)

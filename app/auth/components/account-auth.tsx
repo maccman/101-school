@@ -1,14 +1,14 @@
 'use client'
 
-import {Hanko, register} from '@teamhanko/hanko-elements'
-import {useRouter} from 'next/navigation'
-import {useCallback, useEffect} from 'react'
+import { Hanko, register } from '@teamhanko/hanko-elements'
+import { useRouter } from 'next/navigation'
+import { useCallback, useEffect } from 'react'
 
-import {assertString} from '@/lib/assert'
+import { assertString } from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
 
-export default function AccountAuth({redirect = ''}: {redirect?: string}) {
+export default function AccountAuth({ redirect = '' }: { redirect?: string }) {
   assertString(hankoApiUrl, 'Hanko API URL is not defined.')
   const router = useRouter()
 

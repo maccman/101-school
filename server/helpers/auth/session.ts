@@ -1,7 +1,7 @@
-import {decode, verify} from 'jsonwebtoken'
+import { decode, verify } from 'jsonwebtoken'
 import jwksRsa from 'jwks-rsa'
 
-import {assertString} from '@/lib/assert'
+import { assertString } from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
 
@@ -20,7 +20,7 @@ interface HankoEmailResponse {
 }
 
 export async function getUserIdFromSessionToken(token: string) {
-  const decodedToken = decode(token, {complete: true})
+  const decodedToken = decode(token, { complete: true })
 
   if (!decodedToken) {
     throw new Error('Invalid token')

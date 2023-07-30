@@ -1,16 +1,8 @@
-import { decode, verify } from 'jsonwebtoken'
-import jwksRsa from 'jwks-rsa'
+import { createRemoteJWKSet, jwtVerify } from 'jose'
 
-import { assertString } from '@/lib/assert'
+import { assertString, assert } from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
-
-const jwksClient = jwksRsa({
-  cache: true,
-  rateLimit: true,
-  jwksRequestsPerMinute: 2,
-  jwksUri: `${hankoApiUrl}/.well-known/jwks.json`,
-})
 
 interface HankoEmailResponse {
   id: string
@@ -19,24 +11,15 @@ interface HankoEmailResponse {
   is_primary: boolean
 }
 
+const JWKS = createRemoteJWKSet(new URL(`${hankoApiUrl}/.well-known/jwks.json`))
+
 export async function getUserIdFromSessionToken(token: string) {
-  const decodedToken = decode(token, { complete: true })
+  const { payload, protectedHeader } = await jwtVerify(token, JWKS)
 
-  if (!decodedToken) {
-    throw new Error('Invalid token')
-  }
+  assert(protectedHeader.alg === 'RS256', 'alg is not RS256')
 
-  const key = await jwksClient.getSigningKey(decodedToken.header.kid)
+  const userId = payload.sub
 
-  if (!key) {
-    throw new Error('Invalid token')
-  }
-
-  verify(token, key.getPublicKey(), {
-    algorithms: ['RS256'],
-  })
-
-  const userId = decodedToken.payload.sub
   assertString(userId, 'userId is not a string')
 
   return userId

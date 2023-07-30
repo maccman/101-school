@@ -1,4 +1,4 @@
-import { Insertable } from 'kysely'
+import { Insertable, sql } from 'kysely'
 
 import { db } from '../db'
 import { CourseModuleUnit, UnitImage } from '../schema'
@@ -32,5 +32,41 @@ export async function setUnitImages(
     .updateTable('course_module_units')
     .set(values)
     .where('id', '=', unitId)
+    .execute()
+}
+
+export async function markUnitAsComplete({
+  userId,
+  courseId,
+  unitId,
+}: {
+  userId: string
+  courseId: string
+  unitId: string
+}) {
+  await db
+    .updateTable('user_courses')
+    .set({ completedUnitIds: sql`'array_append(completed_unit_ids, ${unitId})'` })
+    .where('userId', '=', userId)
+    .where('courseId', '=', courseId)
+    .execute()
+}
+
+export async function markUnitAsIncomplete({
+  userId,
+  courseId,
+  unitId,
+}: {
+  userId: string
+  courseId: string
+  unitId: string
+}) {
+  await db
+    .updateTable('user_courses')
+    .set({
+      completedUnitIds: sql`'array_remove(completed_unit_ids, ${unitId})'`,
+    })
+    .where('userId', '=', userId)
+    .where('courseId', '=', courseId)
     .execute()
 }

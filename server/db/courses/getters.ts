@@ -128,6 +128,7 @@ export async function getCoursesWithImages() {
     .selectFrom('courses')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
     .selectAll(['courses'])
+    .select(['course_images.image as image'])
     .execute()
 
   return records
@@ -142,4 +143,34 @@ export async function searchCourses(query: string) {
     .execute()
 
   return records
+}
+
+export async function getCoursesByUser(userId: string) {
+  const records = await db
+    .selectFrom('courses')
+    .innerJoin('user_courses', 'courses.id', 'user_courses.courseId')
+    .leftJoin('course_images', 'courses.id', 'course_images.courseId')
+    .where('user_courses.userId', '=', userId)
+    .selectAll(['courses'])
+    .select(['course_images.image as image'])
+    .execute()
+
+  return records
+}
+
+export async function getCourseEnrollment({
+  userId,
+  courseId,
+}: {
+  userId: string
+  courseId: string
+}) {
+  const record = await db
+    .selectFrom('user_courses')
+    .selectAll()
+    .where('userId', '=', userId)
+    .where('courseId', '=', courseId)
+    .executeTakeFirst()
+
+  return record ?? null
 }

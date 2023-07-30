@@ -90,9 +90,9 @@ CREATE TABLE user_courses (
   enrolled_at TIMESTAMP NOT NULL DEFAULT NOW(),
 
   -- Create a unique index to ensure a user can enroll in a course only once
-  UNIQUE (user_id, course_id)
+  UNIQUE (user_id, course_id),
 
-  progress JSONB DEFAULT '{}'::JSONB NOT NULL,
+  completed_unit_ids UUID[] DEFAULT '{}'::UUID[] NOT NULL
 );
 
 CREATE INDEX user_courses_user_id_index ON user_courses(user_id);

@@ -1,12 +1,12 @@
 import first from 'lodash/first'
-import {headers} from 'next/headers'
-import {redirect} from 'next/navigation'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-import {getUserById} from '@/server/db/users/getters'
+import { getUserById } from '@/server/db/users/getters'
 
-import {getEmailsFromSessionToken, safeGetUserIdFromSessionToken} from './session'
-import {getToken} from './token'
-import {error} from '../error'
+import { getEmailsFromSessionToken, safeGetUserIdFromSessionToken } from './session'
+import { getToken } from './token'
+import { error } from '../error'
 
 export function auth() {
   const headersList = headers()
@@ -19,6 +19,10 @@ export function auth() {
   return getUserId(authType, token)
 }
 
+export function authRedirect(redirectBack: string = ''): never {
+  redirect(`/auth${redirectBack ? `?redirect=${redirectBack}` : ''}`)
+}
+
 /**
  * Authenticates a user and redirects them to a specified URL if not authenticated.
  * @param {string} redirectBack - The relative path to redirect back to after authentication (optional).
@@ -28,7 +32,7 @@ export async function authOrRedirect(redirectBack: string = ''): Promise<string>
   const userId = await auth()
 
   if (!userId) {
-    redirect(`/auth${redirectBack ? `?redirect=${redirectBack}` : ''}`)
+    authRedirect(redirectBack)
   }
 
   return userId
@@ -74,7 +78,7 @@ export async function getSessionInfoOrRedirect() {
   return sessionInfo
 }
 
-export function withAuth<U extends {userId: string}>(
+export function withAuth<U extends { userId: string }>(
   callback: (request: Request, args: U) => Promise<Response>,
 ) {
   return async (request: Request, args: U) => {
@@ -90,7 +94,7 @@ export function withAuth<U extends {userId: string}>(
       return error('Invalid token', 'invalid_token', 401)
     }
 
-    const argsWithUserId: U = {...args, userId} as U & {userId: string}
+    const argsWithUserId: U = { ...args, userId } as U & { userId: string }
 
     return callback(request, argsWithUserId)
   }

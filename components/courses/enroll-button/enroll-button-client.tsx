@@ -20,6 +20,7 @@ export function EnrollButtonClient({
 
   const handleClick = async () => {
     if (enrolled) {
+      router.push('/account/courses')
       return
     }
 
@@ -29,10 +30,17 @@ export function EnrollButtonClient({
     }
 
     await fetchEnroll(courseId)
+
+    router.refresh()
   }
 
   return (
-    <Button size="lg" onClick={handleClick} {...props}>
+    <Button
+      size="lg"
+      variant={enrolled ? 'secondary' : 'default'}
+      onClick={handleClick}
+      {...props}
+    >
       {enrolled ? 'Enrolled' : 'Enroll in course'}
     </Button>
   )

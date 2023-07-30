@@ -1,7 +1,7 @@
 'use client'
 
 import { debounce } from 'lodash'
-import { Calendar } from 'lucide-react'
+import { Boxes, Group } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -91,9 +91,9 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
 
   const noResults = topResults.length === 0 && otherResults.length === 0
 
-  const onSelectSearchResult = (result: SearchResult) => {
+  const onSelectSearchResult = ({ path }: { path: string }) => {
     setOpen(false)
-    router.push(result.path)
+    router.push(path)
   }
 
   return (
@@ -106,9 +106,16 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
       <CommandList>
         {!query && (
           <CommandGroup heading="Suggestions">
-            <CommandItem value="courses">
-              <Calendar className="mr-2 h-4 w-4" />
-              <span>Courses</span>
+            <CommandItem
+              value="courses"
+              onSelect={() =>
+                onSelectSearchResult({
+                  path: '/courses',
+                })
+              }
+            >
+              <Group className="mr-2 h-4 w-4" />
+              <span>All courses</span>
             </CommandItem>
           </CommandGroup>
         )}
@@ -123,7 +130,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Calendar className="mr-2 h-4 w-4" />
+                <Boxes className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}
@@ -138,22 +145,22 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Calendar className="mr-2 h-4 w-4" />
+                <Boxes className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}
           </CommandGroup>
         )}
 
-        {!query && (
-          <CommandGroup heading="All results">
-            {otherResults.map((result) => (
+        {!query && allResults.length > 0 && (
+          <CommandGroup heading="Units & courses">
+            {allResults.map((result) => (
               <CommandItem
                 key={result.id}
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Calendar className="mr-2 h-4 w-4" />
+                <Boxes className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}

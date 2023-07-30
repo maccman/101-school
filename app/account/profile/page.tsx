@@ -1,7 +1,16 @@
-import AccountProfile from '@/components/account-profile'
 import { Separator } from '@/components/ui/separator'
+import { assert } from '@/lib/assert'
+import { getUserById } from '@/server/db/users/getters'
+import { authOrRedirect } from '@/server/helpers/auth'
 
-export default function Account() {
+import { AccountForm } from './components/account-form'
+import { AccountProfile } from './components/account-profile-dynamic'
+
+export default async function Account() {
+  const userId = await authOrRedirect()
+  const user = await getUserById(userId)
+  assert(user, 'User not found')
+
   return (
     <div className="space-y-6">
       <div>
@@ -12,6 +21,8 @@ export default function Account() {
       </div>
 
       <Separator />
+
+      <AccountForm userName={user.name} />
 
       <AccountProfile />
     </div>

@@ -1,6 +1,9 @@
-import { db } from '../db'
+import { Insertable } from 'kysely'
 
-export const setUser = async ({
+import { db } from '../db'
+import { User } from '../schema'
+
+export async function setUserAuth({
   id,
   emails,
   signInDate,
@@ -8,7 +11,7 @@ export const setUser = async ({
   id: string
   emails: string[]
   signInDate: Date
-}) => {
+}) {
   // Insert or update the user's emails and last sign in time
   await db
     .insertInto('users')
@@ -24,4 +27,12 @@ export const setUser = async ({
       }),
     )
     .execute()
+}
+
+export async function setUser(userId: string, values: Insertable<User>) {
+  await db
+    .updateTable('users')
+    .set(values)
+    .where('id', '=', userId)
+    .executeTakeFirstOrThrow()
 }

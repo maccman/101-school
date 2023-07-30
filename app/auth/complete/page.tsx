@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 
-import { setUser } from '@/server/db/users/setters'
+import { setUserAuth } from '@/server/db/users/setters'
 import { getSessionEmails, authOrRedirect } from '@/server/helpers/auth'
 
 export default async function AuthCompletePage({
@@ -13,7 +13,7 @@ export default async function AuthCompletePage({
   const userId = await authOrRedirect()
   const emails = (await getSessionEmails()) ?? []
 
-  await setUser({
+  await setUserAuth({
     id: userId,
     signInDate: new Date(),
     emails,

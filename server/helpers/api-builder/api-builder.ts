@@ -31,10 +31,10 @@ type ExtendedRequestArgs<T> = T & {
   params?: Record<string, unknown>
 }
 
-export const withApiBuilder = <TRequestParams, TRequestArgs = {}>(
+export function withApiBuilder<TRequestParams, TRequestArgs = {}>(
   schema: z.ZodType,
   next: ApiBuilderHandler<TRequestParams, TRequestArgs>,
-) => {
+) {
   return async (request: Request, pathArgs: ExtendedRequestArgs<TRequestArgs>) => {
     const uri = new URL(request.url)
     const bodyParams = await parseBodyParams(request)

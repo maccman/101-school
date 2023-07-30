@@ -1,8 +1,9 @@
 'use client'
 
+import { User2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -32,8 +33,7 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-7 w-7 rounded-full mx-2">
           <Avatar className="h-7 w-7">
-            <AvatarImage src="/avatars/01.png" alt="@shadcn" />
-            {initials && <AvatarFallback>{initials}</AvatarFallback>}
+            <AvatarFallback>{initials || <User2 className="w-4 h-4" />}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -59,19 +59,12 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
         {userId ? (
           <>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              <DropdownMenuItem onClick={() => router.push('/account/courses')}>
+                Enrolled courses
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                Billing
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/account/profile')}>
                 Settings
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </DropdownMenuItem>
-              <DropdownMenuItem>New Team</DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => router.push('/sign-out')}>
@@ -81,9 +74,11 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
           </>
         ) : (
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              Create a profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <DropdownMenuItem onClick={() => router.push('/auth')}>
+              Sign in
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/auth')}>
+              Register
             </DropdownMenuItem>
           </DropdownMenuGroup>
         )}

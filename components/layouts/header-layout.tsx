@@ -10,7 +10,7 @@ export function HeaderLayout({ children, courseId }: Props) {
     <div className="flex-1 flex flex-col overflow-hidden">
       <Header className="shrink-0" courseId={courseId} />
 
-      <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
+      <div className="flex-1 flex flex-col overflow-auto">{children}</div>
     </div>
   )
 }

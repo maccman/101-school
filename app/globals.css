@@ -19,8 +19,8 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 142 69% 58%;
+    --primary-foreground: 144 61% 20%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -86,8 +86,9 @@ hanko-profile {
   --color-shade-1: #8f9095;
   --color-shade-2: #e5e6ef;
 
-  --brand-color: #ec4899;
-  --brand-color-shade-1: rgb(39 39 42 / 2%);
+  /* Use primary */
+  --brand-color: hsl(142, 69%, 58%);
+  --brand-color-shade-1: rgb(74 222 128 / 80%);
   --brand-contrast-color: #18181b;
 
   --background-color: transparent;
@@ -115,12 +116,12 @@ hanko-profile {
   --container-max-width: 600px;
 
   /* Headline Styles */
-  --headline1-font-size: 16px;
-  --headline1-font-weight: 600;
+  --headline1-font-size: 14px;
+  --headline1-font-weight: 500;
   --headline1-margin: 0 0 0.5rem;
 
   --headline2-font-size: 14px;
-  --headline2-font-weight: 600;
+  --headline2-font-weight: 500;
   --headline2-margin: 1rem 0 0.25rem;
 
   /* Divider Styles */

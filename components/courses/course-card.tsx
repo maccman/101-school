@@ -1,17 +1,17 @@
 import Link from 'next/link'
 
-export function CourseCard({
-  course,
-}: {
+interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   course: {
     slug: string
     title: string
     description: string
     image: { source: string } | null
   }
-}) {
+}
+
+export function CourseCard({ course, ...props }: Props) {
   return (
-    <Link href={`/courses/${course.slug}`}>
+    <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-1">
         <h3 className="text-lg">{course.title}</h3>
         {course.description && <h4 className="text-sm">{course.description}</h4>}

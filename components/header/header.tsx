@@ -1,3 +1,4 @@
+import { Box } from 'lucide-react'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
@@ -20,8 +21,9 @@ export function Header({ className, courseId }: HeaderProps) {
       )}
     >
       <div className="flex items-center">
-        <Link href={'/'}>
-          <span className="flex space-x-3 font-bold text-sm px-3 py-2">101.school</span>
+        <Link href={'/'} className="flex items-center px-3 py-2 group">
+          <Box className="mr-1 h-4 w-4 group-hover:text-green-500 transition-colors duration-100" />
+          <span className="font-bold text-sm">101.school</span>
         </Link>
 
         <div className="flex space-x-2 ml-6">

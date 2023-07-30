@@ -120,6 +120,15 @@ export interface UserCourse {
   completedUnitIds: Generated<string[]>
 }
 
+export interface UnitMessage {
+  id: Generated<string>
+  userId: string
+  unitId: string
+  content: string
+  role: string
+  createdAt: Generated<Timestamp>
+}
+
 export interface DB {
   courses: Course
   course_modules: CourseModule
@@ -128,4 +137,5 @@ export interface DB {
   users: User
   course_images: CourseImage
   user_courses: UserCourse
+  unit_messages: UnitMessage
 }

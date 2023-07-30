@@ -156,3 +156,14 @@ SELECT
     LEAD(course_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_course_id,
 FROM 
     ordered_units
+
+CREATE TABLE unit_messages (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id) NOT NULL,
+  unit_id UUID REFERENCES course_module_units(id) NOT NULL,
+  content TEXT NOT NULL,
+  role TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX unit_messages_unit_id_user_id_index ON unit_messages(unit_id, user_id);

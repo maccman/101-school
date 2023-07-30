@@ -16,7 +16,7 @@ export function CourseCard({ course, ...props }: Props) {
         <h3 className="text-lg">{course.title}</h3>
         {course.description && <h4 className="text-sm">{course.description}</h4>}
         {course.image?.source && (
-          <div className="rounded-md overflow-hidden max-w-[500px]">
+          <div className="rounded-md overflow-hidden max-w-[500px] min-h-[227px]">
             <img
               src={course.image.source}
               alt={course.title}

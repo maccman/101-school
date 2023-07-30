@@ -1,7 +1,7 @@
 'use client'
 
 import { sample } from 'lodash'
-import { CheckCircle, Circle } from 'lucide-react'
+import { CheckCircle, CircleDashed } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
@@ -53,7 +53,7 @@ export function CompleteButtonClient({
     </Button>
   ) : (
     <Button variant={'default'} onClick={handleClick}>
-      <Circle className="mr-2 w-4" />
+      <CircleDashed className="mr-2 w-4" />
       Mark as complete
     </Button>
   )

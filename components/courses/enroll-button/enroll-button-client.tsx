@@ -1,5 +1,6 @@
 'use client'
 
+import { CheckCircle, CircleDashed } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Button, ButtonProps } from '../../ui/button'
@@ -37,10 +38,16 @@ export function EnrollButtonClient({
   return (
     <Button
       size="lg"
-      variant={enrolled ? 'secondary' : 'default'}
+      variant="default"
       onClick={handleClick}
+      disabled={enrolled}
       {...props}
     >
+      {enrolled ? (
+        <CheckCircle className="w-4 h-4 mr-2" />
+      ) : (
+        <CircleDashed className="w-4 h-4 mr-2" />
+      )}
       {enrolled ? 'Enrolled' : 'Enroll in course'}
     </Button>
   )

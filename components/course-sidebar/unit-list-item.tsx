@@ -52,11 +52,11 @@ export function UnitListItem({
 
         <div className="flex-none flex items-center">
           {completed ? (
-            <Tooltip title="Completed unit">
+            <Tooltip title="Complete">
               <CheckCircle className="text-green-500 w-4 h-4" />
             </Tooltip>
           ) : (
-            <Tooltip title="Uncompleted">
+            <Tooltip title="Uncomplete">
               <CircleDashed className="w-4 h-4 text-gray-300" />
             </Tooltip>
           )}

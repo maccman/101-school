@@ -1,6 +1,10 @@
 import { HeaderLayout } from '@/components/layouts/header-layout'
+import { authOrRedirect } from '@/server/helpers/auth'
 
 export default function NewCoursePage() {
+  const userId = authOrRedirect()
+  console.log({ userId })
+
   return (
     <HeaderLayout>
       <div className="p-10">

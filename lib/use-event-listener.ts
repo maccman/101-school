@@ -16,7 +16,7 @@ export function useEventListener<K extends keyof WindowEventMap>(
 
 export function triggerEvent<K extends keyof WindowEventMap>(
   type: K,
-  options?: EventInit,
+  options?: CustomEventInit<WindowEventMap[K]>,
 ) {
-  window.dispatchEvent(new Event(type, options))
+  window.dispatchEvent(new CustomEvent(type, options))
 }

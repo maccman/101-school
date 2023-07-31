@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { getCourseEnrollment } from '@/server/db/enrollment/getters'
-import { markUnitAsComplete } from '@/server/db/enrollment/setters'
+import { enrollInCourse, markUnitAsComplete } from '@/server/db/enrollment/setters'
 import { getUnitAndModule } from '@/server/db/units/getters'
 import { withAuth } from '@/server/helpers/auth'
 import { error } from '@/server/helpers/error'
@@ -16,11 +15,8 @@ async function completeUnit(
     return error('Unit not found')
   }
 
-  const enrollment = await getCourseEnrollment({ userId, courseId: unit.courseId })
-
-  if (!enrollment) {
-    return error('User not enrolled in course')
-  }
+  // Noops if already enrolled
+  await enrollInCourse({ userId, courseId: unit.courseId })
 
   await markUnitAsComplete({ userId, unitId: unit.id, courseId: unit.courseId })
 

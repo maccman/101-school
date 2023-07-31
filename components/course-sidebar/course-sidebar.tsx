@@ -27,12 +27,12 @@ export function CourseSidebar({
   return (
     <div
       className={cn(
-        'py-5 flex-1 flex flex-col space-y-4 relative',
+        'flex-1 flex flex-col space-y-4 relative',
         { 'max-h-[270px] md:max-h-none overflow-hidden md:overflow-visible': collapsed },
         className,
       )}
     >
-      <div className="flex-1 flex flex-col space-y-4 overflow-auto">
+      <div className="flex-1 flex flex-col space-y-4 overflow-auto py-5">
         <h2 className="font-semibold text-xl tracking-tight px-5">{course.title}</h2>
 
         {courseEnrollment && (

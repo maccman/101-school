@@ -28,7 +28,7 @@ export function UnitContent({ content, image }: UnitContentProps) {
                 <h1>{children}</h1>
                 <UnitImage
                   image={image}
-                  className="md:float-right md:mt-2 md:-mr-56 md:ml-5 md:mb-10 my-8"
+                  className="md:float-right md:mt-2 md:-mr-32 md:ml-5 md:mb-10 my-8"
                 />
               </>
             )

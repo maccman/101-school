@@ -11,7 +11,9 @@ interface HankoEmailResponse {
   is_primary: boolean
 }
 
-const JWKS = createRemoteJWKSet(new URL(`${hankoApiUrl}/.well-known/jwks.json`))
+const JWKS = createRemoteJWKSet(new URL(`${hankoApiUrl}/.well-known/jwks.json`), {
+  cooldownDuration: 1000 * 60 * 60 * 24, // 24 hours
+})
 
 export async function getUserIdFromSessionToken(token: string) {
   const { payload, protectedHeader } = await jwtVerify(token, JWKS)

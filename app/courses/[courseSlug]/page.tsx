@@ -9,6 +9,7 @@ import {
 import { getModule } from '@/server/db/modules/getters'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'edge'
 
 export async function generateStaticParams() {
   const courses = await getCourses()

@@ -42,7 +42,9 @@ export function ImageDialog() {
     <Dialog open={!!image} onOpenChange={(open) => !open && setImage(null)}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
-          <DialogTitle>{image?.alt || 'Preview image'}</DialogTitle>
+          <DialogTitle className="text-center">
+            {image?.alt || 'Preview image'}
+          </DialogTitle>
           <DialogDescription className="p-2 flex items-center justify-center">
             {image && (
               <img

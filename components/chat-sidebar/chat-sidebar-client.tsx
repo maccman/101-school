@@ -5,8 +5,9 @@ import React from 'react'
 
 import { cn } from '@/lib/utils'
 
-import { MessageItem } from './message-item'
+import { ChatMessage } from './chat-message'
 import { Message } from './types'
+import { ChatScrollAnchor } from '../chat-scroll-anchor'
 import { Input } from '../ui/input'
 
 interface ChatSidebarProps {
@@ -15,7 +16,7 @@ interface ChatSidebarProps {
 }
 
 export function ChatSidebarClient({ initialMessages, className }: ChatSidebarProps) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
     initialMessages,
   })
 
@@ -25,8 +26,9 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
     <div className={cn('p-5 overflow-hidden flex flex-col space-y-4', className)}>
       <div className="flex-grow overflow-auto px-5 py-5 space-y-3 border rounded">
         {displayableMessages.map((message, i) => (
-          <MessageItem key={i} message={message} />
+          <ChatMessage key={i} message={message} />
         ))}
+        <ChatScrollAnchor trackVisibility={isLoading} />
       </div>
 
       <div className="flex-none">

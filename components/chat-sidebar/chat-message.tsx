@@ -2,10 +2,10 @@ import { GraduationCap, User } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-import { MessageItemContent } from './message-item-content'
+import { ChatMessageContent } from './chat-message-content'
 import { Message } from './types'
 
-export function MessageItem({ message }: { message: Message }) {
+export function ChatMessage({ message }: { message: Message }) {
   const isAssistant = message.role === 'assistant'
 
   return (
@@ -19,7 +19,7 @@ export function MessageItem({ message }: { message: Message }) {
       </div>
 
       <div className="flex-1 bg-indigo-100 text-gray-800 p-2 px-3 rounded-lg relative">
-        <MessageItemContent content={message.content} />
+        <ChatMessageContent content={message.content} />
 
         {isAssistant ? <LeftArrow /> : <RightArrow />}
       </div>

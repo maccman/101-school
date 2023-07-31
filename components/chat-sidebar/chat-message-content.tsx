@@ -4,7 +4,7 @@ import remarkMath from 'remark-math'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/ui/markdown'
 
-export function MessageItemContent({ content }: { content: string }) {
+export function ChatMessageContent({ content }: { content: string }) {
   return (
     <MemoizedReactMarkdown
       className="prose prose-sm break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"

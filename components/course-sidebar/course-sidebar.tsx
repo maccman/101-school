@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, ChevronsDown } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -27,41 +27,44 @@ export function CourseSidebar({
   return (
     <div
       className={cn(
-        'py-5 overflow-auto flex-1 flex flex-col space-y-4 relative',
-        { 'max-h-[270px] md:max-h-none overflow-hidden md:overflow-auto': collapsed },
+        'py-5 flex-1 flex flex-col space-y-4 relative',
+        { 'max-h-[270px] md:max-h-none overflow-hidden md:overflow-visible': collapsed },
         className,
       )}
     >
-      <h2 className="font-semibold text-xl tracking-tight px-5">{course.title}</h2>
+      <div className="flex-1 flex flex-col space-y-4 overflow-auto">
+        <h2 className="font-semibold text-xl tracking-tight px-5">{course.title}</h2>
 
-      {courseEnrollment && (
-        <CourseProgress courseEnrollment={courseEnrollment} className="flex-none" />
-      )}
+        {courseEnrollment && (
+          <CourseProgress courseEnrollment={courseEnrollment} className="flex-none" />
+        )}
 
-      <div className="space-y-2 px-2">
-        {Array.from(courseUnits).map(([moduleId, courseModule]) => (
-          <ul key={moduleId} className="space-y-1">
-            <li key={moduleId}>
-              <span className="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full justify-start">
-                {courseModule.title}
-              </span>
+        <div className="space-y-2 px-2">
+          {Array.from(courseUnits).map(([moduleId, courseModule]) => (
+            <ul key={moduleId} className="space-y-1">
+              <li key={moduleId}>
+                <span className="inline-flex items-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full justify-start">
+                  {courseModule.title}
+                </span>
 
-              <ul className="space-y-1">
-                {courseModule.units.map((courseUnit) => (
-                  <UnitListItem
-                    key={courseUnit.id}
-                    course={course}
-                    courseModule={courseModule}
-                    courseUnit={courseUnit}
-                    completed={
-                      courseEnrollment?.completedUnitIds.includes(courseUnit.id) ?? false
-                    }
-                  />
-                ))}
-              </ul>
-            </li>
-          </ul>
-        ))}
+                <ul className="space-y-1">
+                  {courseModule.units.map((courseUnit) => (
+                    <UnitListItem
+                      key={courseUnit.id}
+                      course={course}
+                      courseModule={courseModule}
+                      courseUnit={courseUnit}
+                      completed={
+                        courseEnrollment?.completedUnitIds.includes(courseUnit.id) ??
+                        false
+                      }
+                    />
+                  ))}
+                </ul>
+              </li>
+            </ul>
+          ))}
+        </div>
       </div>
 
       <div
@@ -71,8 +74,8 @@ export function CourseSidebar({
           className="w-full py-4 px-2 text-sm font-medium items-center justify-center bg-white/20 backdrop-blur-sm flex gap-2"
           onClick={() => setCollapsed(false)}
         >
-          <ChevronDown className="w-4 h-4" />
-          <span>Maximize table of contents</span>
+          <ChevronsDown className="w-4 h-4" />
+          <span>Expand table of contents</span>
         </button>
       </div>
     </div>

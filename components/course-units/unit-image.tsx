@@ -12,6 +12,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function UnitImage({ image, className }: Props) {
+  const description = image.description ? titlize(image.description) : ''
+
   return (
     <div
       className={cn(
@@ -21,7 +23,7 @@ export function UnitImage({ image, className }: Props) {
       onClick={() =>
         previewImage({
           source: image.source,
-          alt: image.description ?? undefined,
+          alt: description,
         })
       }
     >
@@ -33,7 +35,7 @@ export function UnitImage({ image, className }: Props) {
       />
 
       {image.description && (
-        <p className="text-sm text-gray-500 m-1 px-4">{titlize(image.description)}</p>
+        <p className="text-sm text-gray-500 m-1 px-2">{description}</p>
       )}
     </div>
   )

@@ -56,9 +56,7 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
         <Badge
           className="bg-indigo-100 text-indigo-900 hover:bg-indigo-200 cursor-pointer"
           onClick={() =>
-            addUserMessage(
-              'Do you have any further reading on this unit? Output links as markdown.',
-            )
+            addUserMessage('Do you have any further reading based on this unit?')
           }
         >
           Further reading

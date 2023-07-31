@@ -7,7 +7,7 @@ import { MemoizedReactMarkdown } from '@/components/ui/markdown'
 export function ChatMessageContent({ content }: { content: string }) {
   return (
     <MemoizedReactMarkdown
-      className="prose prose-sm break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+      className="prose prose-sm break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 prose-headings:text-sm"
       remarkPlugins={[remarkGfm, remarkMath]}
       components={{
         a({ children, ...props }) {

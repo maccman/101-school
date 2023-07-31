@@ -18,6 +18,7 @@ async function main() {
 
     if (!result.cipCode) {
       console.warn(`No CIP code for course ${course.id}`)
+      continue
     }
 
     console.log(

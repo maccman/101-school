@@ -94,7 +94,10 @@ export async function getFirstCourseUnit(courseId: string) {
     .innerJoin('course_modules', 'courses.id', 'course_modules.courseId')
     .innerJoin('course_module_units', 'course_modules.id', 'course_module_units.moduleId')
     .selectAll(['course_module_units'])
-    .select('course_modules.title as moduleTitle')
+    .select([
+      'course_modules.title as moduleTitle',
+      'course_modules.number as moduleNumber',
+    ])
     .orderBy('course_modules.number', 'asc')
     .orderBy('course_module_units.number', 'asc')
     .executeTakeFirst()

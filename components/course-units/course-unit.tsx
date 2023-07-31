@@ -12,7 +12,10 @@ import { EnrollButton } from '../courses/enroll-button'
 
 interface CourseUnitProps {
   courseId: string
-  courseModule: { title: string }
+  courseModule: {
+    title: string
+    number: number
+  }
   courseUnit: CourseModuleUnit
   userId: string | null
   className?: string
@@ -33,7 +36,7 @@ export function CourseUnit({
             userId={userId}
             courseId={courseId}
             className="absolute right-5 top-5"
-            hideEnrolled={courseUnit.number !== 1}
+            hideEnrolled={!(courseUnit.number === 1 && courseModule.number === 1)}
           />
         </Suspense>
 

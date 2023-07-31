@@ -35,7 +35,7 @@ export function CompleteButtonClient({
     }
 
     toast({
-      title: 'Completed!',
+      title: 'Unit completed',
       description: sample(encouragingMessages),
     })
 

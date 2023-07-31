@@ -2,8 +2,6 @@
 
 import { cn } from '@/lib/utils'
 
-import { previewImage } from '../image-dialog'
-
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   image: {
     source: string
@@ -17,15 +15,10 @@ export function UnitImage({ image, className }: Props) {
   return (
     <div
       className={cn(
-        'rounded-md overflow-hidden sm:max-w-[200px] lg:max-w-[450px] border',
+        'rounded-md overflow-hidden sm:max-w-[200px] lg:max-w-[450px] border cursor-pointer',
         className,
       )}
-      onClick={() =>
-        previewImage({
-          source: image.source,
-          alt: description,
-        })
-      }
+      onClick={() => window.open(image.source, '_blank', 'noopener noreferrer')}
     >
       <img
         src={image.source}

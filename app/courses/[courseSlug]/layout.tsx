@@ -4,7 +4,6 @@ import { ReactNode, Suspense } from 'react'
 
 import { CourseSidebar } from '@/components/course-sidebar'
 import CourseSidebarWithEnrollment from '@/components/course-sidebar/course-sidebar-with-enrollment'
-import { ImageDialog } from '@/components/image-dialog'
 import { HeaderLayout } from '@/components/layouts/header-layout'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 
@@ -65,8 +64,6 @@ export default async function CourseShowLayout({
 
         <div className="md:flex-1 md:border-l flex">{children}</div>
       </div>
-
-      <ImageDialog />
     </HeaderLayout>
   )
 }

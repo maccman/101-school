@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster'
 
 export const metadata = {
   title: '101.school',
-  description: 'Create custom courses and teach yourself anything.',
+  description: 'Teach yourself anything.',
 }
 
 export const runtime = 'edge'

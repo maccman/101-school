@@ -47,10 +47,10 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
         <Badge
           className="bg-indigo-100 text-indigo-900 hover:bg-indigo-200 cursor-pointer"
           onClick={() =>
-            addUserMessage("I'm stuck on a part of this unit. Can you help?")
+            addUserMessage('Give me a practical exercise based on this unit.')
           }
         >
-          I&apos;m stuck!
+          Practical exercise
         </Badge>
 
         <Badge

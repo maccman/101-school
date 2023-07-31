@@ -43,7 +43,7 @@ export function ImageDialog() {
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{image?.alt || 'Preview image'}</DialogTitle>
-          <DialogDescription className="p-2">
+          <DialogDescription className="p-2 flex items-center justify-center">
             {image && (
               <img
                 src={image.source}

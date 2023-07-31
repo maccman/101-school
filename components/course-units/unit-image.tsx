@@ -15,7 +15,7 @@ export function UnitImage({ image, className }: Props) {
   return (
     <div
       className={cn(
-        'rounded-md overflow-hidden sm:max-w-[200px] lg:max-w-[450px] border cursor-pointer',
+        'rounded-md overflow-hidden flex flex-col items-center justify-center sm:max-w-[200px] lg:max-w-[450px] border cursor-pointer',
         className,
       )}
       onClick={() => window.open(image.source, '_blank', 'noopener noreferrer')}

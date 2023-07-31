@@ -8,7 +8,8 @@ export default function About() {
         <p>101.school is an experiment in creating AI generated course contents.</p>
 
         <p>
-          You enter a subject you&apos;re curious about and we generate a 13 week course.
+          You enter something you&apos;re curious about and we generate a 13 week course
+          on the subject.
         </p>
 
         <p>

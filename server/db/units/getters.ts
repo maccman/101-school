@@ -109,9 +109,14 @@ export async function getNextUnit(unitId: string) {
   // Find either the unit with the next number or the next module
   const nextUnit = await db
     .selectFrom('course_module_units_next')
-    .where('id', '=', unitId)
-    .where('courseId', '=', currentUnit.courseId)
-    .selectAll()
+    .where('course_module_units_next.id', '=', unitId)
+    .where('course_module_units_next.courseId', '=', currentUnit.courseId)
+    .innerJoin(
+      'course_module_units',
+      'course_module_units_next.nextId',
+      'course_module_units.id',
+    )
+    .selectAll(['course_module_units'])
     .executeTakeFirst()
 
   return nextUnit ?? null

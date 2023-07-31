@@ -31,7 +31,7 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-7 w-7 rounded-full mx-2">
+        <Button variant="ghost" className="relative h-7 w-7 rounded-full mx-2 text-3xs">
           <Avatar className="h-7 w-7">
             <AvatarFallback>{initials || <User2 className="w-4 h-4" />}</AvatarFallback>
           </Avatar>

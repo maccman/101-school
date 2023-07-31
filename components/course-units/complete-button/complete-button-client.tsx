@@ -12,7 +12,6 @@ interface CompleteButtonProps {
   unitId: string
   isCompleted: boolean
   isAuthenticated: boolean
-  nextUnitId: string
 }
 
 const encouragingMessages = [
@@ -27,7 +26,6 @@ export function CompleteButtonClient({
   unitId,
   isCompleted,
   isAuthenticated,
-  nextUnitId,
 }: CompleteButtonProps) {
   const router = useRouter()
 
@@ -42,8 +40,8 @@ export function CompleteButtonClient({
     })
 
     await fetchComplete({ unitId })
-
-    router.push(`/api/redirect/units/${nextUnitId}`)
+    router.refresh()
+    router.push(`/api/redirect/units/${unitId}/next`)
   }
 
   return isCompleted ? (

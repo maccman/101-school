@@ -54,7 +54,7 @@ export default async function CourseShowLayout({
           course={course}
           courseUnits={courseUnits}
           courseEnrollment={courseEnrollment}
-          className="lg:max-w-[400px]"
+          className="lg:w-1/4 lg:min-w-[300px] lg:max-w-[400px] flex-none"
         />
 
         <div className="lg:flex-1 lg:border-l flex">{children}</div>

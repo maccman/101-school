@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils'
 import { CourseModuleUnit } from '@/server/db/units/types'
 
 import { UnitContent } from './unit-content'
+import { UnitFooter } from './unit-footer'
 import { UnitImage } from './unit-image'
-import { UnitPagination } from './unit-pagination'
 import { ChatSidebar } from '../chat-sidebar'
 import { ChatSidebarNoAuth } from '../chat-sidebar/chat-sidebar-no-auth'
 import { EnrollButton } from '../courses/enroll-button'
@@ -47,12 +47,10 @@ export function CourseUnit({
 
         {courseUnit.content && <UnitContent content={courseUnit.content} />}
 
-        <Suspense>
-          <UnitPagination unitId={courseUnit.id} />
-        </Suspense>
+        <UnitFooter courseId={courseId} unitId={courseUnit.id} />
       </div>
 
-      <div className="border-l border-accent-border flex-none w-[370px] flex-col hidden sm:flex">
+      <div className="border-l border-accent-border flex-none w-1/3 min-w-[370px] flex-col hidden sm:flex">
         {userId ? (
           <Suspense>
             <ChatSidebar unitId={courseUnit.id} userId={userId} className="flex-1" />

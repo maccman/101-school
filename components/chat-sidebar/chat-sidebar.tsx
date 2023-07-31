@@ -1,4 +1,5 @@
 import { Message } from 'ai'
+import sample from 'lodash/sample'
 import { notFound } from 'next/navigation'
 
 import { getUnitMessages } from '@/server/db/messages/getters'
@@ -45,6 +46,15 @@ async function getInitialMessages({
   ]
 }
 
+const assistantOpenerOptions = [
+  'Howdy, any questions I can help with?',
+  'Hey there, any questions I can help with?',
+  'Hi, any questions for me?',
+  'My dude, any questions for me?',
+  'Buenos dias, any questions for me?',
+  'Good morning my good sir, any questions for me?',
+]
+
 function getSystemMessages(unitContent: string): Message[] {
   return [
     {
@@ -56,6 +66,11 @@ function getSystemMessages(unitContent: string): Message[] {
       id: 'system-2',
       content: `Here's some useful context as to what the student is working on:\n ${unitContent}`,
       role: 'system',
+    },
+    {
+      id: 'assistant-1',
+      content: sample(assistantOpenerOptions)!,
+      role: 'assistant',
     },
   ]
 }

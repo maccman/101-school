@@ -10,9 +10,7 @@ const openai = new OpenAIApi(config)
 
 export const runtime = 'edge'
 
-async function createChat(req: Request, { userId }: { userId: string }) {
-  console.log('createChat', { userId })
-
+async function createChat(req: Request) {
   const { messages } = await req.json()
   const response = await openai.createChatCompletion({
     model: 'gpt-4',

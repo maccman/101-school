@@ -16,7 +16,7 @@ export async function markUnitAsComplete({
     .set({ completedUnitIds: sql`array_append(completed_unit_ids, ${unitId})` })
     .where('userId', '=', userId)
     .where('courseId', '=', courseId)
-    .execute()
+    .executeTakeFirstOrThrow()
 }
 
 export async function markUnitAsIncomplete({
@@ -35,5 +35,5 @@ export async function markUnitAsIncomplete({
     })
     .where('userId', '=', userId)
     .where('courseId', '=', courseId)
-    .execute()
+    .executeTakeFirstOrThrow()
 }

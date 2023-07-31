@@ -22,7 +22,7 @@ export function Header({ className, courseId }: HeaderProps) {
     >
       <div className="flex items-center">
         <Link href={'/'} className="flex items-center px-3 py-2 group">
-          <Box className="mr-1 h-4 w-4 group-hover:text-green-500 transition-colors duration-100" />
+          <Box className="mr-2 h-4 w-4 group-hover:text-green-500 transition-colors duration-100" />
           <span className="font-bold text-sm">101.school</span>
         </Link>
 

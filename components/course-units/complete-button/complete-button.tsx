@@ -6,14 +6,9 @@ import { CompleteButtonClient } from './complete-button-client'
 interface CompleteButtonProps {
   courseId: string
   unitId: string
-  nextUnitId: string
 }
 
-export async function CompleteButton({
-  courseId,
-  unitId,
-  nextUnitId,
-}: CompleteButtonProps) {
+export async function CompleteButton({ courseId, unitId }: CompleteButtonProps) {
   const userId = await auth()
   const enrollment = userId ? await getCourseEnrollment({ userId, courseId }) : null
   const isCompleted = enrollment?.completedUnitIds?.includes(unitId) ?? false
@@ -21,7 +16,6 @@ export async function CompleteButton({
   return (
     <CompleteButtonClient
       unitId={unitId}
-      nextUnitId={nextUnitId}
       isCompleted={isCompleted}
       isAuthenticated={!!userId}
     />

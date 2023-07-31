@@ -55,11 +55,13 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+
       keyframes: {
         'accordion-down': {
           from: { height: 0 },
@@ -70,9 +72,19 @@ module.exports = {
           to: { height: 0 },
         },
       },
+
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+
+      fontSize: {
+        // 10px
+        '3xs': '0.625rem',
+        // 13px
+        '2xs': '0.8125rem',
+        // 15px
+        '2sm': '0.9375rem',
       },
     },
   },

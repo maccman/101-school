@@ -47,7 +47,6 @@ export function EnrollButtonClient({
 
   return (
     <Button
-      size="lg"
       variant="default"
       onClick={handleClick}
       disabled={enrolled || pending}

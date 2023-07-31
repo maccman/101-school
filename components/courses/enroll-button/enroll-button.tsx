@@ -1,10 +1,10 @@
 import { getCourseEnrollment } from '@/server/db/enrollment/getters'
+import { auth } from '@/server/helpers/auth'
 
 import { EnrollButtonClient } from './enroll-button-client'
 import { ButtonProps } from '../../ui/button'
 
 interface EnrollButtonProps extends ButtonProps {
-  userId: string | null
   courseId: string
   hideEnrolled?: boolean
 }
@@ -12,9 +12,9 @@ interface EnrollButtonProps extends ButtonProps {
 export async function EnrollButton({
   courseId,
   hideEnrolled,
-  userId,
   ...props
 }: EnrollButtonProps) {
+  const userId = await auth()
   const courseEnrollment = userId ? await getCourseEnrollment({ userId, courseId }) : null
 
   if (hideEnrolled && courseEnrollment) {

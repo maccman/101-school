@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
-import { auth } from '@/server/helpers/auth'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export async function generateMetadata({
@@ -30,10 +29,7 @@ export default async function CourseModuleUnitPage({
 }: {
   params: { courseSlug: string; moduleSlug: string; unitSlug: string }
 }) {
-  const [{ course, courseModule, courseUnit }, userId] = await Promise.all([
-    getCourseContext(params),
-    auth(),
-  ])
+  const { course, courseModule, courseUnit } = await getCourseContext(params)
 
   if (!course || !courseModule || !courseUnit) {
     return notFound()
@@ -44,7 +40,6 @@ export default async function CourseModuleUnitPage({
       courseId={course.id}
       courseModule={courseModule}
       courseUnit={courseUnit}
-      userId={userId}
     />
   )
 }

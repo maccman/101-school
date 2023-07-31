@@ -1,5 +1,6 @@
 import { Box } from 'lucide-react'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -54,7 +55,9 @@ export function Header({ className, courseId }: HeaderProps) {
           Generate a course with AI...
         </Link>
 
-        <UserNav />
+        <Suspense fallback={<div className="h-7 w-7 rounded-full bg-muted" />}>
+          <UserNav />
+        </Suspense>
       </div>
 
       <CourseCommandDialog courseId={courseId} />

@@ -1,6 +1,8 @@
 import { HeaderLayout } from '@/components/layouts/header-layout'
 import { authOrRedirect } from '@/server/helpers/auth'
 
+export const dynamic = 'force-dynamic'
+
 export default function NewCoursePage() {
   const userId = authOrRedirect()
   console.log({ userId })

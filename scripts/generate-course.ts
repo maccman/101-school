@@ -4,8 +4,10 @@ import { retry } from 'ts-retry'
 import { assert, assertString } from '@/lib/assert'
 import { prompt } from '@/lib/readline'
 import { slugify } from '@/lib/slugify'
-import { getCourseBySlug } from '@/server/db/courses/getters'
+import { getCourse } from '@/server/db/courses/getters'
+import { createCourse, updateCourse } from '@/server/db/courses/setters'
 import { getModuleByNumber } from '@/server/db/modules/getters'
+import { setModule } from '@/server/db/modules/setters'
 import {
   Course,
   CourseModule,
@@ -13,16 +15,59 @@ import {
   CourseParsedUnit,
 } from '@/server/db/schema'
 import { setUnit, updateUnit } from '@/server/db/units/setters'
+import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'
+import { generateModule } from '@/server/helpers/ai/prompts/generate-module'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
+import { parseCourse } from '@/server/helpers/ai/prompts/parse-course'
+import { parseCourseCip } from '@/server/helpers/ai/prompts/parse-course-cip'
 import { pickImageForWikpediaUrls } from '@/server/lib/wikipedia'
 
 async function main() {
   const title = await prompt('Course title: ')
 
-  const course = await getCourseBySlug(slugify(title))
-  assert(course)
+  console.log('Generating course...')
 
+  const content = await generateCourse(title)
+
+  const courseId = await createCourse({
+    title,
+    slug: slugify(title),
+    description: `A course about ${title}`,
+    content,
+  })
+
+  console.log('Parsing course...')
+  const parsedContent = await parseCourse(content)
+
+  let parsedCip: any = {
+    cipCode: null,
+    cipTitle: null,
+  }
+
+  try {
+    parsedCip = await parseCourseCip(
+      parsedContent.headline || parsedContent.outline || title,
+    )
+  } catch (error) {
+    console.error(error)
+  }
+
+  await updateCourse(courseId, {
+    parsedContent,
+    cipCode: parsedCip.cipCode || null,
+    cipTitle: parsedCip.cipTitle || null,
+  })
+
+  const course = await getCourse(courseId)
+  assert(course, 'Course not found')
+
+  console.log('Generating modules...')
+  await Promise.all(
+    course.parsedContent.modules.map((mod) => generateAndSaveModule(mod, course)),
+  )
+
+  console.log('Generating units...')
   await Promise.all(
     course.parsedContent.modules.map((mod) => generateAndSaveUnits(mod, course)),
   )
@@ -92,6 +137,31 @@ async function generateAndSaveUnit(
       await updateUnit(unitId, {
         wikipediaUrls,
         image,
+      })
+    },
+    { maxTry: 3, delay: 1000, onError: console.error },
+  )
+}
+
+async function generateAndSaveModule(
+  parsedModule: CourseParsedModule,
+  course: Selectable<Course>,
+) {
+  console.log(`Generating module ${parsedModule.week}...`)
+
+  await retry(
+    async () => {
+      const moduleBody = await generateModule({
+        courseDescription: course.description,
+        courseBody: course.content,
+        moduleNumber: parsedModule.week,
+      })
+
+      await setModule({
+        courseId: course.id,
+        title: parsedModule.title,
+        content: moduleBody,
+        number: parsedModule.week,
       })
     },
     { maxTry: 3, delay: 1000, onError: console.error },

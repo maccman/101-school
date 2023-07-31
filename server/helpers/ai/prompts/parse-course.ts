@@ -8,7 +8,7 @@ import { ChatMessage } from '@/server/lib/open-ai/types'
 const schema = z.object({
   outline: z.string().describe('The course outline and objectives'),
   targeting: z.string().describe('The target audience'),
-  headline: z.string().describe('A short description of the course'),
+  headline: z.string().describe('A short one-liner description of the course'),
   modules: z.array(
     z.object({
       week: z.number().describe("The section's week number"),

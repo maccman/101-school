@@ -1,4 +1,4 @@
-import { Insertable } from 'kysely'
+import { Insertable, Updateable } from 'kysely'
 
 import { db } from '../db'
 import { CourseModuleUnit, UnitImage } from '../schema'
@@ -18,6 +18,17 @@ export async function setUnit(values: Insertable<CourseModuleUnit>) {
     .insertInto('course_module_units')
     .values(values)
     .onConflict((oc) => oc.columns(['moduleId', 'number']).doUpdateSet(values))
+    .returning('id')
+    .executeTakeFirstOrThrow()
+
+  return id
+}
+
+export async function updateUnit(unitId: string, values: Updateable<CourseModuleUnit>) {
+  const { id } = await db
+    .updateTable('course_module_units')
+    .set(values)
+    .where('id', '=', unitId)
     .returning('id')
     .executeTakeFirstOrThrow()
 

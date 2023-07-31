@@ -8,7 +8,7 @@ import { CoursesSkeletonGrid } from './components/courses-skeleton-grid'
 export default async function CoursesPage() {
   return (
     <HeaderLayout>
-      <div className="p-5">
+      <div className="p-5 flex-1 overflow-auto">
         <h1 className="text-lg font-semibold mb-3">
           What would you like to teach yourself?
         </h1>

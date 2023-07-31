@@ -17,7 +17,7 @@ export function CourseProgress({ courseEnrollment, ...props }: CourseProgressPro
   const progress = Math.round((completedCount / totalCount) * 100)
 
   return (
-    <div className="space-y-1 px-5">
+    <div className="space-y-2 px-5">
       <h4 className="text-2xs font-medium">Your progress</h4>
       <Progress value={progress} {...props} />
     </div>

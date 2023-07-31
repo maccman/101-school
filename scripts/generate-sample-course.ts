@@ -21,7 +21,7 @@ async function main() {
   console.log('Parsing course...')
   const parsedContent = await parseCourse(content)
 
-  const parsedCip = await parseCourseCip(
+  const parsedCip = await safeParseCouseCip(
     parsedContent.headline || parsedContent.outline || title,
   )
 
@@ -32,6 +32,18 @@ async function main() {
   })
 
   console.log('Done!')
+}
+
+function safeParseCouseCip(headline: string) {
+  try {
+    return parseCourseCip(headline)
+  } catch (error) {
+    console.error(error)
+    return {
+      cipCode: null,
+      cipTitle: null,
+    }
+  }
 }
 
 main()

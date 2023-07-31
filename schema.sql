@@ -42,6 +42,9 @@ CREATE TABLE courses (
 
   parsed_content JSONB,
 
+  cip_code TEXT,
+  cip_title TEXT,
+
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -49,6 +52,7 @@ CREATE TABLE courses (
 -- Index title/desc so we can search it
 CREATE INDEX courses_title_index ON courses USING GIN (to_tsvector('english', title));
 CREATE INDEX courses_description_index ON courses USING GIN (to_tsvector('english', description));
+CREATE INDEX courses_cip_title_index ON courses (cip_title);
 
 CREATE TABLE course_modules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

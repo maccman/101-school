@@ -1,26 +1,32 @@
 import { z } from 'zod'
 
-import { assert } from '@/lib/assert'
+import { assertString } from '@/lib/assert'
 import { fetchCompletion } from '@/server/lib/open-ai'
 import { buildChatFunction, parseChatFunctionArgs } from '@/server/lib/open-ai/functions'
 import { ChatMessage } from '@/server/lib/open-ai/types'
 
 const schema = z.object({
-  cipCode: z.string().describe("The course's CIP code"),
-  cipTitle: z.string().describe("The course's CIP title"),
+  cip_code: z.string().describe("The course's CIP code"),
+  cip_title: z.string().describe("The course's CIP title"),
 })
 
-type Parsed = z.infer<typeof schema>
-
-export async function parseCourseCipCode(courseBody: string): Promise<Parsed> {
+export async function parseCourseCip(description: string) {
   const result = await fetchCompletion({
-    messages: getChatMessages(courseBody),
+    messages: getChatMessages(description),
     functions: getChatFunctions(),
   })
 
-  assert(result.function_call, 'No function call found')
+  // Sometimes GPT-4 just returns the result as a string
+  const resultJson = result.function_call?.arguments || result.content
 
-  return parseChatFunctionArgs(result.function_call.arguments, schema)
+  assertString(resultJson, 'Expected result to be a string')
+
+  const resultParsed = parseChatFunctionArgs(resultJson, schema)
+
+  return {
+    cipCode: resultParsed.cip_code,
+    cipTitle: resultParsed.cip_title,
+  }
 }
 
 function getChatMessages(description: string): ChatMessage[] {
@@ -32,7 +38,7 @@ function getChatMessages(description: string): ChatMessage[] {
     {
       role: 'user',
       content: `
-      What is the Classification of Instructional Programs (CIP) of the university course described below?
+      Parse the Classification of Instructional Programs (CIP) of the university course described below. If you don't know make your best guess.
     
       ${description}
   `.trim(),
@@ -44,7 +50,7 @@ function getChatFunctions() {
   return [
     buildChatFunction({
       name: 'onResult',
-      description: 'The function to call when the result is ready',
+      description: 'The function to call with the result',
       schema,
     }),
   ]

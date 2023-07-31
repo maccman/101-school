@@ -3,6 +3,7 @@ import { slugify } from '@/lib/slugify'
 import { createCourse, updateCourse } from '@/server/db/courses/setters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'
 import { parseCourse } from '@/server/helpers/ai/prompts/parse-course'
+import { parseCourseCip } from '@/server/helpers/ai/prompts/parse-course-cip'
 
 async function main() {
   console.log('Generating course...')
@@ -20,7 +21,15 @@ async function main() {
   console.log('Parsing course...')
   const parsedContent = await parseCourse(content)
 
-  await updateCourse(courseId, { parsedContent })
+  const parsedCip = await parseCourseCip(
+    parsedContent.headline || parsedContent.outline || title,
+  )
+
+  await updateCourse(courseId, {
+    parsedContent,
+    cipCode: parsedCip.cipCode || null,
+    cipTitle: parsedCip.cipTitle || null,
+  })
 
   console.log('Done!')
 }

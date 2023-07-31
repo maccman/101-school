@@ -9,6 +9,7 @@ export interface UnitImage {
 
 export interface CourseParsedContent {
   outline: string
+  headline: string
   targeting: string
   modules: CourseParsedModule[]
   recommendedReading: CourseParsedRecommendedReading[]
@@ -61,6 +62,8 @@ export interface Course {
   description: string
   content: string
   parsedContent: Generated<CourseParsedContent>
+  cipCode: string | null
+  cipTitle: string | null
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }

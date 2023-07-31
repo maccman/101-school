@@ -8,6 +8,9 @@ export const metadata = {
   description: 'Learn anything with 101 school',
 }
 
+export const runtime = 'edge'
+export const preferredRegion = 'iad1'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

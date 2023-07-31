@@ -2,6 +2,9 @@
 
 import { CheckCircle, CircleDashed } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+
+import { cn } from '@/lib/utils'
 
 import { Button, ButtonProps } from '../../ui/button'
 
@@ -18,8 +21,13 @@ export function EnrollButtonClient({
   ...props
 }: EnrollButtonProps) {
   const router = useRouter()
+  const [pending, setPending] = useState(false)
 
   const handleClick = async () => {
+    if (pending) {
+      return
+    }
+
     if (enrolled) {
       router.push('/account/courses')
       return
@@ -29,6 +37,8 @@ export function EnrollButtonClient({
       router.push('/auth')
       return
     }
+
+    setPending(true)
 
     await fetchEnroll(courseId)
 
@@ -40,13 +50,13 @@ export function EnrollButtonClient({
       size="lg"
       variant="default"
       onClick={handleClick}
-      disabled={enrolled}
+      disabled={enrolled || pending}
       {...props}
     >
       {enrolled ? (
         <CheckCircle className="w-4 h-4 mr-2" />
       ) : (
-        <CircleDashed className="w-4 h-4 mr-2" />
+        <CircleDashed className={cn('w-4 h-4 mr-2', { 'animate-spin': pending })} />
       )}
       {enrolled ? 'Enrolled' : 'Enroll in course'}
     </Button>

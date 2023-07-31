@@ -6,7 +6,7 @@ import { getAllUnits } from '@/server/db/units/getters'
 import { getCourseContext } from '@/server/helpers/params-getters'
 import { getSlug } from '@/server/helpers/slug'
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,

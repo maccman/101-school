@@ -19,6 +19,7 @@ export function UnitImage({ image, className }: Props) {
         src={image.source}
         alt={image.description || ''}
         className="h-auto w-auto object-cover transition-all aspect-video"
+        loading="lazy"
       />
 
       {image.description && (

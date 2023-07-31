@@ -1,9 +1,8 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-import ChatSidebar from '@/components/chat-sidebar/chat-sidebar'
-import CourseSidebar from '@/components/course-sidebar/course-sidebar'
+import { CourseSidebar } from '@/components/course-sidebar'
 import { HeaderLayout } from '@/components/layouts/header-layout'
 import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
 import { getCourseEnrollment } from '@/server/db/enrollment/getters'
@@ -50,19 +49,15 @@ export default async function CourseShowLayout({
 
   return (
     <HeaderLayout courseId={course.id}>
-      <div className="flex-1 overflow-hidden grid lg:grid-cols-5">
+      <div className="flex-1 overflow-hidden lg:flex">
         <CourseSidebar
           course={course}
           courseUnits={courseUnits}
           courseEnrollment={courseEnrollment}
-          className="hidden lg:block"
+          className="lg:max-w-[400px]"
         />
 
-        <div className="col-span-2 lg:col-span-3 lg:border-l overflow-auto pb-10">
-          {children}
-        </div>
-
-        <ChatSidebar messages={[]} />
+        <div className="lg:flex-1 lg:border-l flex">{children}</div>
       </div>
     </HeaderLayout>
   )

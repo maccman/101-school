@@ -1,18 +1,18 @@
 'use client'
 
 import { debounce } from 'lodash'
-import { Boxes, Group } from 'lucide-react'
+import { Box, Boxes } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { SearchResult } from '@/app/types'
 import {
-  CommandDialog as UiCommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
+  CommandDialog as UiCommandDialog,
 } from '@/components/ui/command'
 import { useEventListener } from '@/lib/use-event-listener'
 import { useKeyboardShortcut } from '@/lib/use-keyboard-shortcut'
@@ -114,7 +114,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 })
               }
             >
-              <Group className="mr-2 h-4 w-4" />
+              <Boxes className="mr-2 h-4 w-4" />
               <span>All courses</span>
             </CommandItem>
           </CommandGroup>
@@ -130,7 +130,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Boxes className="mr-2 h-4 w-4" />
+                <Box className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}
@@ -145,7 +145,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Boxes className="mr-2 h-4 w-4" />
+                <Box className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}
@@ -160,7 +160,7 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
                 value={`${result.type}-${result.id}`}
                 onSelect={() => onSelectSearchResult(result)}
               >
-                <Boxes className="mr-2 h-4 w-4" />
+                <Box className="mr-2 h-4 w-4" />
                 <span>{result.title}</span>
               </CommandItem>
             ))}

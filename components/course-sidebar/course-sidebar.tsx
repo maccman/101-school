@@ -14,14 +14,14 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   courseEnrollment: CourseEnrollment | null
 }
 
-const CourseSidebar: React.FC<SidebarProps> = ({
+export function CourseSidebar({
   course,
   courseUnits,
   courseEnrollment,
   className,
-}) => {
+}: SidebarProps) {
   return (
-    <div className={cn('py-5 overflow-auto', className)}>
+    <div className={cn('py-5 overflow-auto flex-1 flex flex-col', className)}>
       <h2 className="font-semibold text-xl mb-2 tracking-tight px-5">{course.title}</h2>
 
       <div className="my-4 space-y-2 px-2">
@@ -52,5 +52,3 @@ const CourseSidebar: React.FC<SidebarProps> = ({
     </div>
   )
 }
-
-export default CourseSidebar

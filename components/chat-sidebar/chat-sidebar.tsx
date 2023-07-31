@@ -1,48 +1,61 @@
-// ChatWidget.tsx
-import React from 'react'
+import { Message } from 'ai'
+import { notFound } from 'next/navigation'
 
-interface Message {
-  sender: string
-  text: string
+import { getUnitMessages } from '@/server/db/messages/getters'
+import { getUnit } from '@/server/db/units/getters'
+
+import { ChatSidebarClient } from './chat-sidebar-client'
+import { unitMessageToChatMessage } from './utils'
+
+interface ChatSidebarProps {
+  userId: string
+  unitId: string
+  className?: string
+}
+export async function ChatSidebar({ userId, unitId, className }: ChatSidebarProps) {
+  const unit = await getUnit(unitId)
+
+  if (!unit) {
+    notFound()
+  }
+
+  const initialMessages = await getInitialMessages({
+    userId,
+    unitId,
+    unitContent: unit.content,
+  })
+
+  return <ChatSidebarClient initialMessages={initialMessages} className={className} />
 }
 
-interface Props {
-  messages: Message[]
+async function getInitialMessages({
+  userId,
+  unitId,
+  unitContent,
+}: {
+  userId: string
+  unitId: string
+  unitContent: string
+}): Promise<Message[]> {
+  const unitMessages = await getUnitMessages({ userId, unitId })
+
+  return [
+    ...getSystemMessages(unitContent),
+    ...unitMessages.map(unitMessageToChatMessage),
+  ]
 }
 
-const ChatSidebar: React.FC<Props> = ({ messages }) => {
-  return (
-    <div className="p-5 overflow-hidden border-l flex flex-col">
-      <h2 className="font-semibold text-xl mb-4 flex-none">Chat</h2>
-      <div className="flex-grow overflow-auto p-3 space-y-4 mb-4 border rounded">
-        {messages.map((message, i) => (
-          <div key={i} className={message.sender === 'Bot' ? 'text-right' : ''}>
-            <div
-              className={`font-bold mb-1 ${
-                message.sender === 'Bot' ? 'text-blue-500' : ''
-              }`}
-            >
-              {message.sender}
-            </div>
-            <div
-              className={`bg-${
-                message.sender === 'Bot' ? 'blue-200' : 'gray-200'
-              } rounded-lg py-2 px-3 inline-block text-sm text-gray-700`}
-            >
-              {message.text}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="chat-input flex-none">
-        <input
-          className="w-full rounded border p-2"
-          type="text"
-          placeholder="Type your message..."
-        />
-      </div>
-    </div>
-  )
+function getSystemMessages(unitContent: string): Message[] {
+  return [
+    {
+      id: 'system-1',
+      content: `You are a helpful tutor. You give good, accurate, careful responses to student's questions. Think step by step.`,
+      role: 'system',
+    },
+    {
+      id: 'system-2',
+      content: `Here's some useful context as to what the student is working on:\n ${unitContent}`,
+      role: 'system',
+    },
+  ]
 }
-
-export default ChatSidebar

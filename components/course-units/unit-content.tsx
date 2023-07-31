@@ -4,12 +4,38 @@ import remarkMath from 'remark-math'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/ui/markdown'
 
-export function UnitContent({ content }: { content: string }) {
+import { UnitImage } from './unit-image'
+
+interface UnitContentProps {
+  content: string
+  image: {
+    source: string
+    description: string | null
+  } | null
+}
+
+export function UnitContent({ content, image }: UnitContentProps) {
   return (
     <MemoizedReactMarkdown
       className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
       remarkPlugins={[remarkGfm, remarkMath]}
+      includeElementIndex={true}
       components={{
+        h1({ index, children }) {
+          if (index === 0 && image) {
+            return (
+              <>
+                <h1>{children}</h1>
+                <UnitImage
+                  image={image}
+                  className="md:float-right md:mt-2 md:-mr-56 md:ml-5 md:mb-10 my-8"
+                />
+              </>
+            )
+          } else {
+            return <h1>{children}</h1>
+          }
+        },
         p({ children }) {
           return <p className="mb-2 last:mb-0">{children}</p>
         },

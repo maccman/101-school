@@ -23,7 +23,7 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
 
   return (
     <div className={cn('p-5 overflow-hidden flex flex-col space-y-4', className)}>
-      <div className="flex-grow overflow-auto p-3 space-y-2 border rounded">
+      <div className="flex-grow overflow-auto px-5 py-5 space-y-3 border rounded">
         {displayableMessages.map((message, i) => (
           <MessageItem key={i} message={message} />
         ))}

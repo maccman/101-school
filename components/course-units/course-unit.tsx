@@ -5,7 +5,6 @@ import { CourseModuleUnit } from '@/server/db/units/types'
 
 import { UnitContent } from './unit-content'
 import { UnitFooter } from './unit-footer'
-import { UnitImage } from './unit-image'
 import { ChatSidebar } from '../chat-sidebar'
 import { EnrollButton } from '../courses/enroll-button'
 
@@ -40,14 +39,9 @@ export function CourseUnit({
           {courseModule.title}
         </h3>
 
-        {courseUnit.image && (
-          <UnitImage
-            image={courseUnit.image}
-            className="md:float-right md:mt-28 md:ml-5 md:mb-10 my-8"
-          />
+        {courseUnit.content && (
+          <UnitContent content={courseUnit.content} image={courseUnit.image} />
         )}
-
-        {courseUnit.content && <UnitContent content={courseUnit.content} />}
 
         <UnitFooter courseId={courseId} unitId={courseUnit.id} />
       </div>

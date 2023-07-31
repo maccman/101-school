@@ -9,8 +9,8 @@ export function MessageItem({ message }: { message: Message }) {
   const isAssistant = message.role === 'assistant'
 
   return (
-    <div className={cn('flex gap-2', isAssistant ? 'flex-row' : 'flex-row-reverse')}>
-      <div className="flex-none flex flex-col items-center space-y-1 p-2">
+    <div className={cn('flex gap-4', isAssistant ? 'flex-row' : 'flex-row-reverse')}>
+      <div className="flex-none flex flex-col items-center pt-2">
         {isAssistant ? (
           <GraduationCap className="w-6 h-6 text-indigo-900" />
         ) : (

@@ -4,8 +4,6 @@ import { getFirstCourseUnit } from '@/server/db/courses/getters'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
-export const runtime = 'edge'
-
 export default async function CourseModulePage({
   params,
 }: {

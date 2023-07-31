@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 
+// Force every page to be served from the edge
+export const runtime = 'edge'
+
 export const metadata = {
   title: '101.school',
   description: 'Learn anything with 101 school',

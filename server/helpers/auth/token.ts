@@ -54,4 +54,6 @@ function getTokenFromCookie(
   return ['session', token]
 }
 
-const decodeBase64 = (value: string) => Buffer.from(value, 'base64').toString('ascii')
+function decodeBase64(value: string) {
+  return Buffer.from(value, 'base64').toString('ascii')
+}

@@ -3,8 +3,10 @@
 import { sample } from 'lodash'
 import { CheckCircle, CircleDashed } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 import { toast } from '../../ui/use-toast'
 
@@ -28,11 +30,18 @@ export function CompleteButtonClient({
   isAuthenticated,
 }: CompleteButtonProps) {
   const router = useRouter()
+  const [pending, setPending] = useState(false)
 
   async function handleClick() {
     if (!isAuthenticated) {
       return router.push('/auth')
     }
+
+    if (pending) {
+      return
+    }
+
+    setPending(true)
 
     toast({
       title: 'Unit completed',
@@ -50,8 +59,8 @@ export function CompleteButtonClient({
       Completed
     </Button>
   ) : (
-    <Button variant={'default'} onClick={handleClick}>
-      <CircleDashed className="mr-2 w-4" />
+    <Button variant={'default'} onClick={handleClick} disabled={pending}>
+      <CircleDashed className={cn('mr-2 w-4', pending && 'animate-slow-spin')} />
       Mark as complete
     </Button>
   )

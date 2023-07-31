@@ -1,10 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { CourseCard } from '@/components/courses/course-card'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils'
 import { CourseWithImage } from '@/server/db/courses/types'
 
 export function CourseItem({ course }: { course: CourseWithImage }) {
@@ -26,9 +28,12 @@ export function CourseItem({ course }: { course: CourseWithImage }) {
       <CourseCard key={course.slug} course={course} />
 
       <div className="space-y-5">
-        <Button size="lg" variant="secondary">
+        <Link
+          href={`/api/redirect/courses/${course.id}`}
+          className={cn(buttonVariants({ variant: 'secondary' }))}
+        >
           View course
-        </Button>
+        </Link>
 
         <Button size="lg" variant="destructive" onClick={() => handleUnEnroll()}>
           Un-enroll

@@ -10,6 +10,13 @@ export function ChatMessageContent({ content }: { content: string }) {
       className="prose prose-sm break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
       remarkPlugins={[remarkGfm, remarkMath]}
       components={{
+        a({ children, ...props }) {
+          return (
+            <a target="_blank" rel="noopener noreferrer" {...props}>
+              {children}
+            </a>
+          )
+        },
         p({ children }) {
           return <p className="mb-2 last:mb-0">{children}</p>
         },

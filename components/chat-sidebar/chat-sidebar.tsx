@@ -65,7 +65,7 @@ function getSystemMessages(unitContent: string): Message[] {
   return [
     {
       id: 'system-1',
-      content: `You are a helpful tutor. You give good, accurate, careful responses to student's questions. Think step by step.`,
+      content: `You are a helpful tutor. You give good, accurate, careful responses to student's questions. Think step by step. Output text as markdown.`,
       role: 'system',
     },
     {

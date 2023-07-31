@@ -2,7 +2,9 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
+import { getAllUnits } from '@/server/db/units/getters'
 import { getCourseContext } from '@/server/helpers/params-getters'
+import { getSlug } from '@/server/helpers/slug'
 
 export async function generateMetadata({
   params,
@@ -22,6 +24,18 @@ export async function generateMetadata({
     title: `${courseModule.title} / ${courseUnit.title}`,
     description: course.description,
   }
+}
+
+export async function generateStaticParams() {
+  const units = await getAllUnits()
+
+  return units.map((unit) => ({
+    params: {
+      courseSlug: unit.courseSlug,
+      moduleSlug: getSlug({ title: unit.moduleTitle, number: unit.moduleNumber }),
+      unitSlug: getSlug(unit),
+    },
+  }))
 }
 
 export default async function CourseModuleUnitPage({

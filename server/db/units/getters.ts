@@ -132,3 +132,20 @@ export async function getUnitCountForCourse(courseId: string) {
 
   return record?.count ?? 0
 }
+
+export async function getAllUnits() {
+  const records = await db
+    .selectFrom('course_module_units')
+    .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
+    .innerJoin('courses', 'course_modules.courseId', 'courses.id')
+    .selectAll(['course_module_units'])
+    .select([
+      'courses.id as courseId',
+      'courses.slug as courseSlug',
+      'course_modules.number as moduleNumber',
+      'course_modules.title as moduleTitle',
+    ])
+    .execute()
+
+  return records
+}

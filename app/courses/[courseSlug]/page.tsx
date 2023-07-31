@@ -1,8 +1,22 @@
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
-import { getCourseBySlug, getFirstCourseUnit } from '@/server/db/courses/getters'
+import {
+  getCourseBySlug,
+  getCourses,
+  getFirstCourseUnit,
+} from '@/server/db/courses/getters'
 import { getModule } from '@/server/db/modules/getters'
+
+export async function generateStaticParams() {
+  const courses = await getCourses()
+
+  return courses.map((course) => ({
+    params: {
+      courseSlug: course.slug,
+    },
+  }))
+}
 
 export default async function CoursePage({ params }: { params: { courseSlug: string } }) {
   const course = await getCourseBySlug(params.courseSlug)

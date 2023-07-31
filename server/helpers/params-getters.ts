@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import { getNumberFromSlug } from './slug'
 import { getCourseBySlug } from '../db/courses/getters'
 import { getModuleByNumber } from '../db/modules/getters'
@@ -5,7 +7,7 @@ import { CourseModule } from '../db/modules/types'
 import { getUnitByNumber } from '../db/units/getters'
 import { CourseModuleUnit } from '../db/units/types'
 
-export async function getCourseContext(params: {
+async function getUncachedCourseContext(params: {
   courseSlug: string
   moduleSlug?: string
   unitSlug?: string
@@ -46,3 +48,5 @@ export async function getCourseContext(params: {
     courseUnit,
   }
 }
+
+export const getCourseContext = cache(getUncachedCourseContext)

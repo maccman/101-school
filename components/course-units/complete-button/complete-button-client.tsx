@@ -60,7 +60,7 @@ export function CompleteButtonClient({
     </Button>
   ) : (
     <Button variant={'default'} onClick={handleClick} disabled={pending}>
-      <CircleDashed className={cn('mr-2 w-4', pending && 'animate-slow-spin')} />
+      <CircleDashed className={cn('mr-2 w-4', { 'animate-spin': pending })} />
       Mark as complete
     </Button>
   )

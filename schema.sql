@@ -58,7 +58,7 @@ CREATE TABLE course_modules (
 
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  course_id UUID REFERENCES courses(id) NOT NULL,
+  course_id UUID REFERENCES courses(id) NOT NULL ON DELETE CASCADE,
   
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -72,7 +72,7 @@ CREATE TABLE course_module_units (
   number INT NOT NULL,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  module_id UUID REFERENCES course_modules(id) NOT NULL,
+  module_id UUID REFERENCES course_modules(id) NOT NULL ON DELETE CASCADE,
 
   wikipedia_urls TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,
 
@@ -89,8 +89,8 @@ CREATE INDEX course_module_units_content_index ON course_module_units USING GIN 
 
 CREATE TABLE course_enrollments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES users(id) NOT NULL,
-  course_id UUID REFERENCES courses(id) NOT NULL,
+  user_id UUID REFERENCES users(id) NOT NULL ON DELETE CASCADE,
+  course_id UUID REFERENCES courses(id) NOT NULL ON DELETE CASCADE,
 
   enrolled_at TIMESTAMP NOT NULL DEFAULT NOW(),
 

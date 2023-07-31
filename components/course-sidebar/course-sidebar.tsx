@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react'
+import { ChevronDown } from 'lucide-react'
+import React, { useState } from 'react'
 
 import { cn } from '@/lib/utils'
 import { Course, CourseUnits } from '@/server/db/courses/types'
@@ -21,8 +22,16 @@ export function CourseSidebar({
   courseEnrollment,
   className,
 }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(true)
+
   return (
-    <div className={cn('py-5 overflow-auto flex-1 flex flex-col space-y-4', className)}>
+    <div
+      className={cn(
+        'py-5 overflow-auto flex-1 flex flex-col space-y-4 relative',
+        { 'max-h-[270px] md:max-h-none overflow-hidden md:overflow-auto': collapsed },
+        className,
+      )}
+    >
       <h2 className="font-semibold text-xl tracking-tight px-5">{course.title}</h2>
 
       {courseEnrollment && (
@@ -53,6 +62,18 @@ export function CourseSidebar({
             </li>
           </ul>
         ))}
+      </div>
+
+      <div
+        className={cn('absolute inset-x-0 bottom-0 md:hidden', { hidden: !collapsed })}
+      >
+        <button
+          className="w-full py-4 px-2 text-sm font-medium items-center justify-center bg-white/20 backdrop-blur-sm flex gap-2"
+          onClick={() => setCollapsed(false)}
+        >
+          <ChevronDown className="w-4 h-4" />
+          <span>Maximize table of contents</span>
+        </button>
       </div>
     </div>
   )

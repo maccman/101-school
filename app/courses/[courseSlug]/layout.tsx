@@ -49,15 +49,15 @@ export default async function CourseShowLayout({
 
   return (
     <HeaderLayout courseId={course.id}>
-      <div className="flex-1 overflow-hidden lg:flex">
+      <div className="md:flex-1 md:overflow-hidden md:flex">
         <CourseSidebar
           course={course}
           courseUnits={courseUnits}
           courseEnrollment={courseEnrollment}
-          className="lg:w-1/4 lg:min-w-[300px] lg:max-w-[400px] flex-none"
+          className="md:w-1/4 md:min-w-[300px] md:max-w-[400px] md:flex-none"
         />
 
-        <div className="lg:flex-1 lg:border-l flex">{children}</div>
+        <div className="md:flex-1 md:border-l flex">{children}</div>
       </div>
     </HeaderLayout>
   )

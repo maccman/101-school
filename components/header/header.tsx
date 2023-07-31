@@ -3,7 +3,8 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 
-import { Search } from './search'
+import { SearchButton } from './search-button'
+import { SearchInput } from './search-input'
 import { UserNav } from './user-nav/user-nav'
 import { CourseCommandDialog } from '../courses/command-dialog'
 import { buttonVariants } from '../ui/button'
@@ -16,7 +17,7 @@ export function Header({ className, courseId }: HeaderProps) {
   return (
     <header
       className={cn(
-        'border-b px-2 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl grid grid-cols-3',
+        'border-b px-2 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl flex',
         className,
       )}
     >
@@ -34,15 +35,22 @@ export function Header({ className, courseId }: HeaderProps) {
           <Link href="/about" className={cn(buttonVariants({ variant: 'ghost' }))}>
             About
           </Link>
+
+          <SearchButton className="md:hidden" />
         </div>
       </div>
 
-      <div className="flex items-center justify-center">
-        <Search />
+      <div className="items-center justify-center hidden md:flex flex-1">
+        <SearchInput />
       </div>
 
+      <div className="flex-1 md:hidden" />
+
       <div className="flex space-x-5 items-center px-2 justify-end">
-        <Link href="/courses/new" className={cn(buttonVariants({ variant: 'ghost' }))}>
+        <Link
+          href="/courses/new"
+          className={cn(buttonVariants({ variant: 'ghost' }), 'hidden md:inline-flex')}
+        >
           Generate a course with AI...
         </Link>
 

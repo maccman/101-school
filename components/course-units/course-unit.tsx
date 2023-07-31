@@ -30,12 +30,12 @@ export function CourseUnit({
 }: CourseUnitProps) {
   return (
     <div className={cn('flex-1 flex', className)}>
-      <div className="px-10 py-5 relative flex-1 overflow-auto">
+      <div className="px-5 md:px-10 py-5 relative flex-1 overflow-auto">
         <Suspense>
           <EnrollButton
             userId={userId}
             courseId={courseId}
-            className="absolute right-5 top-5"
+            className="absolute right-5 top-5 md:right-10"
             hideEnrolled={!(courseUnit.number === 1 && courseModule.number === 1)}
           />
         </Suspense>
@@ -45,7 +45,10 @@ export function CourseUnit({
         </h3>
 
         {courseUnit.image && (
-          <UnitImage image={courseUnit.image} className="float-right mt-28 ml-5 mb-10" />
+          <UnitImage
+            image={courseUnit.image}
+            className="md:float-right md:mt-28 md:ml-5 md:mb-10 my-8"
+          />
         )}
 
         {courseUnit.content && <UnitContent content={courseUnit.content} />}
@@ -53,7 +56,7 @@ export function CourseUnit({
         <UnitFooter courseId={courseId} unitId={courseUnit.id} />
       </div>
 
-      <div className="border-l border-accent-border flex-none w-1/3 min-w-[370px] max-w-[600px] flex-col hidden sm:flex">
+      <div className="border-l border-accent-border flex-none w-1/3 max-w-[600px] flex-col hidden md:flex">
         {userId ? (
           <Suspense>
             <ChatSidebar unitId={courseUnit.id} userId={userId} className="flex-1" />

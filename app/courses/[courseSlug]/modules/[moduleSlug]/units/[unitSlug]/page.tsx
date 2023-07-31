@@ -18,7 +18,7 @@ export async function generateMetadata({
   if (!course || !courseModule || !courseUnit) {
     return {
       title: '101.school',
-      description: 'Learn anything',
+      description: 'Teach yourself anything',
     }
   }
 

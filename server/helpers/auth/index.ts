@@ -1,14 +1,12 @@
-import first from 'lodash/first'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-
-import { getUserById } from '@/server/db/users/getters'
+import { cache } from 'react'
 
 import { getEmailsFromSessionToken, safeGetUserIdFromSessionToken } from './session'
 import { getToken } from './token'
 import { error } from '../error'
 
-export function auth() {
+export function uncachedAuth() {
   const headersList = headers()
   const [authType, token] = getToken(headersList)
 
@@ -18,6 +16,8 @@ export function auth() {
 
   return getUserId(authType, token)
 }
+
+export const auth = cache(uncachedAuth)
 
 export function authRedirect(redirectBack: string = ''): never {
   redirect(`/auth${redirectBack ? `?redirect=${redirectBack}` : ''}`)
@@ -51,31 +51,6 @@ export async function getSessionEmails(): Promise<string[] | null> {
   }
 
   return getEmailsFromSessionToken(token)
-}
-
-export async function getSessionInfo() {
-  const userId = await auth()
-
-  if (!userId) {
-    return null
-  }
-
-  const user = await getUserById(userId)
-
-  return {
-    userId: userId,
-    userEmail: first(user?.emails) ?? null,
-  }
-}
-
-export async function getSessionInfoOrRedirect() {
-  const sessionInfo = await getSessionInfo()
-
-  if (!sessionInfo) {
-    redirect('/auth')
-  }
-
-  return sessionInfo
 }
 
 export function withAuth<U extends { userId: string }>(

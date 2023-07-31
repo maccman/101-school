@@ -13,13 +13,13 @@ import { UnitListItem } from './unit-list-item'
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   course: Course
   courseUnits: CourseUnits
-  courseEnrollment: CourseEnrollment | null
+  courseEnrollment?: CourseEnrollment | null
 }
 
 export function CourseSidebar({
   course,
   courseUnits,
-  courseEnrollment,
+  courseEnrollment = null,
   className,
 }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(true)

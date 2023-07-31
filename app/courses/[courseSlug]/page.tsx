@@ -8,6 +8,8 @@ import {
 } from '@/server/db/courses/getters'
 import { getModule } from '@/server/db/modules/getters'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateStaticParams() {
   const courses = await getCourses()
 

@@ -14,7 +14,7 @@ export async function UnitPagination({ unitId }: { unitId: string }) {
     return null
   }
 
-  const nextUnitAndCourse = await getUnitAndCourse(nextUnit.nextId)
+  const nextUnitAndCourse = await getUnitAndCourse(nextUnit.id)
 
   if (!nextUnitAndCourse) {
     return null
@@ -28,11 +28,11 @@ export async function UnitPagination({ unitId }: { unitId: string }) {
           number: nextUnitAndCourse.moduleNumber,
           title: nextUnitAndCourse.moduleTitle,
         },
-        courseUnit: { number: nextUnitAndCourse.number, title: nextUnitAndCourse.title },
+        courseUnit: nextUnit,
       })}
     >
       <Button variant="ghost" asChild>
-        <span>Skip to: {nextUnit.nextTitle}</span>
+        <span>Skip to: {nextUnit.title}</span>
       </Button>
     </Link>
   )

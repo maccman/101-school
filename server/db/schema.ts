@@ -112,12 +112,13 @@ export interface CourseImage {
   image: UnitImage
 }
 
-export interface UserCourse {
+export interface CourseEnrollment {
   id: Generated<string>
   userId: string
   courseId: string
   enrolledAt: Generated<Timestamp>
   completedUnitIds: Generated<string[]>
+  unitCount: number
 }
 
 export interface UnitMessage {
@@ -136,6 +137,6 @@ export interface DB {
   course_module_units_next: CourseModuleUnitNext
   users: User
   course_images: CourseImage
-  user_courses: UserCourse
+  course_enrollments: CourseEnrollment
   unit_messages: UnitMessage
 }

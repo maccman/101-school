@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { enrollInCourse } from '@/server/db/courses/setters'
+import { enrollInCourse } from '@/server/db/enrollment/setters'
 import { withAuth } from '@/server/helpers/auth'
 
 async function coursesEnroll(

@@ -87,7 +87,7 @@ CREATE TABLE course_module_units (
 -- Index content so we can search it
 CREATE INDEX course_module_units_content_index ON course_module_units USING GIN (to_tsvector('english', content));
 
-CREATE TABLE user_courses (
+CREATE TABLE course_enrollments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES users(id) NOT NULL,
   course_id UUID REFERENCES courses(id) NOT NULL,
@@ -97,11 +97,13 @@ CREATE TABLE user_courses (
   -- Create a unique index to ensure a user can enroll in a course only once
   UNIQUE (user_id, course_id),
 
-  completed_unit_ids UUID[] DEFAULT '{}'::UUID[] NOT NULL
+  completed_unit_ids UUID[] DEFAULT '{}'::UUID[] NOT NULL,
+
+  unit_count INT NOT NULL
 );
 
-CREATE INDEX user_courses_user_id_index ON user_courses(user_id);
-CREATE INDEX user_courses_course_id_index ON user_courses(course_id);
+CREATE INDEX course_enrollments_user_id_index ON course_enrollments(user_id);
+CREATE INDEX course_enrollments_course_id_index ON course_enrollments(course_id);
 
 -- Trigger to update updated_at column
 CREATE OR REPLACE FUNCTION touch_updated_at()   

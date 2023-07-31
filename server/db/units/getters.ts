@@ -121,3 +121,14 @@ export async function getNextUnit(unitId: string) {
 
   return nextUnit ?? null
 }
+
+export async function getUnitCountForCourse(courseId: string) {
+  const record = await db
+    .selectFrom('course_module_units')
+    .innerJoin('course_modules', 'course_module_units.moduleId', 'course_modules.id')
+    .where('course_modules.courseId', '=', courseId)
+    .select((eb) => eb.fn.count<number>('course_module_units.id').as('count'))
+    .executeTakeFirst()
+
+  return record?.count ?? 0
+}

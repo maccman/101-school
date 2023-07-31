@@ -8,7 +8,7 @@ export async function getCourseEnrollment({
   courseId: string
 }) {
   const record = await db
-    .selectFrom('user_courses')
+    .selectFrom('course_enrollments')
     .selectAll()
     .where('userId', '=', userId)
     .where('courseId', '=', courseId)

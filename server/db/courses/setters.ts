@@ -16,31 +16,3 @@ export async function createCourse(values: Insertable<Course>) {
 export async function updateCourse(id: string, values: Updateable<Course>) {
   await db.updateTable('courses').set(values).where('id', '=', id).execute()
 }
-
-export async function enrollInCourse({
-  userId,
-  courseId,
-}: {
-  userId: string
-  courseId: string
-}) {
-  await db
-    .insertInto('user_courses')
-    .values({ userId, courseId })
-    .onConflict((oc) => oc.doNothing())
-    .execute()
-}
-
-export async function unenrollFromCourse({
-  userId,
-  courseId,
-}: {
-  userId: string
-  courseId: string
-}) {
-  await db
-    .deleteFrom('user_courses')
-    .where('userId', '=', userId)
-    .where('courseId', '=', courseId)
-    .execute()
-}

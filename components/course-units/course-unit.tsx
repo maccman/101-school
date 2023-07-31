@@ -50,7 +50,7 @@ export function CourseUnit({
         <UnitFooter courseId={courseId} unitId={courseUnit.id} />
       </div>
 
-      <div className="border-l border-accent-border flex-none w-1/3 min-w-[370px] flex-col hidden sm:flex">
+      <div className="border-l border-accent-border flex-none w-1/3 min-w-[370px] max-w-[600px] flex-col hidden sm:flex">
         {userId ? (
           <Suspense>
             <ChatSidebar unitId={courseUnit.id} userId={userId} className="flex-1" />

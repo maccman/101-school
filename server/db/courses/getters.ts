@@ -127,9 +127,9 @@ export async function searchCourses(query: string) {
 export async function getCoursesByUser(userId: string) {
   const records = await db
     .selectFrom('courses')
-    .innerJoin('user_courses', 'courses.id', 'user_courses.courseId')
+    .innerJoin('course_enrollments', 'courses.id', 'course_enrollments.courseId')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
-    .where('user_courses.userId', '=', userId)
+    .where('course_enrollments.userId', '=', userId)
     .selectAll(['courses'])
     .select(['course_images.image as image'])
     .execute()

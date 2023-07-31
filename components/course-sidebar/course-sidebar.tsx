@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { Course, CourseUnits } from '@/server/db/courses/types'
 import { CourseEnrollment } from '@/server/db/enrollment/types'
 
+import { CourseProgress } from './course-progress'
 import { UnitListItem } from './unit-list-item'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,10 +22,14 @@ export function CourseSidebar({
   className,
 }: SidebarProps) {
   return (
-    <div className={cn('py-5 overflow-auto flex-1 flex flex-col', className)}>
-      <h2 className="font-semibold text-xl mb-2 tracking-tight px-5">{course.title}</h2>
+    <div className={cn('py-5 overflow-auto flex-1 flex flex-col space-y-4', className)}>
+      <h2 className="font-semibold text-xl tracking-tight px-5">{course.title}</h2>
 
-      <div className="my-4 space-y-2 px-2">
+      {courseEnrollment && (
+        <CourseProgress courseEnrollment={courseEnrollment} className="flex-none" />
+      )}
+
+      <div className="space-y-2 px-2">
         {Array.from(courseUnits).map(([moduleId, courseModule]) => (
           <ul key={moduleId} className="space-y-1">
             <li key={moduleId}>

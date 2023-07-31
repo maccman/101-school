@@ -1,7 +1,6 @@
-import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
-import { getUnitsByModule } from '@/server/db/units/getters'
+import { getFirstCourseUnit } from '@/server/db/courses/getters'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
@@ -13,31 +12,20 @@ export default async function CourseModulePage({
   const { course, courseModule } = await getCourseContext(params)
 
   if (!course || !courseModule) {
-    return notFound()
+    notFound()
   }
 
-  const courseUnits = await getUnitsByModule(courseModule.id)
+  const courseUnit = await getFirstCourseUnit(course.id)
 
-  return (
-    <div>
-      <p>{courseModule.title}</p>
+  if (!courseUnit) {
+    notFound()
+  }
 
-      <ul>
-        {courseUnits.map((courseUnit) => (
-          <li key={courseUnit.id}>
-            <Link
-              href={getPathForCourseUnit({
-                course,
-                courseModule,
-                courseUnit,
-              })}
-              className="font-medium text-base mt-2"
-            >
-              {courseModule.number}.{courseUnit.number} {courseUnit.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+  const path = getPathForCourseUnit({
+    course,
+    courseModule,
+    courseUnit,
+  })
+
+  redirect(path)
 }

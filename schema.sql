@@ -45,6 +45,8 @@ CREATE TABLE courses (
   cip_code TEXT,
   cip_title TEXT,
 
+  generated_at TIMESTAMP,
+
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

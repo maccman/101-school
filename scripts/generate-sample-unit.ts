@@ -1,7 +1,6 @@
 import { Selectable } from 'kysely'
-import { retry } from 'ts-retry'
 
-import { assert, assertString } from '@/lib/assert'
+import { assert } from '@/lib/assert'
 import { prompt } from '@/lib/readline'
 import { slugify } from '@/lib/slugify'
 import { getCourseBySlug } from '@/server/db/courses/getters'
@@ -12,7 +11,7 @@ import {
   CourseParsedModule,
   CourseParsedUnit,
 } from '@/server/db/schema'
-import { setUnit, updateUnit } from '@/server/db/units/setters'
+import { setUnit } from '@/server/db/units/setters'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
 import { pickImageForWikpediaUrls } from '@/server/lib/wikipedia'
@@ -52,48 +51,24 @@ async function generateAndSaveUnit(
 ) {
   console.log(`Generating unit ${parsedUnit.number}...`)
 
-  let unitId: string | null = null
-  let unitContent: string | null = null
+  const unitContent = await generateUnit({
+    courseDescription: course.description,
+    courseBody: course.content,
+    moduleBody: module.content,
+    moduleNumber: courseModule.week,
+    unitNumber: parsedUnit.number,
+  })
 
-  await retry(
-    async () => {
-      unitContent = await generateUnit({
-        courseDescription: course.description,
-        courseBody: course.content,
-        moduleBody: module.content,
-        moduleNumber: courseModule.week,
-        unitNumber: parsedUnit.number,
-      })
+  const wikipediaUrls = await generateWikipediaUrls(unitContent)
 
-      unitId = await setUnit({
-        moduleId: module.id,
-        number: parsedUnit.number,
-        title: parsedUnit.title,
-        content: unitContent,
-      })
-    },
-    { maxTry: 3, delay: 1000, onError: console.error },
-  )
+  const image = await pickImageForWikpediaUrls(wikipediaUrls)
 
-  if (!unitId || !unitContent) {
-    console.error('Failed to generate unit')
-    return
-  }
-
-  await retry(
-    async () => {
-      assertString(unitId)
-      assertString(unitContent)
-
-      const wikipediaUrls = await generateWikipediaUrls(unitContent)
-
-      const image = await pickImageForWikpediaUrls(wikipediaUrls)
-
-      await updateUnit(unitId, {
-        wikipediaUrls,
-        image,
-      })
-    },
-    { maxTry: 3, delay: 1000, onError: console.error },
-  )
+  await setUnit({
+    moduleId: module.id,
+    number: parsedUnit.number,
+    title: parsedUnit.title,
+    content: unitContent,
+    wikipediaUrls,
+    image,
+  })
 }

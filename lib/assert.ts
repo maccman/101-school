@@ -22,3 +22,9 @@ export function assertNumber(value: any, message?: string): asserts value is num
     throw new AssertError(message)
   }
 }
+
+export function assertArray<T>(value: any, message?: string): asserts value is T[] {
+  if (!Array.isArray(value)) {
+    throw new AssertError(message)
+  }
+}

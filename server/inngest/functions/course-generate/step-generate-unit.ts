@@ -51,7 +51,7 @@ export async function stepGenerateUnit({
   })
 
   await setUnit({
-    moduleId: module.id,
+    moduleId: courseModule.id,
     number: parsedUnit.number,
     title: parsedUnit.title,
     content: unitContent,

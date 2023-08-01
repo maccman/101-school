@@ -16,8 +16,6 @@ export async function fetchApi<T>(
 ): Promise<T> {
   assertString(apiKey, 'No OpenAPI API Key provided')
 
-  console.log(`${method} ${path} --> \n${JSON.stringify(body, null, 2)}`)
-
   const response = await fetch(`${OPENAI_ENDPOINT}${path}`, {
     method,
     body: body ? JSON.stringify(body) : undefined,
@@ -34,8 +32,6 @@ export async function fetchApi<T>(
   }
 
   const json = await response.json()
-
-  console.log(`${method} ${path} <-- \n${JSON.stringify(json, null, 2)}`)
 
   return json as T
 }

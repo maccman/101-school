@@ -15,7 +15,7 @@ export default async function NewCoursePage() {
 
   return (
     <HeaderLayout>
-      <div className="p-10 flex flex-col items-center">
+      <div className="p-10 flex flex-col items-center flex-1 overflow-auto">
         <Card className="w-full max-w-2xl">
           <CardHeader>
             <CardTitle>Create a new course</CardTitle>

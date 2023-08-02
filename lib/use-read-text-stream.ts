@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-
 export function useReadTextStream(stream: ReadableStream<string> | null) {
   const [text, setText] = useState('')
   const [done, setDone] = useState(false)

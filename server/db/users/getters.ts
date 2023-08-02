@@ -1,6 +1,6 @@
 import { db } from '../db'
 
-export async function getUserById(userId: string) {
+export async function getUser(userId: string) {
   const record = await db
     .selectFrom('users')
     .selectAll()

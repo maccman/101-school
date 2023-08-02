@@ -44,6 +44,7 @@ export async function stepParseCourse({
     cipTitle,
   })
 }
+
 function safeParseCourseCip(content: string) {
   try {
     return parseCourseCip(content)

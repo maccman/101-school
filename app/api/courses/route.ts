@@ -5,7 +5,7 @@ import { generateUniqueCourseSlug } from '@/server/db/courses/getters'
 import { createCourse } from '@/server/db/courses/setters'
 import { withAuth } from '@/server/helpers/auth'
 import { error } from '@/server/helpers/error'
-import { inngest } from '@/server/inngest/client'
+import { inngest } from '@/server/jobs/client'
 
 async function handleCreateCourse(request: Request, { userId }: { userId: string }) {
   const { title, description, content } = await request.json()

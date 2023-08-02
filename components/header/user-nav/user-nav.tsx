@@ -1,11 +1,11 @@
-import { getUserById } from '@/server/db/users/getters'
+import { getUser } from '@/server/db/users/getters'
 import { auth } from '@/server/helpers/auth'
 
 import { UserNavClient } from './user-nav-client'
 
 export async function UserNav() {
   const userId = await auth()
-  const user = userId ? await getUserById(userId) : null
+  const user = userId ? await getUser(userId) : null
 
   return (
     <UserNavClient

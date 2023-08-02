@@ -1,6 +1,6 @@
 import { Separator } from '@/components/ui/separator'
 import { assert } from '@/lib/assert'
-import { getUserById } from '@/server/db/users/getters'
+import { getUser } from '@/server/db/users/getters'
 import { authOrRedirect } from '@/server/helpers/auth'
 
 import { AccountForm } from './components/account-form'
@@ -8,7 +8,7 @@ import { AccountProfile } from './components/account-profile-dynamic'
 
 export default async function Account() {
   const userId = await authOrRedirect()
-  const user = await getUserById(userId)
+  const user = await getUser(userId)
   assert(user, 'User not found')
 
   return (

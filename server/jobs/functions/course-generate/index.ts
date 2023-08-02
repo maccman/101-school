@@ -5,6 +5,7 @@ import { updateCourse } from '@/server/db/courses/setters'
 import { stepGenerateModule } from './step-generate-module'
 import { stepGenerateUnit } from './step-generate-unit'
 import { stepParseCourse } from './step-parse-course'
+import { stepSendEmail } from './step-send-email'
 import { inngest } from '../../client'
 
 export const courseGenerate = inngest.createFunction(
@@ -51,7 +52,14 @@ export const courseGenerate = inngest.createFunction(
         .flat(),
     )
 
-    // 4. Done
-    await step.run('Done', () => updateCourse(course.id, { generatedAt: new Date() }))
+    // 4. Update course
+    await step.run('Set generatedAt', () =>
+      updateCourse(course.id, { generatedAt: new Date() }),
+    )
+
+    // 5. Send email
+    await step.run('Send email', () =>
+      stepSendEmail({ courseId, userId: course.ownerId }),
+    )
   },
 )

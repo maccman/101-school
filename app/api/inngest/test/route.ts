@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { inngest } from '@/server/inngest/client'
+import { inngest } from '@/server/jobs/client'
 
 // Create a simple async Next.js API route handler
 export async function GET() {

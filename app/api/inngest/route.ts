@@ -1,8 +1,8 @@
 import { serve } from 'inngest/next'
 
-import { inngest } from '@/server/inngest/client'
-import { courseGenerate } from '@/server/inngest/functions/course-generate'
-import { helloWorld } from '@/server/inngest/functions/hello-world'
+import { inngest } from '@/server/jobs/client'
+import { courseGenerate } from '@/server/jobs/functions/course-generate'
+import { helloWorld } from '@/server/jobs/functions/hello-world'
 
 export const runtime = 'edge'
 

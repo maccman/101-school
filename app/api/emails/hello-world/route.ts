@@ -1,15 +1,13 @@
-import React from 'react'
-
 import { createEmail } from '@/lib/resend'
 import HelloWorldEmail from '@/server/emails/hello-world'
-import { renderAsync } from '@/server/helpers/react-email/react-email'
+import { renderHtmlAsync } from '@/server/helpers/react-email/react-email'
 
 export const runtime = 'edge'
 
 export async function POST(_request: Request) {
-  const html = await renderAsync(React.createElement(HelloWorldEmail))
+  const html = await renderHtmlAsync(HelloWorldEmail())
 
-  const text = await renderAsync(HelloWorldEmail(), {
+  const text = await renderHtmlAsync(HelloWorldEmail(), {
     plainText: true,
   })
 

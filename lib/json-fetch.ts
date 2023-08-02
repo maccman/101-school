@@ -25,24 +25,23 @@ export async function jsonFetch<R>(
 
   let error: FetchError | undefined
 
-  if (!response.ok) {
-    error = {
+  let json: any | undefined
+
+  try {
+    json = await response.json()
+  } catch (error) {
+    console.error(error)
+  }
+
+  if (!response.ok || !json) {
+    error = json?.error ?? {
       type: 'unknown',
       message: 'Something went wrong',
     }
-
-    try {
-      const json = await response.json()
-      error = json.error
-    } catch (error) {
-      console.error(error)
-    }
   }
-
-  const jsonResponse = (await response.json()) as R
 
   return {
     error,
-    response: jsonResponse,
+    response: json,
   }
 }

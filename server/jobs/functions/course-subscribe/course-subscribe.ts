@@ -14,6 +14,8 @@ export const courseSubscribe = inngest.createFunction(
   async ({ event, step, logger }) => {
     const { courseSubscriptionId } = event.data
 
+    logger.info('Subscribe to course', { courseSubscriptionId })
+
     const courseSubscription = await step.run('Get course subscription', () =>
       getCourseSubscription(courseSubscriptionId),
     )
@@ -44,6 +46,7 @@ export const courseSubscribe = inngest.createFunction(
         await stepSendEmail({
           unitId: unit.id,
           courseSubscriptionId,
+          logger,
         })
       })
 

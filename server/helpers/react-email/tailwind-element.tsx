@@ -1,5 +1,8 @@
+'use server'
+
 import htmlParser, { attributesToProps, domToReact, Element } from 'html-react-parser'
 import * as React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { tailwindToCSS, TailwindConfig } from 'tw-to-css'
 
 export interface TailwindProps {
@@ -9,8 +12,6 @@ export interface TailwindProps {
 
 export const Tailwind: React.FC<TailwindProps> = async ({ children, config }) => {
   // We have to import react-dom/server dynamically because otherwise nextjs has a little fit
-  const { renderToStaticMarkup } = (await import('react-dom/server')).default
-
   const { twi } = tailwindToCSS({
     config,
   })

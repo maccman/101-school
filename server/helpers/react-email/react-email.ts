@@ -2,8 +2,11 @@ import { type ReadableStream } from 'node:stream/web'
 
 import { convert } from 'html-to-text'
 import { type ReactNode } from 'react'
+import { TailwindConfig } from 'tw-to-css'
 
-export default async function renderToString(children: ReactNode) {
+import { processTailwindClasses } from './tailwind'
+
+export async function renderToString(children: ReactNode) {
   const ReactDOMServer = (await import('react-dom/server')).default
   const { renderToReadableStream } = ReactDOMServer
 
@@ -36,13 +39,14 @@ async function readableStreamToString(readableStream: ReadableStream<Uint8Array>
   return result
 }
 
-export const renderAsync = async (
+export async function renderHtmlAsync(
   component: React.ReactElement,
-  options?: {
-    pretty?: boolean
-    plainText?: boolean
-  },
-) => {
+  {
+    tailwindConfig,
+  }: {
+    tailwindConfig?: TailwindConfig
+  } = {},
+) {
   const ReactDOMServer = (await import('react-dom/server')).default
 
   const { renderToStaticMarkup, renderToString } = ReactDOMServer
@@ -52,19 +56,30 @@ export const renderAsync = async (
       ? await renderToString(component)
       : renderToStaticMarkup(component)
 
-  if (options?.plainText) {
-    return convert(markup, {
-      selectors: [
-        { selector: 'img', format: 'skip' },
-        { selector: '#__react-email-preview', format: 'skip' },
-      ],
-    })
-  }
+  const markupWithTailwind = processTailwindClasses(markup, tailwindConfig)
 
   const doctype =
     '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
 
-  const document = `${doctype}${markup}`
+  const document = `${doctype}${markupWithTailwind}`
 
   return document
+}
+
+export async function renderTextAsync(component: React.ReactElement) {
+  const ReactDOMServer = (await import('react-dom/server')).default
+
+  const { renderToStaticMarkup, renderToString } = ReactDOMServer
+
+  const markup =
+    typeof renderToStaticMarkup === 'undefined'
+      ? await renderToString(component)
+      : renderToStaticMarkup(component)
+
+  return convert(markup, {
+    selectors: [
+      { selector: 'img', format: 'skip' },
+      { selector: '#__react-email-preview', format: 'skip' },
+    ],
+  })
 }

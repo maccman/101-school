@@ -5,6 +5,7 @@ import { Heading } from '@react-email/heading'
 import { Html } from '@react-email/html'
 import { Img } from '@react-email/img'
 import { Link } from '@react-email/link'
+import { Markdown } from '@react-email/markdown'
 import { Section } from '@react-email/section'
 import { Text } from '@react-email/text'
 
@@ -59,6 +60,7 @@ export function CourseUnitEmail({
           <Heading className="text-2xl font-semibold leading-none tracking-tight">
             {courseUnit.title}
           </Heading>
+          <Markdown>{courseUnit.content}</Markdown>
           <Text className="leading-6">
             <Link href={unitUrl} className="text-blue-600 no-underline">
               View the unit

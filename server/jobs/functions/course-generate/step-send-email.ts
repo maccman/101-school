@@ -1,3 +1,4 @@
+import { renderAsync } from '@react-email/render'
 import React from 'react'
 
 import { assert } from '@/lib/assert'
@@ -5,7 +6,6 @@ import { createEmail } from '@/lib/resend'
 import { getCourse } from '@/server/db/courses/getters'
 import { getUser } from '@/server/db/users/getters'
 import { CourseCreatedEmail } from '@/server/emails/course-created-email'
-import { renderHtmlAsync } from '@/server/helpers/react-email/react-email'
 
 export async function stepSendEmail({
   courseId,
@@ -32,9 +32,9 @@ export async function stepSendEmail({
     courseDescription: course.description,
   })
 
-  const html = await renderHtmlAsync(element)
+  const html = await renderAsync(element)
 
-  const text = await renderHtmlAsync(element, {
+  const text = await renderAsync(element, {
     plainText: true,
   })
 

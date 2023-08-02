@@ -7,9 +7,8 @@ import { Img } from '@react-email/img'
 import { Link } from '@react-email/link'
 import { Preview } from '@react-email/preview'
 import { Section } from '@react-email/section'
+import { Tailwind } from '@react-email/tailwind'
 import { Text } from '@react-email/text'
-
-import { AppTailwind } from './components/app-tailwind'
 
 interface CourseCreatedEmailProps {
   userName: string | null
@@ -33,7 +32,7 @@ export function CourseCreatedEmail({
     <Html>
       <Head />
       <Preview>{previewText}</Preview>
-      <AppTailwind>
+      <Tailwind>
         <Body className="bg-background my-auto mx-auto font-sans">
           <Container className="rounded-lg border bg-card text-card-foreground shadow-sm my-[40px] mx-auto p-[20px] w-[465px]">
             <Section className="mt-[32px]">
@@ -63,7 +62,7 @@ export function CourseCreatedEmail({
             </Text>
           </Container>
         </Body>
-      </AppTailwind>
+      </Tailwind>
     </Html>
   )
 }

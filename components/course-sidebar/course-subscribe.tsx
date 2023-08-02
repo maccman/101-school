@@ -20,11 +20,11 @@ import { jsonFetch } from '@/lib/json-fetch'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 
-const accountFormSchema = z.object({
+const formSchema = z.object({
   email: z.string().email(),
 })
 
-type CourseSubscribeValues = z.infer<typeof accountFormSchema>
+type FormValues = z.infer<typeof formSchema>
 
 interface CourseSubscribeProps {
   courseId: string
@@ -34,16 +34,16 @@ interface CourseSubscribeProps {
 export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps) {
   const [done, setDone] = useState(false)
 
-  const defaultValues: Partial<CourseSubscribeValues> = {
+  const defaultValues: Partial<FormValues> = {
     email: defaultEmail ?? '',
   }
 
-  const form = useForm<CourseSubscribeValues>({
-    resolver: zodResolver(accountFormSchema),
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
     defaultValues,
   })
 
-  async function onSubmit(data: CourseSubscribeValues) {
+  async function onSubmit(data: FormValues) {
     if (done) {
       return
     }
@@ -68,7 +68,7 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
-            name="name"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormControl>

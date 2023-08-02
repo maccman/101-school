@@ -5,11 +5,19 @@ import { courseGenerate } from '@/server/jobs/functions/course-generate'
 import { courseSubscribe } from '@/server/jobs/functions/course-subscribe'
 import { helloWorld } from '@/server/jobs/functions/hello-world'
 
-export const runtime = 'edge'
+export const config = {
+  runtime: 'edge',
+}
 
-export const { GET, POST, PUT } = serve(
+// Create an API that serves zero functions
+export default serve(
   inngest,
-  [helloWorld, courseGenerate, courseSubscribe],
+  [
+    /* your functions will be passed here later! */
+    helloWorld,
+    courseGenerate,
+    courseSubscribe,
+  ],
   {
     streaming: 'allow',
   },

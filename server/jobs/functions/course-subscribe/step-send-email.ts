@@ -1,3 +1,4 @@
+import { renderAsync } from '@react-email/render'
 import { Logger } from 'inngest/middleware/logger'
 
 import { assert } from '@/lib/assert'
@@ -5,10 +6,6 @@ import { createEmail } from '@/lib/resend'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
 import { getUnitAndCourse } from '@/server/db/units/getters'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
-import {
-  renderHtmlAsync,
-  renderTextAsync,
-} from '@/server/helpers/react-email/react-email'
 
 export async function stepSendEmail({
   unitId,
@@ -38,9 +35,11 @@ export async function stepSendEmail({
     email: courseSubscription.email,
   })
 
-  const html = await renderHtmlAsync(element)
+  const html = await renderAsync(element)
 
-  const text = await renderTextAsync(element)
+  const text = await renderAsync(element, {
+    plainText: true,
+  })
 
   logger.info(`Sending email for subscription ${courseSubscriptionId}`)
   await createEmail({

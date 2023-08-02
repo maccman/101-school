@@ -39,3 +39,5 @@ next-env.d.ts
 TODO.md
 
 server/db/schema-generated.ts
+
+.react-email

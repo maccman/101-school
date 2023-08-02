@@ -1,5 +1,6 @@
 import { UseFormReturn } from 'react-hook-form'
 
+import { ScrollingTextarea } from '@/components/scrolling-textarea'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -10,7 +11,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Separator } from '@/components/ui/separator'
-import { Textarea } from '@/components/ui/textarea'
 
 import { ConfirmOutlineFormValues } from './types'
 
@@ -25,9 +25,9 @@ export function ConfirmOutlineForm({
   disabled,
   onSubmit,
 }: ConfirmOutlineFormProps) {
-  const { isDirty, isValid } = form.formState
+  const { isValid } = form.formState
 
-  const disabledOrInvalid = disabled || !isValid || !isDirty
+  const disabledOrInvalid = !isValid || disabled
 
   function handleSubmit(values: ConfirmOutlineFormValues) {
     if (disabledOrInvalid) {
@@ -50,7 +50,7 @@ export function ConfirmOutlineForm({
               <FormItem>
                 <FormLabel>Generated content</FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <ScrollingTextarea {...field} className="min-h-[400px]" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

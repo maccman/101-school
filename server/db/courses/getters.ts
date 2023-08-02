@@ -32,6 +32,10 @@ export async function getCourseBySlug(courseSlug: string) {
   return record ?? null
 }
 
+export async function getCourseBySlugOrId(courseSlugOrId: string) {
+  return (await getCourseBySlug(courseSlugOrId)) ?? (await getCourse(courseSlugOrId))
+}
+
 export async function getCourse(courseId: string) {
   const record = await db
     .selectFrom('courses')
@@ -138,4 +142,27 @@ export async function getCoursesByUser(userId: string) {
     .execute()
 
   return records
+}
+
+export async function generateUniqueCourseSlug(slug: string) {
+  let count = 0
+
+  while (true) {
+    const newSlug = count === 0 ? slug : `${slug}-${count}`
+    const record = await db
+      .selectFrom('courses')
+      .select(['id'])
+      .where('slug', '=', newSlug)
+      .executeTakeFirst()
+
+    if (!record) {
+      return newSlug
+    }
+
+    count++
+
+    if (count > 100) {
+      throw new Error('Could not generate unique slug')
+    }
+  }
 }

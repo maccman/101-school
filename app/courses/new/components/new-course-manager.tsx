@@ -1,10 +1,12 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { assert } from '@/lib/assert'
+import { jsonFetch } from '@/lib/json-fetch'
 import { useAbortController } from '@/lib/use-abort-controller'
 import { useLoading } from '@/lib/use-loading'
 import { useReadTextStream } from '@/lib/use-read-text-stream'
@@ -17,8 +19,10 @@ import {
   confirmOutlineFormSchema,
   generateOutlineFormSchema,
 } from './types'
+import { stripTripleBackticks } from './utils'
 
 export function NewCourseManager() {
+  const router = useRouter()
   const { loading, withLoading } = useLoading()
   const [stream, setStream] = useState<ReadableStream | null>(null)
   const { createSignal, abort: abortRequest } = useAbortController()
@@ -56,14 +60,26 @@ export function NewCourseManager() {
     abortRequest()
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const { title, description } = generateOutlineForm.getValues()
     const { content } = confirmOutlineForm.getValues()
 
-    console.log({ title, description, content })
+    const { error, response } = await createCourse({
+      title,
+      description,
+      content,
+    })
+
+    if (error) {
+      alert('Sorry, something went wrong. Please try again.')
+      return
+    }
+
+    router.push(`/courses/${response.id}`)
   }
 
   useEffect(() => {
+    // Reset the stream when it's done or cancelled
     if (streamCancelled || streamDone) {
       setStream(null)
     }
@@ -71,19 +87,26 @@ export function NewCourseManager() {
 
   useEffect(() => {
     if (generatedContent) {
-      confirmOutlineForm.setValue('content', generatedContent)
+      // Sync the generated content to the confirm form
+      const normalizedGeneratedContent = stripTripleBackticks(generatedContent)
+      confirmOutlineForm.setValue('content', normalizedGeneratedContent, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
+      })
     }
   }, [confirmOutlineForm, generatedContent])
 
   const isPending = !!stream || loading
-  console.log({ isPending, stream, loading, streamCancelled, streamDone })
 
+  // Only display the confirm form if there's content
   const displayConfirmForm = !!confirmOutlineForm.getValues().content
 
   return (
     <div className="space-y-5">
       <GenerateOutlineForm
         isPending={isPending}
+        isPrimary={!displayConfirmForm}
         onCancel={handleCancel}
         onGenerate={handleGenerate}
         form={generateOutlineForm}
@@ -123,4 +146,11 @@ async function fetchCourseOutlineStream(
   const stream = response.body.pipeThrough(new TextDecoderStream())
 
   return stream
+}
+
+function createCourse(values: { title: string; description: string; content: string }) {
+  return jsonFetch<{ id: string }>('/api/courses', {
+    method: 'POST',
+    data: values,
+  })
 }

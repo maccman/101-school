@@ -47,6 +47,8 @@ CREATE TABLE courses (
 
   generated_at TIMESTAMP,
 
+  owner_id UUID REFERENCES users(id),
+
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );

@@ -53,15 +53,6 @@ export function useReadTextStream(stream: ReadableStream<string> | null) {
         return
       }
 
-      // If cancel a reading reader, `reader.read()` will get rejected immediately
-      if (readPromise) {
-        await readPromise
-      }
-
-      if (releasing) {
-        return
-      }
-
       setCanceled(true)
       await reader.cancel()
     }

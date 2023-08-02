@@ -24,6 +24,7 @@ import { GenerateOutlineFormValues } from './types'
 
 interface GenerateOutlineFormProps {
   isPending: boolean
+  isPrimary: boolean
   onCancel: () => void
   onGenerate: (values: GenerateOutlineFormValues) => void
   form: UseFormReturn<GenerateOutlineFormValues>
@@ -31,6 +32,7 @@ interface GenerateOutlineFormProps {
 
 export function GenerateOutlineForm({
   isPending,
+  isPrimary,
   onCancel,
   onGenerate,
   form,
@@ -63,7 +65,9 @@ export function GenerateOutlineForm({
               <FormControl>
                 <Textarea placeholder="Describe your course..." {...field} />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>
+                Write a one to three sentence description of your course&apos;s contents.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -87,7 +91,6 @@ export function GenerateOutlineForm({
                   <SelectItem value="13">13 weeks (recommended)</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>You can manage email addresses in</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -97,6 +100,7 @@ export function GenerateOutlineForm({
           {isPending ? (
             <Button
               variant="secondary"
+              type="button"
               onClick={(event) => {
                 event.preventDefault()
                 onCancel()
@@ -105,7 +109,11 @@ export function GenerateOutlineForm({
               Cancel...
             </Button>
           ) : (
-            <Button disabled={!isDirty || !isValid} type="submit">
+            <Button
+              disabled={!isDirty || !isValid}
+              type="submit"
+              variant={isPrimary ? 'default' : 'secondary'}
+            >
               Generate outline
             </Button>
           )}

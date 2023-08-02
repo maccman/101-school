@@ -5,14 +5,16 @@ import { ReactNode, Suspense } from 'react'
 import { CourseSidebar } from '@/components/course-sidebar'
 import CourseSidebarWithEnrollment from '@/components/course-sidebar/course-sidebar-with-enrollment'
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import { getCourseBySlug, getCourseUnits } from '@/server/db/courses/getters'
+import { getCourseBySlugOrId, getCourseUnits } from '@/server/db/courses/getters'
+
+import { CourseGenerating } from './components/course-generating'
 
 export async function generateMetadata({
   params,
 }: {
   params: { courseSlug: string }
 }): Promise<Metadata> {
-  const course = await getCourseBySlug(params.courseSlug)
+  const course = await getCourseBySlugOrId(params.courseSlug)
 
   if (!course) {
     return {
@@ -34,7 +36,7 @@ export default async function CourseShowLayout({
   children: ReactNode
   params: { courseSlug: string }
 }) {
-  const course = await getCourseBySlug(params.courseSlug)
+  const course = await getCourseBySlugOrId(params.courseSlug)
 
   if (!course) {
     console.warn(`Course with slug "${params.courseSlug}" not found`)
@@ -42,6 +44,10 @@ export default async function CourseShowLayout({
   }
 
   const courseUnits = await getCourseUnits(course.id)
+
+  if (!course.generatedAt || courseUnits.size === 0) {
+    return <CourseGenerating />
+  }
 
   return (
     <HeaderLayout courseId={course.id}>

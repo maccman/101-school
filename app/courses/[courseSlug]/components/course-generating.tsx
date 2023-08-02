@@ -1,11 +1,5 @@
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export function CourseGenerating() {
   return (

@@ -9,3 +9,13 @@ export async function getUserById(userId: string) {
 
   return record ?? null
 }
+
+export async function getUsers() {
+  const records = await db
+    .selectFrom('users')
+    .selectAll()
+    .orderBy('createdAt', 'asc')
+    .execute()
+
+  return records
+}

@@ -15,6 +15,7 @@ import {
   CourseParsedUnit,
 } from '@/server/db/schema'
 import { setUnit, updateUnit } from '@/server/db/units/setters'
+import { getUsers } from '@/server/db/users/getters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'
 import { generateModule } from '@/server/helpers/ai/prompts/generate-module'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
@@ -30,7 +31,10 @@ async function main() {
 
   const content = await generateCourse(title)
 
+  const ownerId = (await getUsers())[0].id
+
   const courseId = await createCourse({
+    ownerId,
     title,
     slug: slugify(title),
     description: `A course about ${title}`,

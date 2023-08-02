@@ -1,5 +1,6 @@
-import { Tailwind } from '@react-email/components'
 import React from 'react'
+
+import { Tailwind } from '@/server/helpers/react-email/tailwind'
 
 export function AppTailwind({ children }: { children: React.ReactNode }) {
   return (

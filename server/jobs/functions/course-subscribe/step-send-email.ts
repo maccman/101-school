@@ -5,7 +5,7 @@ import { createEmail } from '@/lib/resend'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
 import { getUnitAndCourse } from '@/server/db/units/getters'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
-import { renderAsync } from '@/server/helpers/react-email'
+import { renderAsync } from '@/server/helpers/react-email/react-email'
 
 export async function stepSendEmail({
   unitId,

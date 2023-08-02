@@ -2,7 +2,7 @@ import React from 'react'
 
 import { createEmail } from '@/lib/resend'
 import HelloWorldEmail from '@/server/emails/hello-world'
-import { renderAsync } from '@/server/helpers/react-email'
+import { renderAsync } from '@/server/helpers/react-email/react-email'
 
 export const runtime = 'edge'
 

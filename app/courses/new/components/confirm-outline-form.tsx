@@ -10,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Separator } from '@/components/ui/separator'
 
 import { ConfirmOutlineFormValues } from './types'
 
@@ -38,32 +37,28 @@ export function ConfirmOutlineForm({
   }
 
   return (
-    <div>
-      <Separator className="mb-7" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Generated content</FormLabel>
+              <FormControl>
+                <ScrollingTextarea {...field} className="min-h-[400px]" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Generated content</FormLabel>
-                <FormControl>
-                  <ScrollingTextarea {...field} className="min-h-[400px]" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <footer className="flex justify-end">
-            <Button disabled={disabledOrInvalid} type="submit">
-              Confirm outline
-            </Button>
-          </footer>
-        </form>
-      </Form>
-    </div>
+        <footer className="flex justify-end">
+          <Button disabled={disabledOrInvalid} type="submit">
+            Confirm outline
+          </Button>
+        </footer>
+      </form>
+    </Form>
   )
 }

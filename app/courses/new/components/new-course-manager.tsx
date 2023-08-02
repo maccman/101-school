@@ -64,18 +64,20 @@ export function NewCourseManager() {
     const { title, description } = generateOutlineForm.getValues()
     const { content } = confirmOutlineForm.getValues()
 
-    const { error, response } = await createCourse({
-      title,
-      description,
-      content,
+    await withLoading(async () => {
+      const { error, response } = await createCourse({
+        title,
+        description,
+        content,
+      })
+
+      if (error) {
+        alert('Sorry, something went wrong. Please try again.')
+        return
+      }
+
+      router.push(`/courses/${response.id}`)
     })
-
-    if (error) {
-      alert('Sorry, something went wrong. Please try again.')
-      return
-    }
-
-    router.push(`/courses/${response.id}`)
   }
 
   useEffect(() => {

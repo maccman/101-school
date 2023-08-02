@@ -15,7 +15,9 @@ const schema = z.object({
       title: z.string().describe("The section's title"),
       units: z.array(
         z.object({
-          number: z.number().describe("The unit's number"),
+          number: z
+            .number()
+            .describe("The unit's number as a whole integer (1, 2, 3, etc)"),
           title: z.string().describe('The lecture title'),
         }),
       ),

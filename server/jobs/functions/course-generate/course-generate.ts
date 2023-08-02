@@ -19,8 +19,6 @@ export const courseGenerate = inngest.createFunction(
     // 1. Parse course
     await step.run('Parse course', () => stepParseCourse({ courseId, logger }))
 
-    logger.info('debug', { courseId })
-
     const course = await step.run('Get course', () => getCourse(courseId))
     assert(course, 'Course not found')
     assert(course.parsedContent, 'Course content not found')
@@ -28,7 +26,6 @@ export const courseGenerate = inngest.createFunction(
 
     logger.info('2. Generate modules', { courseId })
 
-    // 2. Generate modules
     await Promise.all(
       course.parsedContent.modules.map((parsedModule) =>
         step.run('Generate modules', () =>
@@ -39,7 +36,6 @@ export const courseGenerate = inngest.createFunction(
 
     logger.info('3. Generate units', { courseId })
 
-    // 3. Generate units
     await Promise.all(
       course.parsedContent.modules
         .map((parsedModule) =>
@@ -52,12 +48,12 @@ export const courseGenerate = inngest.createFunction(
         .flat(),
     )
 
-    // 4. Update course
+    logger.info('4. Update course generatedAt', { courseId })
     await step.run('Set generatedAt', () =>
       updateCourse(course.id, { generatedAt: new Date() }),
     )
 
-    // 5. Send email
+    logger.info('5. Send email', { courseId })
     await step.run('Send email', () =>
       stepSendEmail({ courseId, userId: course.ownerId }),
     )

@@ -1,5 +1,4 @@
 import { renderAsync } from '@react-email/render'
-import React from 'react'
 
 import { assert } from '@/lib/assert'
 import { createEmail } from '@/lib/resend'
@@ -25,7 +24,7 @@ export async function stepSendEmail({
     return
   }
 
-  const element = React.createElement(CourseCreatedEmail, {
+  const element = CourseCreatedEmail({
     userName: user?.name ?? null,
     courseSlug: course.slug,
     courseTitle: course.title,

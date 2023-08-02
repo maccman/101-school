@@ -37,7 +37,7 @@ export async function stepGenerateUnit({
     courseBody: course.content,
     moduleBody: courseModule.content,
     moduleNumber: parsedModule.week,
-    unitNumber: parsedUnit.number,
+    unitNumber: extractUnitNumber(parsedUnit.number),
   })
 
   const wikipediaUrls = await safeGenerateWikipediaUrls(unitContent)
@@ -52,7 +52,7 @@ export async function stepGenerateUnit({
 
   await setUnit({
     moduleId: courseModule.id,
-    number: parsedUnit.number,
+    number: extractUnitNumber(parsedUnit.number),
     title: parsedUnit.title,
     content: unitContent,
     wikipediaUrls,
@@ -67,4 +67,19 @@ function safeGenerateWikipediaUrls(content: string) {
     console.error(error)
     return []
   }
+}
+
+function extractUnitNumber(parsedUnitNumber: number): number {
+  // Number can be a float, like 1.2 or 1.3
+  // We want to return the float part, like 2 or 3
+
+  const unitNumberString = parsedUnitNumber.toString()
+
+  const dotIndex = unitNumberString.indexOf('.')
+
+  if (dotIndex === -1) {
+    return parsedUnitNumber
+  }
+
+  return parseFloat(unitNumberString.slice(dotIndex + 1))
 }

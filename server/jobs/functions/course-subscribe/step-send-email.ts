@@ -4,6 +4,7 @@ import { Logger } from 'inngest/middleware/logger'
 import { assert } from '@/lib/assert'
 import { createEmail } from '@/lib/resend'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
+import { markUnitAsComplete } from '@/server/db/enrollment/setters'
 import { getUnitAndCourse } from '@/server/db/units/getters'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
 
@@ -51,4 +52,13 @@ export async function stepSendEmail({
   })
 
   logger.info(`Email sent for subscription ${courseSubscriptionId}`)
+
+  if (courseSubscription.userId) {
+    logger.info(`Marking unit as complete for subscription ${courseSubscriptionId}`)
+    await markUnitAsComplete({
+      userId: courseSubscription.userId,
+      courseId: courseUnit.courseId,
+      unitId: courseUnit.id,
+    })
+  }
 }

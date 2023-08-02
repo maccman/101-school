@@ -80,7 +80,7 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
                       required
                       {...field}
                     />
-                    <Button disabled={done} type="submit" variant="outline">
+                    <Button disabled={done} type="submit" variant="default">
                       Subscribe
                     </Button>
                   </div>

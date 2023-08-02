@@ -6,7 +6,6 @@ import { CourseModuleUnit } from '@/server/db/units/types'
 import { UnitContent } from './unit-content'
 import { UnitFooter } from './unit-footer'
 import { ChatSidebar } from '../chat-sidebar'
-import { EnrollButton } from '../courses/enroll-button'
 
 interface CourseUnitProps {
   courseId: string
@@ -27,14 +26,6 @@ export function CourseUnit({
   return (
     <div className={cn('flex-1 flex', className)}>
       <div className="px-5 md:px-10 py-5 relative flex-1 overflow-auto">
-        <Suspense>
-          <EnrollButton
-            courseId={courseId}
-            className="absolute right-5 top-5 md:right-10"
-            hideEnrolled={!(courseUnit.number === 1 && courseModule.number === 1)}
-          />
-        </Suspense>
-
         <h3 className="text-base tracking-tight pb-5 text-accent-foreground">
           {courseModule.title}
         </h3>

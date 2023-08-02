@@ -5,7 +5,7 @@ import { withUnenforcedAuth } from '@/server/helpers/auth'
 import { error } from '@/server/helpers/error'
 import { inngest } from '@/server/jobs/client'
 
-export async function handleCourseSubscribe(
+async function handleCourseSubscribe(
   request: Request,
   { userId, params }: { userId?: string; params: { courseId: string } },
 ) {

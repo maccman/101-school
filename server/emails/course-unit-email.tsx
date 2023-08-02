@@ -29,7 +29,9 @@ interface CourseUnitEmailProps {
   email: string
 }
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'https://101.school'
 
 export function CourseUnitEmail({
   course,
@@ -37,7 +39,7 @@ export function CourseUnitEmail({
   courseUnit,
   email,
 }: CourseUnitEmailProps) {
-  const unitUrl = `${baseUrl}/redirects/${courseUnit.id}`
+  const unitUrl = `${baseUrl}/redirects/courses/${courseUnit.id}`
   const unsubscribeLink = `${baseUrl}/courses/${course.id}/unsubscribe?email=${email}`
 
   return (

@@ -17,7 +17,9 @@ interface CourseCreatedEmailProps {
   courseDescription: string
 }
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'https://101.school'
 
 export function CourseCreatedEmail({
   userName,

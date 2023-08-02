@@ -55,6 +55,9 @@ dependencies:
   '@react-email/html':
     specifier: 0.0.4
     version: 0.0.4
+  '@react-email/markdown':
+    specifier: 0.0.2
+    version: 0.0.2(react-email@1.9.4)(react@18.2.0)
   '@react-email/render':
     specifier: 0.0.7
     version: 0.0.7
@@ -3062,6 +3065,16 @@ packages:
     engines: {node: '>=16.0.0'}
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@react-email/markdown@0.0.2(react-email@1.9.4)(react@18.2.0):
+    resolution: {integrity: sha512-1CCRbyHsCXWE0RL7tJ2ziNsuLtqYm9V5AXmA3IAFH9Da2MHl6IwqQtAgis+DDqagWjI16GSsGsRD/FHzyE6kTA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      md-to-react-email: 2.0.1(react-email@1.9.4)(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+      - react-email
     dev: false
 
   /@react-email/preview@0.0.6:
@@ -6340,6 +6353,16 @@ packages:
 
   /markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+    dev: false
+
+  /md-to-react-email@2.0.1(react-email@1.9.4)(react@18.2.0):
+    resolution: {integrity: sha512-X1BYy91p/vsJuZgVXI26H+Zp+DIu5E0EWtW2EjIN5shKSmXCda71TG4dzTZAU+Ef4t9tDR/VsTP0MjL8ZwzU1A==}
+    peerDependencies:
+      react: 18.2.0
+      react-email: 1.9.3
+    dependencies:
+      react: 18.2.0
+      react-email: 1.9.4(encoding@0.1.13)
     dev: false
 
   /mdast-util-definitions@5.1.2:

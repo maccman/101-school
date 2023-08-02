@@ -5,7 +5,7 @@ import { ReactNode, Suspense } from 'react'
 import { CourseSidebar } from '@/components/course-sidebar'
 import CourseSidebarWithEnrollment from '@/components/course-sidebar/course-sidebar-with-enrollment'
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import { getCourseBySlugOrId, getCourseUnits } from '@/server/db/courses/getters'
+import { getCourseBySlugOrId, getCourseUnitsMap } from '@/server/db/courses/getters'
 
 import { CourseGenerating } from './components/course-generating'
 
@@ -43,7 +43,7 @@ export default async function CourseShowLayout({
     notFound()
   }
 
-  const courseUnits = await getCourseUnits(course.id)
+  const courseUnits = await getCourseUnitsMap(course.id)
 
   if (!course.generatedAt || courseUnits.size === 0) {
     return <CourseGenerating />

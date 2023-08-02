@@ -135,6 +135,15 @@ export interface UnitMessage {
   createdAt: Generated<Timestamp>
 }
 
+export interface CourseSubscription {
+  id: Generated<string>
+  userId: string | null
+  courseId: string
+  daysInterval: number
+  email: string
+  createdAt: Generated<Timestamp>
+}
+
 export interface DB {
   courses: Course
   course_modules: CourseModule
@@ -144,4 +153,5 @@ export interface DB {
   course_images: CourseImage
   course_enrollments: CourseEnrollment
   unit_messages: UnitMessage
+  course_subscriptions: CourseSubscription
 }

@@ -33,7 +33,7 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Mobile
 - [ ] Open course where left off
 - [ ] Dedupe images
-- [ ] Course creation client-side (need a queue - cloudflare?)
+- [x] Course creation client-side (need a queue - cloudflare?)
 - [x] Automatic course classification
 - [ ] Download a pdf
 - [ ] Subscribe to emails

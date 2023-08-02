@@ -177,3 +177,14 @@ CREATE TABLE unit_messages (
 );
 
 CREATE INDEX unit_messages_unit_id_user_id_index ON unit_messages(unit_id, user_id);
+
+CREATE TABLE course_subscriptions (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID REFERENCES users(id),
+  course_id UUID REFERENCES courses(id) NOT NULL,
+  days_interval INT NOT NULL,
+  email TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+  UNIQUE (course_id, email)
+);

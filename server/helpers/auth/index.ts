@@ -75,6 +75,28 @@ export function withAuth<U extends { userId: string }>(
   }
 }
 
+export function withUnenforcedAuth<U extends { userId?: string }>(
+  callback: (request: Request, args: U) => Promise<Response>,
+) {
+  return async (request: Request, args: U) => {
+    const [authType, token] = getToken(request.headers)
+
+    if (!token) {
+      return callback(request, args)
+    }
+
+    const userId = await getUserId(authType, token)
+
+    if (!userId) {
+      return callback(request, args)
+    }
+
+    const argsWithUserId: U = { ...args, userId } as U & { userId: string }
+
+    return callback(request, argsWithUserId)
+  }
+}
+
 async function getUserId(
   authType: 'api' | 'session' | null,
   token: string,

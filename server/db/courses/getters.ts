@@ -46,7 +46,26 @@ export async function getCourse(courseId: string) {
   return record ?? null
 }
 
-export async function getCourseUnits(
+export async function getCourseUnits(courseId: string) {
+  const records = await db
+    .selectFrom('courses')
+    .where('courses.id', '=', courseId)
+    .innerJoin('course_modules', 'courses.id', 'course_modules.courseId')
+    .innerJoin('course_module_units', 'course_modules.id', 'course_module_units.moduleId')
+    .selectAll(['course_module_units'])
+    .select([
+      'course_modules.title as moduleTitle',
+      'course_modules.number as moduleNumber',
+      'course_modules.courseId as courseId',
+    ])
+    .orderBy('course_modules.number', 'asc')
+    .orderBy('course_module_units.number', 'asc')
+    .execute()
+
+  return records
+}
+
+export async function getCourseUnitsMap(
   courseId: string,
 ): Promise<Map<string, CourseModule>> {
   const records = await db

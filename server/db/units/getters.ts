@@ -36,6 +36,7 @@ export async function getUnitAndCourse(unitId: string) {
     .select([
       'courses.id as courseId',
       'courses.slug as courseSlug',
+      'courses.title as courseTitle',
       'course_modules.number as moduleNumber',
       'course_modules.title as moduleTitle',
     ])

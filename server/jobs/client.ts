@@ -10,6 +10,18 @@ type Events = {
       courseId: string
     }
   }
+
+  'course/subscribe': {
+    data: {
+      courseSubscriptionId: string
+    }
+  }
+
+  'course/unsubscribe': {
+    data: {
+      courseSubscriptionId: string
+    }
+  }
 }
 
 // Create a client to send and receive events

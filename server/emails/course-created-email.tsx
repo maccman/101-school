@@ -22,12 +22,12 @@ interface CourseCreatedEmailProps {
 
 const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
 
-export const CourseCreatedEmail = ({
+export function CourseCreatedEmail({
   userName,
   courseSlug,
   courseTitle,
   courseDescription,
-}: CourseCreatedEmailProps) => {
+}: CourseCreatedEmailProps) {
   const previewText = `Course '${courseTitle}' created`
   const courseUrl = `${baseUrl}/courses/${courseSlug}`
 
@@ -69,5 +69,3 @@ export const CourseCreatedEmail = ({
     </Html>
   )
 }
-
-export default CourseCreatedEmail

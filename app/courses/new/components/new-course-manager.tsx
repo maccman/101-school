@@ -117,7 +117,7 @@ export function NewCourseManager() {
       {displayConfirmForm && (
         <ConfirmOutlineForm
           form={confirmOutlineForm}
-          disabled={isPending}
+          isPending={isPending}
           onSubmit={handleSubmit}
         />
       )}

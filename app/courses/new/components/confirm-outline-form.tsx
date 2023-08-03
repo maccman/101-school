@@ -14,22 +14,22 @@ import {
 import { ConfirmOutlineFormValues } from './types'
 
 interface ConfirmOutlineFormProps {
-  disabled: boolean
+  isPending: boolean
   onSubmit: (values: ConfirmOutlineFormValues) => void
   form: UseFormReturn<ConfirmOutlineFormValues>
 }
 
 export function ConfirmOutlineForm({
   form,
-  disabled,
+  isPending,
   onSubmit,
 }: ConfirmOutlineFormProps) {
   const { isValid } = form.formState
 
-  const disabledOrInvalid = !isValid || disabled
+  const isPendingOrInvalid = !isValid || isPending
 
   function handleSubmit(values: ConfirmOutlineFormValues) {
-    if (disabledOrInvalid) {
+    if (isPendingOrInvalid) {
       return
     }
 
@@ -46,7 +46,11 @@ export function ConfirmOutlineForm({
             <FormItem>
               <FormLabel>Generated content</FormLabel>
               <FormControl>
-                <ScrollingTextarea {...field} className="min-h-[400px]" />
+                <ScrollingTextarea
+                  {...field}
+                  autoScroll={isPending}
+                  className="min-h-[400px]"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -54,7 +58,7 @@ export function ConfirmOutlineForm({
         />
 
         <footer className="flex justify-end">
-          <Button disabled={disabledOrInvalid} type="submit">
+          <Button disabled={isPendingOrInvalid} type="submit">
             Confirm outline
           </Button>
         </footer>

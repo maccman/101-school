@@ -27,8 +27,8 @@ export const courseGenerate = inngest.createFunction(
     logger.info('2. Generate modules', { courseId })
 
     await Promise.all(
-      course.parsedContent.modules.map((parsedModule) =>
-        step.run('Generate modules', () =>
+      course.parsedContent.modules.map((parsedModule, i) =>
+        step.run(`Generate modules #${i}`, () =>
           stepGenerateModule({ parsedModule, courseId, logger }),
         ),
       ),
@@ -38,9 +38,9 @@ export const courseGenerate = inngest.createFunction(
 
     await Promise.all(
       course.parsedContent.modules
-        .map((parsedModule) =>
-          parsedModule.units.map((parsedUnit) =>
-            step.run('Generate unit', () =>
+        .map((parsedModule, mi) =>
+          parsedModule.units.map((parsedUnit, ui) =>
+            step.run(`Generate unit #${mi}/${ui}`, () =>
               stepGenerateUnit({ parsedUnit, courseId, parsedModule, logger }),
             ),
           ),
@@ -54,7 +54,7 @@ export const courseGenerate = inngest.createFunction(
     )
 
     logger.info('5. Send email', { courseId })
-    await step.run('Send email', () =>
+    await step.run('Send course email', () =>
       stepSendEmail({ courseId, userId: course.ownerId }),
     )
   },

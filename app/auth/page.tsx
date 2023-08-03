@@ -1,16 +1,10 @@
 import { Box } from 'lucide-react'
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import { auth } from '@/server/helpers/auth'
 
 import { AccountAuth } from './components/account-auth-dynamic'
-
-export const metadata: Metadata = {
-  title: 'Authentication',
-  description: 'Authentication forms built using the components.',
-}
 
 export default async function AuthenticationPage() {
   const userId = await auth()

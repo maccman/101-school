@@ -48,6 +48,7 @@ export function ConfirmOutlineForm({
               <FormControl>
                 <ScrollingTextarea
                   {...field}
+                  readOnly={isPending}
                   autoScroll={isPending}
                   className="min-h-[400px]"
                 />

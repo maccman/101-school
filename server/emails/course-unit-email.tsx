@@ -39,7 +39,7 @@ export function CourseUnitEmail({
   courseUnit,
   email,
 }: CourseUnitEmailProps) {
-  const unitUrl = `${baseUrl}/redirects/courses/${courseUnit.id}`
+  const unitUrl = `${baseUrl}/api/redirects/courses/${courseUnit.id}`
   const unsubscribeLink = `${baseUrl}/courses/${course.id}/unsubscribe?email=${email}`
 
   return (

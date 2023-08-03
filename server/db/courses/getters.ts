@@ -128,12 +128,13 @@ export async function getFirstCourseUnit(courseId: string) {
   return record ?? null
 }
 
-export async function getCoursesWithImages() {
+export async function getPublishedCoursesWithImages() {
   const records = await db
     .selectFrom('courses')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
     .selectAll(['courses'])
     .select(['course_images.image as image'])
+    .where('courses.generatedAt', '!=', null)
     .execute()
 
   return records

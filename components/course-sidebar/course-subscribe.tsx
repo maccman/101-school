@@ -68,7 +68,7 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
   return (
     <div className="px-5 flex-none relative">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <FormField
             name="email"
             render={({ field }) => (
@@ -97,12 +97,12 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
             name="daysInterval"
             render={({ field }) => (
               <FormItem>
-                <div className="flex text-sm  text-muted-foreground gap-2 items-center h-auto">
+                <div className="flex text-sm  text-muted-foreground gap-2 items-center">
                   <span>Receive a</span>
 
                   <Select onValueChange={field.onChange} defaultValue={field.value + ''}>
                     <FormControl>
-                      <SelectTrigger className="border-none w-auto p-0">
+                      <SelectTrigger className="border-none w-auto p-0  h-auto">
                         <SelectValue placeholder="Select a frequency" />
                       </SelectTrigger>
                     </FormControl>

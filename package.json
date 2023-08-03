@@ -67,6 +67,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.263.1",
     "next": "13.4.12",
+    "next-themes": "^0.2.1",
     "openai-edge": "^1.2.2",
     "pg": "^8.11.1",
     "prettier": "3.0.0",

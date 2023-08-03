@@ -45,7 +45,7 @@ export function UnitListItem({
           'justify-start w-full flex space-x-3',
         )}
       >
-        <span className="bg-gray-50 min-w-[5px] px-2 py-1 rounded-md">
+        <span className="bg-secondary min-w-[5px] px-2 py-1 rounded-md">
           {courseModule.number}.{courseUnit.number}
         </span>
         <span className="flex-1">{courseUnit.title}</span>

@@ -18,7 +18,7 @@ export function ChatMessage({ message }: { message: Message }) {
         )}
       </div>
 
-      <div className="flex-1 bg-indigo-100 text-gray-800 p-2 px-3 rounded-lg relative">
+      <div className="flex-1 bg-indigo-100 dark:bg-indigo-950 text-gray-800 p-2 px-3 rounded-lg relative">
         <ChatMessageContent content={message.content} />
 
         {isAssistant ? <LeftArrow /> : <RightArrow />}
@@ -29,12 +29,12 @@ export function ChatMessage({ message }: { message: Message }) {
 
 function RightArrow() {
   return (
-    <div className="absolute right-0 top-5 transform translate-x-1/2 rotate-45 w-2 -mt-1 h-2 bg-indigo-100"></div>
+    <div className="absolute right-0 top-5 transform translate-x-1/2 rotate-45 w-2 -mt-1 h-2 bg-indigo-100 dark:bg-indigo-950"></div>
   )
 }
 
 function LeftArrow() {
   return (
-    <div className="absolute left-0 top-5 transform -translate-x-1/2 rotate-45 w-2 -mt-1 h-2 bg-indigo-100"></div>
+    <div className="absolute left-0 top-5 transform -translate-x-1/2 rotate-45 w-2 -mt-1 h-2 bg-indigo-100 dark:bg-indigo-950"></div>
   )
 }

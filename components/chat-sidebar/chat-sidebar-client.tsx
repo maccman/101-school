@@ -36,7 +36,7 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
     <div className={cn('p-5 overflow-hidden flex flex-col space-y-4', className)}>
       <div className="flex-none flex gap-2">
         <Badge
-          className="bg-indigo-100 text-indigo-900 hover:bg-indigo-200 cursor-pointer"
+          className="bg-indigo-100 dark:bg-indigo-950 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-900 cursor-pointer"
           onClick={() =>
             addUserMessage('Test me on this unit. Ask me one question at a time.')
           }
@@ -45,7 +45,7 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
         </Badge>
 
         <Badge
-          className="bg-indigo-100 text-indigo-900 hover:bg-indigo-200 cursor-pointer"
+          className="bg-indigo-100 dark:bg-indigo-950 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-900 cursor-pointer"
           onClick={() =>
             addUserMessage('Give me a practical exercise based on this unit.')
           }
@@ -54,7 +54,7 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
         </Badge>
 
         <Badge
-          className="bg-indigo-100 text-indigo-900 hover:bg-indigo-200 cursor-pointer"
+          className="bg-indigo-100 dark:bg-indigo-950 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-900 cursor-pointer"
           onClick={() =>
             addUserMessage('Do you have any further reading based on this unit?')
           }

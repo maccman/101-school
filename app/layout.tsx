@@ -3,6 +3,7 @@ import './globals.css'
 import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
@@ -25,9 +26,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${inter.className} bg-background font-sans antialiased md:h-screen relative md:flex md:flex-col md:overflow-hidden`}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
 
-        <Toaster />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )

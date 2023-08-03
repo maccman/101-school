@@ -11,16 +11,14 @@ import {
   Text,
 } from '@react-email/components'
 
+import { baseUrl } from './utils'
+
 interface CourseCreatedEmailProps {
   userName: string | null
   courseSlug: string
   courseTitle: string
   courseDescription: string
 }
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'https://101.school'
 
 export function CourseCreatedEmail({
   userName,

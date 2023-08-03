@@ -11,6 +11,8 @@ import {
 } from '@react-email/components'
 import { Markdown } from '@react-email/markdown'
 
+import { baseUrl } from './utils'
+
 interface CourseUnitEmailProps {
   course: {
     id: string
@@ -30,10 +32,6 @@ interface CourseUnitEmailProps {
 
   email: string
 }
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'https://101.school'
 
 export function CourseUnitEmail({
   course,

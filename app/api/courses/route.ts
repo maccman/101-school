@@ -25,6 +25,7 @@ async function handleCreateCourse(request: Request, { userId }: { userId: string
   })
 
   await inngest.send({
+    id: `course-generate-${courseId}`,
     name: 'course/generate',
     data: {
       courseId,

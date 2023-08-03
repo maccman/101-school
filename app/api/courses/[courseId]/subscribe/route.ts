@@ -30,6 +30,7 @@ async function handleCourseSubscribe(
   }
 
   await inngest.send({
+    id: `course-subscribe-${courseSubscriptionId}`,
     name: 'course/subscribe',
     data: {
       courseSubscriptionId,

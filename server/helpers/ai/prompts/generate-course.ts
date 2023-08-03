@@ -39,6 +39,7 @@ export function generateCoursePrompt(
 
       Each week will cover one module.
       Each module will be split into three to four units.
+      The course is entirely virtual and online.
       There will be no exams so do not include those in the outline.
 
       Put a recommended reading list at the end of the outline.

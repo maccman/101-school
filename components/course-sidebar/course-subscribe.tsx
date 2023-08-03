@@ -5,23 +5,24 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { jsonFetch } from '@/lib/json-fetch'
 
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 const formSchema = z.object({
   email: z.string().email(),
+  daysInterval: z.coerce.number().min(1).max(7),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -36,6 +37,7 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
 
   const defaultValues: Partial<FormValues> = {
     email: defaultEmail ?? '',
+    daysInterval: 7,
   }
 
   const form = useForm<FormValues>({
@@ -50,12 +52,12 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
 
     toast({
       title: 'Great success',
-      description: 'You have successfully subscribed to the course',
+      description: `You are now subscribed to this course. You'll receive an email every ${data.daysInterval} days with a new unit.`,
     })
 
     setDone(true)
 
-    const { error } = await fetchCourseSubscribe({ courseId, email: data.email })
+    const { error } = await fetchCourseSubscribe(courseId, data)
 
     if (error) {
       alert(`Error subscribing to course: ${error.message}`)
@@ -66,7 +68,7 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
   return (
     <div className="px-5 flex-none relative">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             name="email"
             render={({ field }) => (
@@ -85,9 +87,34 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
                     </Button>
                   </div>
                 </FormControl>
-                <FormDescription>
-                  Receive a weekly email containing a new unit.
-                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="daysInterval"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex text-sm  text-muted-foreground gap-2 items-center h-auto">
+                  <span>Receive a</span>
+
+                  <Select onValueChange={field.onChange} defaultValue={field.value + ''}>
+                    <FormControl>
+                      <SelectTrigger className="border-none w-auto p-0">
+                        <SelectValue placeholder="Select a frequency" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="1">daily</SelectItem>
+                      <SelectItem value="2">bi-daily</SelectItem>
+                      <SelectItem value="7">weekly</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <span>email containing the next unit.</span>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
@@ -106,9 +133,9 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
   )
 }
 
-function fetchCourseSubscribe({ courseId, email }: { courseId: string; email: string }) {
+function fetchCourseSubscribe(courseId: string, data: FormValues) {
   return jsonFetch<{ success: true }>(`/api/courses/${courseId}/subscribe`, {
     method: 'POST',
-    data: { email },
+    data,
   })
 }

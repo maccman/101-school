@@ -134,7 +134,7 @@ export async function getPublishedCoursesWithImages() {
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
     .selectAll(['courses'])
     .select(['course_images.image as image'])
-    .where('courses.generatedAt', '!=', null)
+    .where('courses.generatedAt', 'is not', null)
     .execute()
 
   return records

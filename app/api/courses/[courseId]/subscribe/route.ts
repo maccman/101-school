@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
 
-import { createCourseSubscription } from '@/server/db/course_subscriptions/setters'
 import { enrollInCourse } from '@/server/db/enrollment/setters'
 import { withUnenforcedAuth } from '@/server/helpers/auth'
+import { subscribeEmailToCourse } from '@/server/helpers/course-subscription'
 import { error } from '@/server/helpers/error'
-import { inngest } from '@/server/jobs/client'
 
 async function handleCourseSubscribe(
   request: Request,
@@ -12,41 +11,26 @@ async function handleCourseSubscribe(
 ) {
   const { email, daysInterval = 7 } = await request.json()
 
-  // 1. Enroll user in course if they are logged in
-  if (userId) {
-    await enrollInCourse({
-      userId,
-      courseId: params.courseId,
-    })
-  }
-
-  let courseSubscriptionId: string | undefined
-
-  // 2. Create course subscription, if it doesn't exist
+  // 1. Create course subscription, if it doesn't exist
   try {
-    courseSubscriptionId = await createCourseSubscription({
+    subscribeEmailToCourse({
       userId: userId ?? null,
       courseId: params.courseId,
       email,
       daysInterval,
     })
   } catch (err: any) {
-    if (err.message.includes('duplicate')) {
-      return error('You are already subscribed to this course')
-    }
-
     console.error(err)
     return error('Error creating subscription')
   }
 
-  // 3. Send course subscription to Inngest
-  await inngest.send({
-    id: `course-subscribe-${courseSubscriptionId}`,
-    name: 'course/subscribe',
-    data: {
-      courseSubscriptionId,
-    },
-  })
+  // 2. Enroll user in course if they are logged in
+  if (userId) {
+    await enrollInCourse({
+      userId,
+      courseId: params.courseId,
+    })
+  }
 
   return NextResponse.json({
     success: true,

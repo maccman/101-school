@@ -8,7 +8,7 @@ export default async function AccountCourses() {
   const courses = await getCoursesByUser(userId)
 
   return (
-    <div className="p-5">
+    <div className="p-5 flex-1 overflow-auto">
       <h1 className="text-lg font-semibold mb-3">Courses</h1>
 
       {courses.length === 0 && (

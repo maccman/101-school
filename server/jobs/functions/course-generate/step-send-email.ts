@@ -40,8 +40,8 @@ export async function stepSendEmail({
   await createEmail({
     html,
     text,
-    subject: `Your course ${course.title} is ready!`,
+    subject: `Your course on ${course.title} is ready!`,
     to: toEmail,
-    from: 'noreply@101.school',
+    from: 'alex@101.school',
   })
 }

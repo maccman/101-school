@@ -62,7 +62,8 @@ export function CourseCreatedEmail({
             </Link>
           </Text>
           <Text style={styles.text}>
-            If there are any issues with your course, please reply to this email.
+            If there are any issues with your course, or if you have any feedback, please
+            reply to this email.
           </Text>
           <Text style={styles.text}>Thanks!</Text>
         </Container>

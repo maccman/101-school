@@ -6,14 +6,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { jsonFetch } from '@/lib/json-fetch'
 
@@ -54,7 +47,14 @@ export function CourseUnsubscribeForm({
   }
 
   if (done) {
-    return <h3>Unsubscribed from course</h3>
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[160px]">
+        <h3 className="text-2xl font-semibold leading-none tracking-tight">
+          Unsubscribed!
+        </h3>
+        <p>You will no longer receive emails from us about this course.</p>
+      </div>
+    )
   }
 
   return (
@@ -78,10 +78,6 @@ export function CourseUnsubscribeForm({
                   </Button>
                 </div>
               </FormControl>
-              <FormDescription>
-                Unsubscribe from the course. You will no longer receive any emails from us
-                about this course.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

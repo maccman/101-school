@@ -1,4 +1,3 @@
-'use client'
 export function titlize(str: string) {
   // Make sure first letter is capitalized
   str = str.charAt(0).toUpperCase() + str.slice(1)

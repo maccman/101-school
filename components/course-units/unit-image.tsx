@@ -1,8 +1,7 @@
 'use client'
 
+import { titlize } from '@/lib/titlize'
 import { cn } from '@/lib/utils'
-
-import { titlize } from '../../lib/titlize'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   image: {

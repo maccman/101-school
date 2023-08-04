@@ -46,6 +46,7 @@ CREATE TABLE courses (
   cip_title TEXT,
 
   generated_at TIMESTAMP,
+  featured_at TIMESTAMP,
 
   owner_id UUID REFERENCES users(id),
 
@@ -188,3 +189,4 @@ CREATE TABLE course_subscriptions (
 
   UNIQUE (course_id, email)
 );
+

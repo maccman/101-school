@@ -65,6 +65,7 @@ export interface Course {
   cipCode: string | null
   cipTitle: string | null
   generatedAt: Timestamp | null
+  featuredAt: Timestamp | null
   ownerId: string
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>

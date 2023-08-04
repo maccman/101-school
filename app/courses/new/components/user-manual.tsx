@@ -22,19 +22,22 @@ export function UserManual({ className, ...props }: UserManualProps) {
       <p>
         We use GPT-4 to generate the actual course. The advantage of this, of course, is
         speed - it takes roughly five minutes to generate a comprenenshive 13 week course.
-        The disadvantage is hallucinations. While in practice we have found hallucinations
-        rare, they&apos;re always possible. Especially if you ask for a course on a topic
-        that GPT-4 doesn&apos;t have enough data on.
+        The disadvantage is hallucinations.
       </p>
 
       <p>
-        For example, good course topics are mainstream subjects, such as Astronomy or
-        Music Theory. If you ask for a course on a specific book though, and GPT-4
-        doesn&apos;t have the books contents (perhaps only the chapter titles), then
-        it&apos;ll halluciate all the course contents. Caveat emptor.
+        While in practice we have found hallucinations to be rare, they&apos;re always
+        possible. Especially if you ask for a course on a topic that GPT-4 doesn&apos;t
+        have enough data on. The worst is when you ask for a course about a book that
+        GPT-4 knows the chapter titles of, but not the contents. Total gibberish.
       </p>
 
-      <p>p.s. your courses will be public, so please keep them SFW.</p>
+      <p>
+        Outside of those caveats we do most text-book material well. Practical courses are
+        more of hit and miss. You&apos;ll just have to try it out and see.
+      </p>
+
+      <p>p.s. generated courses, for now, will be public so please keep them SFW.</p>
     </div>
   )
 }

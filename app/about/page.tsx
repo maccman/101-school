@@ -3,7 +3,7 @@ import { HeaderLayout } from '@/components/layouts/header-layout'
 export default function About() {
   return (
     <HeaderLayout>
-      <div className="prose p-10 prose-headings:text-xl">
+      <div className="prose p-10 prose-headings:text-xl dark:prose-invert">
         <h1>About</h1>
         <p>101.school is an experiment in creating AI generated course contents.</p>
 

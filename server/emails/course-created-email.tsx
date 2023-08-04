@@ -1,8 +1,6 @@
 import {
   Body,
-  Container,
   Head,
-  Heading,
   Html,
   Img,
   Link,
@@ -11,7 +9,11 @@ import {
   Text,
 } from '@react-email/components'
 
-import { baseUrl } from './utils'
+import '@/app/globals.css'
+
+import { Container } from './components/container'
+import { styles } from './styles'
+import { baseUrl, formatName } from './utils'
 
 interface CourseCreatedEmailProps {
   userName: string | null
@@ -33,31 +35,36 @@ export function CourseCreatedEmail({
     <Html>
       <Head />
       <Preview>{previewText}</Preview>
-      <Body className="bg-background my-auto mx-auto font-sans">
-        <Container className="rounded-lg border bg-card text-card-foreground shadow-sm my-[40px] mx-auto p-[20px] w-[465px]">
-          <Section className="mt-[32px]">
+      <Body style={styles.body}>
+        <Container style={{ ...styles.container, maxWidth: '500px' }}>
+          <Section style={styles.section}>
             <Img
               src={`${baseUrl}/static/logo.png`}
-              width="40"
-              height="37"
+              width="60"
               alt="101.school"
-              className="my-0 mx-auto"
+              style={styles.logo}
             />
           </Section>
-          <Heading className="text-2xl font-semibold leading-none tracking-tight">
-            Course &apos;{courseTitle}&apos; created.
-          </Heading>
-          <Text className="leading-5">Hello{userName ? ` ${userName},` : ' there'},</Text>
-          <Text className="">
+          <Text style={styles.text}>
+            Hello{userName ? ` ${formatName(userName)}` : ' there'},
+          </Text>
+          <Text style={styles.text}>
             Your course titled <strong>{courseTitle}</strong> has been generated.
           </Text>
-          <Text className="text-muted">{courseDescription}</Text>
-          <Text className="leading-6">
-            You can access your course here:{' '}
-            <Link href={courseUrl} className="text-blue-600 no-underline">
+          <Text style={styles.text}>
+            As a reminder, here is the course&apos;s description:{' '}
+            <em>{courseDescription}</em>
+          </Text>
+          <Text style={styles.text}>
+            You can view your course here:{' '}
+            <Link href={courseUrl} style={styles.link}>
               {courseUrl}
             </Link>
           </Text>
+          <Text style={styles.text}>
+            If there are any issues with your course, please reply to this email.
+          </Text>
+          <Text style={styles.text}>Thanks!</Text>
         </Container>
       </Body>
     </Html>

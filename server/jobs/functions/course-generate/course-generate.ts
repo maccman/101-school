@@ -9,7 +9,7 @@ import { stepSendEmail } from './step-send-email'
 import { inngest } from '../../client'
 
 export const courseGenerate = inngest.createFunction(
-  { name: 'Generate a course' },
+  { name: 'Generate a course', retries: 20 },
   { event: 'course/generate' },
   async ({ event, step, logger }) => {
     const { courseId } = event.data

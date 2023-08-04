@@ -45,6 +45,12 @@ export async function generateMetadata({
           ]
         : [],
     },
+    twitter: {
+      title: `${course.title} - 101.school`,
+      description: course.description,
+      card: 'summary_large_image',
+      images: courseUnit?.image ? [courseUnit.image.source] : [],
+    },
   }
 }
 

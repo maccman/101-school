@@ -13,7 +13,7 @@ async function handleCourseSubscribe(
 
   // 1. Create course subscription, if it doesn't exist
   try {
-    subscribeEmailToCourse({
+    await subscribeEmailToCourse({
       userId: userId ?? null,
       courseId: params.courseId,
       email,

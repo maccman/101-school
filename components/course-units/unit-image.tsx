@@ -2,6 +2,8 @@
 
 import { cn } from '@/lib/utils'
 
+import { titlize } from '../../lib/titlize'
+
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   image: {
     source: string
@@ -32,16 +34,4 @@ export function UnitImage({ image, className }: Props) {
       )}
     </div>
   )
-}
-
-function titlize(str: string) {
-  // Make sure first letter is capitalized
-  str = str.charAt(0).toUpperCase() + str.slice(1)
-
-  // Add a period if it's missing
-  if (!str.endsWith('.')) {
-    str += '.'
-  }
-
-  return str
 }

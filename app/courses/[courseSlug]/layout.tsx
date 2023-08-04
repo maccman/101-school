@@ -5,7 +5,12 @@ import { ReactNode, Suspense } from 'react'
 import { CourseSidebar } from '@/components/course-sidebar'
 import CourseSidebarWithEnrollment from '@/components/course-sidebar/course-sidebar-with-enrollment'
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import { getCourseBySlugOrId, getCourseUnitsMap } from '@/server/db/courses/getters'
+import { titlize } from '@/lib/titlize'
+import {
+  getCourseBySlugOrId,
+  getCourseUnitsMap,
+  getFirstCourseUnit,
+} from '@/server/db/courses/getters'
 
 import { CourseGenerating } from './components/course-generating'
 
@@ -23,9 +28,23 @@ export async function generateMetadata({
     }
   }
 
+  const courseUnit = await getFirstCourseUnit(course.id)
+
   return {
     title: `${course.title} - 101.school`,
     description: course.description,
+    openGraph: {
+      title: `${course.title} - 101.school`,
+      description: course.description,
+      images: courseUnit?.image
+        ? [
+            {
+              url: courseUnit.image.source,
+              alt: titlize(courseUnit.image.description ?? courseUnit.title),
+            },
+          ]
+        : [],
+    },
   }
 }
 

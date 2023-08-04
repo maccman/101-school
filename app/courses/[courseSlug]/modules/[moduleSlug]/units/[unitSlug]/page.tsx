@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
+import { titlize } from '@/lib/titlize'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export async function generateMetadata({
@@ -21,6 +22,18 @@ export async function generateMetadata({
   return {
     title: `${courseModule.title} / ${courseUnit.title}`,
     description: course.description,
+    openGraph: {
+      title: `${course.title} - 101.school`,
+      description: course.description,
+      images: courseUnit?.image
+        ? [
+            {
+              url: courseUnit.image.source,
+              alt: titlize(courseUnit.image.description ?? courseUnit.title),
+            },
+          ]
+        : [],
+    },
   }
 }
 

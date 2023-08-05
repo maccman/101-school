@@ -13,6 +13,7 @@ export async function generateCourse(
 ): Promise<string> {
   const message = await fetchCompletion({
     messages: generateCoursePrompt(description, options),
+    temperature: 0.1,
   })
   assertString(message.content)
   return message.content

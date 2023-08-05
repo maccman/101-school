@@ -136,6 +136,7 @@ export async function getFeaturedCourses() {
     .select(['course_images.image as image'])
     .where('courses.generatedAt', 'is not', null)
     .where('courses.featuredAt', 'is not', null)
+    .orderBy('courses.featuredAt', 'desc')
     .execute()
 
   return records

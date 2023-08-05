@@ -18,7 +18,7 @@ export function CourseCard({ course, ...props }: Props) {
             <img
               src={course.image.source}
               alt={course.title}
-              className="h-auto w-auto object-cover aspect-video transition-all hover:scale-105"
+              className="h-full w-full object-cover aspect-video transition-all hover:scale-105"
             />
           </div>
         )}

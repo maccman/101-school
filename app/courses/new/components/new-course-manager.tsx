@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 
 import { assert } from '@/lib/assert'
 import { jsonFetch } from '@/lib/json-fetch'
+import { sleep } from '@/lib/sleep'
 import { useAbortController } from '@/lib/use-abort-controller'
 import { useLoading } from '@/lib/use-loading'
 import { useReadTextStream } from '@/lib/use-read-text-stream'
@@ -81,6 +82,8 @@ export function NewCourseManager() {
       }
 
       router.push(`/courses/${response.id}`)
+
+      await sleep(1000)
     })
   }
 

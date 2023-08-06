@@ -52,7 +52,12 @@ export function CourseSubscribe({ courseId, defaultEmail }: CourseSubscribeProps
 
     toast({
       title: 'Great success',
-      description: `You are now subscribed to this course. You'll receive an email every ${data.daysInterval} days with a new unit.`,
+      description:
+        `You are now subscribed to this course. ` +
+        `You'll receive an email every ${
+          data.daysInterval === 1 ? 'day' : `${data.daysInterval} days`
+        } ` +
+        `with a new unit.`,
     })
 
     setDone(true)

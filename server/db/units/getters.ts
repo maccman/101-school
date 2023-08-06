@@ -37,6 +37,7 @@ export async function getUnitAndCourse(unitId: string) {
       'courses.id as courseId',
       'courses.slug as courseSlug',
       'courses.title as courseTitle',
+      'courses.ownerId as courseOwnerId',
       'course_modules.number as moduleNumber',
       'course_modules.title as moduleTitle',
     ])

@@ -54,7 +54,7 @@ export async function getSessionEmails(): Promise<string[] | null> {
 }
 
 export function withAuth<U extends { userId: string }>(
-  callback: (request: Request, args: U) => Promise<Response>,
+  callback: (request: Request, args: U) => Response | Promise<Response>,
 ) {
   return async (request: Request, args: U) => {
     const [authType, token] = getToken(request.headers)

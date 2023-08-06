@@ -7,24 +7,24 @@ import { error } from '../error'
  * withApiBuilder makes it fun to build APIs! It does query and post
  * parameter validation, method validation, and... actually that's it.
  *
- * Example:
+ * const ApiSchema = z.object({
+ *   unitId: z.string().uuid(),
+ *   title: z.string().min(2).max(100),
+ *   description: z.string().nonempty(),
+ * })
  *
- *    const ApiSchema = z.object({
- *      graph_id: z.string(),
- *      date: dateSchema,
- *      text: z.string(),
- *      transform_type: z.enum(['list-append']),
- *      list_name: z.string().optional(),
- *    })
+ * type ApiRequestParams = z.infer<typeof ApiSchema>
  *
- *    type ApiRequestParams = z.infer<typeof ApiSchema>
+ * const handleUnitUpdate = withAuth(
+ *   withApiBuilder<ApiRequestParams, { userId: string }>(
+ *     ApiSchema,
+ *     async (request, { data, userId }) => {
+ *       const courseUnit = await getUnitAndCourse(data.unitId)
  *
- *    export default withApiBuilder<ApiRequestParams, ApiResponse>(ApiSchema,
- *      (request, {params}) => {
- *        console.log(params.graph_id)
- *        res.json({my_response: 'hello world'})
- *      },
- *    )
+ *       return NextResponse.json({ success: true })
+ *     },
+ *   ),
+ * )
  */
 
 type ExtendedRequestArgs<T> = T & {

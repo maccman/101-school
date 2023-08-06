@@ -5,7 +5,7 @@ import { assert } from '@/lib/assert'
 import { createEmail } from '@/lib/resend'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
 import { markUnitAsComplete } from '@/server/db/enrollment/setters'
-import { getUnitAndCourse } from '@/server/db/units/getters'
+import { getNextUnit, getUnitAndCourse } from '@/server/db/units/getters'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
 
 export async function stepSendEmail({
@@ -23,6 +23,8 @@ export async function stepSendEmail({
   const courseUnit = await getUnitAndCourse(unitId)
   assert(courseUnit, 'Course unit not found')
 
+  const nextCourseUnit = await getNextUnit(unitId)
+
   logger.info(`Generating email for subscription ${courseSubscriptionId}`)
   const element = CourseUnitEmail({
     course: {
@@ -33,6 +35,7 @@ export async function stepSendEmail({
       number: courseUnit.moduleNumber,
     },
     courseUnit,
+    nextCourseUnit,
     email: courseSubscription.email,
   })
 

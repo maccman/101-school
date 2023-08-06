@@ -22,6 +22,10 @@ interface CourseUnitEmailProps {
     content: string
   }
 
+  nextCourseUnit?: {
+    title: string
+  } | null
+
   email: string
 }
 
@@ -29,6 +33,7 @@ export function CourseUnitEmail({
   course,
   courseModule,
   courseUnit,
+  nextCourseUnit,
   email,
 }: CourseUnitEmailProps) {
   const unitUrl = `${baseUrl}/api/redirects/units/${courseUnit.id}`
@@ -47,11 +52,13 @@ export function CourseUnitEmail({
               style={styles.logo}
             />
           </Section>
+
           <Heading style={styles.heading}>
             <Link href={unitUrl} style={styles.link}>
               {course.title} / {courseModule.number}.{courseUnit.number}
             </Link>
           </Heading>
+
           <Markdown
             markdownContainerStyles={{
               padding: '10px 0',
@@ -64,6 +71,12 @@ export function CourseUnitEmail({
           >
             {courseUnit.content}
           </Markdown>
+
+          {nextCourseUnit && (
+            <Section style={styles.section}>
+              In the next unit, we will learn about {nextCourseUnit.title}.
+            </Section>
+          )}
         </Container>
       </Body>
     </Html>

@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { updateCourse } from '@/server/db/courses/setters'
 import { getUnitAndCourse } from '@/server/db/units/getters'
+import { updateUnit } from '@/server/db/units/setters'
 import { withApiBuilder } from '@/server/helpers/api-builder'
 import { withAuth } from '@/server/helpers/auth'
 import { error } from '@/server/helpers/error'
@@ -29,7 +30,7 @@ export const PUT = withAuth(
         return error('Unauthorized', 'unauthorized', 403)
       }
 
-      await updateCourse(courseUnit.id, {
+      await updateUnit(courseUnit.id, {
         title: data.title,
         content: data.content,
       })

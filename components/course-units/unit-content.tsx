@@ -4,7 +4,7 @@ import remarkMath from 'remark-math'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/ui/markdown'
 
-import { UnitImage } from './unit-image'
+import { UnitAsset } from './unit-image'
 
 interface UnitContentProps {
   content: string
@@ -26,7 +26,7 @@ export function UnitContent({ content, image }: UnitContentProps) {
             return (
               <>
                 <h1>{children}</h1>
-                <UnitImage
+                <UnitAsset
                   image={image}
                   className="md:float-right md:mt-2 md:-mr-32 md:ml-5 md:mb-10 my-8"
                 />

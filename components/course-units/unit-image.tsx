@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { titlize } from '@/lib/titlize'
 import { cn } from '@/lib/utils'
 
@@ -10,8 +12,14 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   }
 }
 
-export function UnitImage({ image, className }: Props) {
+export function UnitAsset({ image, className }: Props) {
+  const [error, setError] = useState(false)
   const description = image.description ? titlize(image.description) : ''
+  const isVideo = /\.(mp4|mov|ogv)$/.test(image.source)
+
+  if (error) {
+    return null
+  }
 
   return (
     <div
@@ -21,12 +29,22 @@ export function UnitImage({ image, className }: Props) {
       )}
       onClick={() => window.open(image.source, '_blank', 'noopener noreferrer')}
     >
-      <img
-        src={image.source}
-        alt={image.description || ''}
-        className="h-auto w-auto object-cover transition-all aspect-video m-0"
-        loading="lazy"
-      />
+      {isVideo ? (
+        <video
+          src={image.source}
+          className="h-auto w-auto object-cover transition-all aspect-video m-0"
+          controls
+          muted
+        />
+      ) : (
+        <img
+          src={image.source}
+          alt={image.description || ''}
+          className="h-auto w-auto object-cover transition-all aspect-video m-0"
+          loading="lazy"
+          onError={() => setError(true)}
+        />
+      )}
 
       {image.description && (
         <p className="text-sm text-gray-500 m-1 px-2">{description}</p>

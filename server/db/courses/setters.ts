@@ -14,5 +14,10 @@ export async function createCourse(values: Insertable<Course>) {
 }
 
 export async function updateCourse(id: string, values: Updateable<Course>) {
-  await db.updateTable('courses').set(values).where('id', '=', id).execute()
+  await db
+    .updateTable('courses')
+    .set(values)
+    .where('id', '=', id)
+    .returning('id')
+    .executeTakeFirstOrThrow()
 }

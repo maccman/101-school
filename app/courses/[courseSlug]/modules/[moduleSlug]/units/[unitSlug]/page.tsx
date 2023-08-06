@@ -55,10 +55,6 @@ export default async function CourseModuleUnitPage({
   }
 
   return (
-    <CourseUnit
-      courseId={course.id}
-      courseModule={courseModule}
-      courseUnit={courseUnit}
-    />
+    <CourseUnit course={course} courseModule={courseModule} courseUnit={courseUnit} />
   )
 }

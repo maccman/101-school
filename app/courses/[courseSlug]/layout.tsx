@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { ReactNode, Suspense } from 'react'
 
 import { CourseSidebar } from '@/components/course-sidebar'
@@ -65,7 +64,7 @@ export default async function CourseShowLayout({
 
   if (!course) {
     console.warn(`Course with slug "${params.courseSlug}" not found`)
-    notFound()
+    return null
   }
 
   const courseUnits = await getCourseUnitsMap(course.id)

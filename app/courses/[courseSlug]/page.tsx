@@ -24,10 +24,6 @@ export default async function CoursePage({ params }: { params: { courseSlug: str
   }
 
   return (
-    <CourseUnit
-      courseModule={courseModule}
-      courseUnit={courseUnit}
-      courseId={course.id}
-    />
+    <CourseUnit courseModule={courseModule} courseUnit={courseUnit} course={course} />
   )
 }

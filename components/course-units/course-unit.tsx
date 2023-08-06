@@ -48,7 +48,9 @@ export function CourseUnit({
           <UnitContent content={courseUnit.content} image={courseUnit.image} />
         )}
 
-        <UnitFooter courseId={course.id} unitId={courseUnit.id} />
+        <Suspense>
+          <UnitFooter courseId={course.id} unitId={courseUnit.id} />
+        </Suspense>
       </div>
 
       <div className="border-l border-accent-border flex-none w-1/3 max-w-[600px] flex-col hidden md:flex">

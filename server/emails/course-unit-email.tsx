@@ -36,7 +36,7 @@ export function CourseUnitEmail({
   nextCourseUnit,
   email,
 }: CourseUnitEmailProps) {
-  const unitUrl = `${baseUrl}/api/redirects/units/${courseUnit.id}`
+  const unitUrl = `${baseUrl}/api/redirect/units/${courseUnit.id}`
   const unsubscribeLink = `${baseUrl}/courses/${course.id}/unsubscribe?email=${email}`
 
   return (
@@ -74,7 +74,7 @@ export function CourseUnitEmail({
 
           {nextCourseUnit && (
             <Section style={styles.section}>
-              In the next unit, we will learn about {nextCourseUnit.title}.
+              In the next unit, we will learn about <em>{nextCourseUnit.title}</em>.
             </Section>
           )}
         </Container>

@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
-import { updateCourse } from '@/server/db/courses/setters'
 import { getUnitAndCourse } from '@/server/db/units/getters'
 import { updateUnit } from '@/server/db/units/setters'
 import { withApiBuilder } from '@/server/helpers/api-builder'

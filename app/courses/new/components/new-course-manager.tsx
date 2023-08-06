@@ -36,6 +36,7 @@ export function NewCourseManager() {
   const generateOutlineForm = useForm<GenerateOutlineFormValues>({
     resolver: zodResolver(generateOutlineFormSchema),
     defaultValues: {
+      title: '',
       description: '',
       weekCount: 13,
     },
@@ -56,8 +57,11 @@ export function NewCourseManager() {
   }
 
   async function handleCancel() {
-    cancelStream?.()
-    abortRequest()
+    if (cancelStream) {
+      cancelStream()
+    } else {
+      abortRequest()
+    }
   }
 
   async function handleSubmit() {
@@ -81,13 +85,6 @@ export function NewCourseManager() {
   }
 
   useEffect(() => {
-    // Reset the stream when it's done or cancelled
-    if (streamCancelled || streamDone) {
-      setStream(null)
-    }
-  }, [streamCancelled, streamDone])
-
-  useEffect(() => {
     if (generatedContent) {
       // Sync the generated content to the confirm form
       const normalizedGeneratedContent = stripTripleBackticks(generatedContent)
@@ -99,7 +96,10 @@ export function NewCourseManager() {
     }
   }, [confirmOutlineForm, generatedContent])
 
-  const isPending = !!stream || loading
+  // Is pending is true if:
+  // - There's a stream and it hasn't been cancelled and it's not done
+  // - Or, we are loading the request
+  const isPending = (!!stream && !streamCancelled && !streamDone) || loading
 
   // Only display the confirm form if there's content
   const displayConfirmForm = !!confirmOutlineForm.getValues().content

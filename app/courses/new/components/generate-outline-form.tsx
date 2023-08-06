@@ -114,7 +114,7 @@ export function GenerateOutlineForm({
               type="submit"
               variant={isPrimary ? 'default' : 'secondary'}
             >
-              Generate outline
+              {isPrimary ? 'Generate outline' : 'Re-generate outline'}
             </Button>
           )}
         </footer>

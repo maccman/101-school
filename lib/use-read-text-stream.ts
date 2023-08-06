@@ -7,6 +7,8 @@ export function useReadTextStream(stream: ReadableStream<string> | null) {
 
   useEffect(() => {
     // Reset state if stream changes or get removed
+    setCanceled(false)
+    setDone(false)
     setText('')
 
     if (!stream) {
@@ -49,6 +51,15 @@ export function useReadTextStream(stream: ReadableStream<string> | null) {
       canceling = true
 
       // A released reader cannot be canceled
+      if (releasing) {
+        return
+      }
+
+      // If cancel a reading reader, `reader.read()` will get rejected immediately
+      if (readPromise) {
+        await readPromise
+      }
+
       if (releasing) {
         return
       }

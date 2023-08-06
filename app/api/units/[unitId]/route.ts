@@ -29,7 +29,7 @@ export const PUT = withAuth(
         return error('Unauthorized', 'unauthorized', 403)
       }
 
-      await updateCourse(courseUnit.courseId, {
+      await updateCourse(courseUnit.id, {
         title: data.title,
         content: data.content,
       })

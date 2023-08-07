@@ -14,11 +14,11 @@ export function CourseCard({ course, ...props }: Props) {
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
         {course.image?.source && (
-          <div className="rounded-md overflow-hidden max-w-[500px] min-h-[227px]">
+          <div className="rounded-md overflow-hidden max-w-[500px]">
             <img
               src={course.image.source}
               alt={course.title}
-              className="h-full w-full object-cover aspect-video transition-all hover:scale-105"
+              className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105"
             />
           </div>
         )}

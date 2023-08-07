@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
+import { baseUrl } from '@/server/helpers/base-url'
 
 export const metadata: Metadata = {
   title: '101.school',
@@ -14,6 +15,12 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
+  twitter: {
+    title: '101.school',
+    description: 'Teach yourself anything.',
+    card: 'summary',
+    images: [`${baseUrl}/public/static/logo.png`],
+  },
 }
 
 export const runtime = 'edge'

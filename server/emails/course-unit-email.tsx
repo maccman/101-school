@@ -3,7 +3,7 @@ import { Markdown } from '@react-email/markdown'
 
 import { Container } from './components/container'
 import { styles } from './styles'
-import { baseUrl } from './utils'
+import { baseUrl } from '../helpers/base-url'
 
 interface CourseUnitEmailProps {
   course: {

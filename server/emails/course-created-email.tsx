@@ -13,7 +13,8 @@ import '@/app/globals.css'
 
 import { Container } from './components/container'
 import { styles } from './styles'
-import { baseUrl, formatName } from './utils'
+import { formatName } from './utils'
+import { baseUrl } from '../helpers/base-url'
 
 interface CourseCreatedEmailProps {
   userName: string | null

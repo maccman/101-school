@@ -38,7 +38,7 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [ ] Download a pdf
 - [x] Subscribe to emails
 - [x] styling emails
-- [ ] Bug where you can't restart a course generation
+- [x] Bug where you can't restart a course generation
 
 # Future TODO
 

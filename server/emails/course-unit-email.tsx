@@ -66,6 +66,8 @@ export function CourseUnitEmail({
             markdownCustomStyles={{
               h1: styles.markdownHeading,
               h2: styles.markdownHeading,
+              h3: styles.markdownHeading,
+              h4: styles.markdownHeading,
               codeInline: { background: 'grey' },
             }}
           >

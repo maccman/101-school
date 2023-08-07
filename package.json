@@ -47,6 +47,7 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "@vercel/analytics": "^1.0.1",
     "ai": "^2.1.32",
     "bufferutil": "^4.0.7",
     "class-variance-authority": "^0.7.0",

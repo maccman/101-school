@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-import { baseUrl } from '@/server/helpers/base-url'
+// import { baseUrl } from '@/server/helpers/base-url'
 
 export const metadata: Metadata = {
   title: '101.school',

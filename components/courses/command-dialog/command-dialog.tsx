@@ -2,10 +2,12 @@
 
 import { debounce } from 'lodash'
 import { Box, Boxes } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { SearchResult } from '@/app/types'
+import { buttonVariants } from '@/components/ui/button'
 import {
   CommandEmpty,
   CommandGroup,
@@ -16,6 +18,7 @@ import {
 } from '@/components/ui/command'
 import { useEventListener } from '@/lib/use-event-listener'
 import { useKeyboardShortcut } from '@/lib/use-keyboard-shortcut'
+import { cn } from '@/lib/utils'
 
 import { FetchResultsOptions, fetchResults, sortSearchResults } from './utils'
 
@@ -117,10 +120,36 @@ export function CourseCommandDialog({ courseId }: { courseId?: string }) {
               <Boxes className="mr-2 h-4 w-4" />
               <span>All courses</span>
             </CommandItem>
+
+            <CommandItem
+              value="courses-new"
+              onSelect={() =>
+                onSelectSearchResult({
+                  path: '/courses/new',
+                })
+              }
+            >
+              <Boxes className="mr-2 h-4 w-4" />
+              <span>Generate a new course</span>
+            </CommandItem>
           </CommandGroup>
         )}
 
-        {query && noResults && <CommandEmpty>No results found.</CommandEmpty>}
+        {query && noResults && (
+          <CommandEmpty>
+            <div className="flex flex-col items-center justify-center p-10">
+              <div className="flex flex-col gap-5">
+                <span>No results found.</span>
+                <Link
+                  href="/courses/new"
+                  className={cn(buttonVariants({ variant: 'outline' }))}
+                >
+                  Generate a new course with AI...
+                </Link>
+              </div>
+            </div>
+          </CommandEmpty>
+        )}
 
         {topResults.length > 0 && (
           <CommandGroup heading="Top matches">

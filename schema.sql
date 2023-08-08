@@ -45,6 +45,9 @@ CREATE TABLE courses (
   cip_code TEXT,
   cip_title TEXT,
 
+  ddc_code TEXT,
+  ddc_title TEXT,
+
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
 
@@ -58,6 +61,7 @@ CREATE TABLE courses (
 CREATE INDEX courses_title_index ON courses USING GIN (to_tsvector('english', title));
 CREATE INDEX courses_description_index ON courses USING GIN (to_tsvector('english', description));
 CREATE INDEX courses_cip_title_index ON courses (cip_title);
+CREATE INDEX courses_ddc_title_index ON courses (ddc_title);
 
 CREATE TABLE course_modules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -189,4 +193,3 @@ CREATE TABLE course_subscriptions (
 
   UNIQUE (course_id, email)
 );
-

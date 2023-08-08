@@ -1,7 +1,7 @@
 import { renderAsync } from '@react-email/render'
 
 import { assert } from '@/lib/assert'
-import { db } from '@/server/db/db'
+import { db } from '@/server/db/edge-db'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
 
 export const config = {

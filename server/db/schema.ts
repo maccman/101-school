@@ -64,6 +64,8 @@ export interface Course {
   parsedContent: Generated<CourseParsedContent>
   cipCode: string | null
   cipTitle: string | null
+  ddcCode: string | null
+  ddcTitle: string | null
   generatedAt: Timestamp | null
   featuredAt: Timestamp | null
   ownerId: string

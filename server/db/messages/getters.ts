@@ -1,4 +1,4 @@
-import { db } from '../db'
+import { db } from '../edge-db'
 
 export function getUnitMessages({ unitId, userId }: { unitId: string; userId: string }) {
   return db

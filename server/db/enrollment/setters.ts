@@ -1,6 +1,6 @@
 import { sql } from 'kysely'
 
-import { db } from '../db'
+import { db } from '../edge-db'
 import { getUnitCountForCourse } from '../units/getters'
 
 export async function markUnitAsComplete({

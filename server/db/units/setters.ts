@@ -1,6 +1,6 @@
 import { Insertable, Updateable } from 'kysely'
 
-import { db } from '../db'
+import { db } from '../edge-db'
 import { CourseModuleUnit, UnitImage } from '../schema'
 
 export async function createUnit(values: Insertable<CourseModuleUnit>) {

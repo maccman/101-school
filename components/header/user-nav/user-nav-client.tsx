@@ -62,6 +62,12 @@ export function UserNavClient({ userId, userName, userEmail }: Props) {
               <DropdownMenuItem onClick={() => router.push('/account/courses')}>
                 Enrolled courses
               </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/account/owned-courses')}>
+                Created courses
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/courses/new')}>
+                New course...
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push('/account/profile')}>
                 Settings
               </DropdownMenuItem>

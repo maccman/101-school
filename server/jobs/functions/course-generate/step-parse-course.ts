@@ -33,7 +33,9 @@ export async function stepParseCourse({
 
   // Extract DDC code and title from course
   logger.info('Parsing DDC code and title', { courseId })
-  const { ddcCode, ddcTitle } = await safeParseCourseDdc(content)
+  const { ddcCode, ddcTitle } = await safeParseCourseDdc(
+    parsedContent.headline || course.description,
+  )
 
   // Save course
   logger.info('Saving course', { courseId })

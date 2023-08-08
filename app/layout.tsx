@@ -9,6 +9,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { baseUrl } from '@/server/helpers/base-url'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: '101.school',
   description: 'Teach yourself anything.',
   themeColor: [

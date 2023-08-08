@@ -15,7 +15,9 @@ async function main() {
     }
 
     const headline =
-      course.parsedContent.headline || course.parsedContent.outline || course.description
+      course.parsedContent?.headline ||
+      course.parsedContent?.outline ||
+      course.description
 
     if (!headline) {
       console.warn(`No headline for course ${course.id}`)

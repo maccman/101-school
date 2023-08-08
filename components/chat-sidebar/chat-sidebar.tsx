@@ -7,7 +7,6 @@ import { getUnit } from '@/server/db/units/getters'
 import { auth } from '@/server/helpers/auth'
 
 import { ChatSidebarClient } from './chat-sidebar-client'
-import { ChatSidebarNoAuth } from './chat-sidebar-no-auth'
 import { unitMessageToChatMessage } from './utils'
 
 interface ChatSidebarProps {
@@ -22,17 +21,19 @@ export async function ChatSidebar({ unitId, className }: ChatSidebarProps) {
     notFound()
   }
 
-  if (!userId) {
-    return <ChatSidebarNoAuth className="flex-1" />
-  }
-
   const initialMessages = await getInitialMessages({
     userId,
     unitId,
     unitContent: unit.content,
   })
 
-  return <ChatSidebarClient initialMessages={initialMessages} className={className} />
+  return (
+    <ChatSidebarClient
+      promptAuth={!userId}
+      initialMessages={initialMessages}
+      className={className}
+    />
+  )
 }
 
 async function getInitialMessages({
@@ -40,11 +41,11 @@ async function getInitialMessages({
   unitId,
   unitContent,
 }: {
-  userId: string
+  userId: string | null
   unitId: string
   unitContent: string
 }): Promise<Message[]> {
-  const unitMessages = await getUnitMessages({ userId, unitId })
+  const unitMessages = userId ? await getUnitMessages({ userId, unitId }) : []
 
   return [
     ...getSystemMessages(unitContent),

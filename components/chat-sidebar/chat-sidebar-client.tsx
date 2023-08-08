@@ -1,6 +1,7 @@
 'use client'
 
 import { useChat } from 'ai/react'
+import Link from 'next/link'
 import React from 'react'
 
 import { cn } from '@/lib/utils'
@@ -9,14 +10,20 @@ import { ChatMessage } from './chat-message'
 import { Message } from './types'
 import { ChatScrollAnchor } from '../chat-scroll-anchor'
 import { Badge } from '../ui/badge'
+import { buttonVariants } from '../ui/button'
 import { Input } from '../ui/input'
 
 interface ChatSidebarProps {
   initialMessages?: Message[]
   className?: string
+  promptAuth?: boolean
 }
 
-export function ChatSidebarClient({ initialMessages, className }: ChatSidebarProps) {
+export function ChatSidebarClient({
+  initialMessages,
+  className,
+  promptAuth = false,
+}: ChatSidebarProps) {
   const { append, messages, input, handleInputChange, handleSubmit, isLoading } = useChat(
     {
       initialMessages,
@@ -33,7 +40,9 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
   }
 
   return (
-    <div className={cn('p-5 overflow-hidden flex flex-col space-y-4', className)}>
+    <div
+      className={cn('p-5 overflow-hidden flex flex-col space-y-4 relative', className)}
+    >
       <div className="flex-none flex gap-2">
         <Badge
           className="bg-indigo-100 dark:bg-indigo-950 text-indigo-900 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-900 cursor-pointer"
@@ -81,6 +90,17 @@ export function ChatSidebarClient({ initialMessages, className }: ChatSidebarPro
           />
         </form>
       </div>
+
+      {promptAuth ? (
+        <div className="absolute inset-0 p-3 flex flex-col items-center justify-center bg-white/60">
+          <Link
+            href="/auth?redirect=back"
+            className={cn(buttonVariants({ variant: 'outline' }))}
+          >
+            Sign in to chat
+          </Link>
+        </div>
+      ) : null}
     </div>
   )
 }

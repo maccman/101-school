@@ -19,8 +19,8 @@ export function uncachedAuth() {
 
 export const auth = cache(uncachedAuth)
 
-export function authRedirect(redirectTo = 'back'): never {
-  redirect(`/auth?redirect=${redirectTo}`)
+export function authRedirect(redirectTo?: string): never {
+  redirect(`/auth${redirectTo ? `?redirect=${redirectTo}` : ''}`)
 }
 
 /**
@@ -28,7 +28,7 @@ export function authRedirect(redirectTo = 'back'): never {
  * @param {string} redirectBack - The relative path to redirect back to after authentication (optional).
  * @returns {Promise<string>} A promise that resolves to the authenticated user's ID.
  */
-export async function authOrRedirect(redirectBack: string = ''): Promise<string> {
+export async function authOrRedirect(redirectBack: string = 'back'): Promise<string> {
   const userId = await auth()
 
   if (!userId) {

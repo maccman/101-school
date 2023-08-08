@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { assertString } from '@/plugins/assert'
+import { assertString } from '@/lib/assert'
 import { fetchCompletion } from '@/server/lib/open-ai'
 import { buildChatFunction, parseChatFunctionArgs } from '@/server/lib/open-ai/functions'
 import { ChatMessage } from '@/server/lib/open-ai/types'

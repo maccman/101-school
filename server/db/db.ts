@@ -2,7 +2,7 @@ import { neonConfig } from '@neondatabase/serverless'
 import { CamelCasePlugin, Kysely } from 'kysely'
 import { NeonHTTPDialect } from 'kysely-neon'
 
-import { assertString } from '@/plugins/assert'
+import { assertString } from '@/lib/assert'
 
 import { DB } from './schema'
 

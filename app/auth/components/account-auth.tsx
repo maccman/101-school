@@ -4,7 +4,7 @@ import { Hanko, register } from '@teamhanko/hanko-elements'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect } from 'react'
 
-import { assertString } from '@/plugins/assert'
+import { assertString } from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
 

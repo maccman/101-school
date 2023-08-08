@@ -6,7 +6,7 @@ import {
   OpenAIChatCompletion,
   SupportedModels,
 } from './types'
-import { assert } from '../../../plugins/assert'
+import { assert } from '../../../lib/assert'
 
 interface Options {
   messages: ChatMessage[]

@@ -2,7 +2,7 @@ import { Box } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 
 import { SearchButton } from './search-button'
 import { SearchInput } from './search-input'

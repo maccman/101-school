@@ -1,4 +1,4 @@
-import { slugify } from '@/plugins/slugify'
+import { slugify } from '@/lib/slugify'
 
 export function getNumberFromSlug(slug: string): number | null {
   const firstPart = slug.split('-').shift()

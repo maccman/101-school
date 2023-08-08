@@ -1,6 +1,6 @@
 'use client'
 
-import { triggerEvent } from '@/plugins/use-event-listener'
+import { triggerEvent } from '@/lib/use-event-listener'
 
 import { Button, ButtonProps } from '../ui/button'
 

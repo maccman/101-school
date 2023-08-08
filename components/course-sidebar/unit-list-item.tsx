@@ -2,7 +2,7 @@ import { CheckCircle, CircleDashed } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 import { Course, CourseModule } from '@/server/db/courses/types'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 

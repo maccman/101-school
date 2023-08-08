@@ -1,6 +1,6 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose'
 
-import { assertString, assert } from '@/plugins/assert'
+import { assertString, assert } from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
 

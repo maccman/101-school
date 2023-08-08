@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 import { CourseWithImage } from '@/server/db/courses/types'
 
 export function CourseItem({ course }: { course: CourseWithImage }) {

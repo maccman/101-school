@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { slugify } from '@/plugins/slugify'
+import { slugify } from '@/lib/slugify'
 import { generateUniqueCourseSlug } from '@/server/db/courses/getters'
 import { createCourse } from '@/server/db/courses/setters'
 import { withAuth } from '@/server/helpers/auth'

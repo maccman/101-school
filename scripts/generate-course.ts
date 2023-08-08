@@ -1,9 +1,9 @@
 import { Selectable } from 'kysely'
 import { retry } from 'ts-retry'
 
-import { assert, assertString } from '@/plugins/assert'
-import { prompt } from '@/plugins/readline'
-import { slugify } from '@/plugins/slugify'
+import { assert, assertString } from '@/lib/assert'
+import { prompt } from '@/lib/readline'
+import { slugify } from '@/lib/slugify'
 import { getCourse } from '@/server/db/courses/getters'
 import { createCourse, updateCourse } from '@/server/db/courses/setters'
 import { getModuleByNumber } from '@/server/db/modules/getters'

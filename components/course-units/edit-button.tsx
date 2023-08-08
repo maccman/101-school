@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 import { auth } from '@/server/helpers/auth'
 import { getPathForCourseUnit } from '@/server/helpers/links'
 

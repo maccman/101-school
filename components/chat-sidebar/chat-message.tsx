@@ -1,6 +1,6 @@
 import { GraduationCap, User } from 'lucide-react'
 
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 
 import { ChatMessageContent } from './chat-message-content'
 import { Message } from './types'

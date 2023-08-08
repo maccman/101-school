@@ -1,7 +1,7 @@
 import { Message } from 'ai'
 
-import { assert } from '@/plugins/assert'
-import { enumFromString } from '@/plugins/enum'
+import { assert } from '@/lib/assert'
+import { enumFromString } from '@/lib/enum'
 import { UnitMessage } from '@/server/db/messages/types'
 
 enum MessageRole {

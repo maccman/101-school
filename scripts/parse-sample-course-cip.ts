@@ -1,4 +1,4 @@
-import { prompt } from '@/plugins/readline'
+import { prompt } from '@/lib/readline'
 import { parseCourseCip } from '@/server/helpers/ai/prompts/parse-course-cip'
 
 async function main() {

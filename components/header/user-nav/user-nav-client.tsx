@@ -15,7 +15,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { notEmpty } from '@/plugins/not-empty'
+import { notEmpty } from '@/lib/not-empty'
 
 interface Props {
   userId: string | null

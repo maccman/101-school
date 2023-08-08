@@ -3,7 +3,7 @@
 import { useChat } from 'ai/react'
 import React from 'react'
 
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 
 import { ChatMessage } from './chat-message'
 import { Message } from './types'

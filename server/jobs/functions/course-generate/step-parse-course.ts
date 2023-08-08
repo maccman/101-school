@@ -1,6 +1,6 @@
 import { Logger } from 'inngest/middleware/logger'
 
-import { assert, assertString } from '@/plugins/assert'
+import { assert, assertString } from '@/lib/assert'
 import { getCourse } from '@/server/db/courses/getters'
 import { updateCourse } from '@/server/db/courses/setters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'

@@ -1,4 +1,4 @@
-import { cn } from '@/plugins/utils'
+import { cn } from '@/lib/utils'
 
 interface UserManualProps extends React.HTMLAttributes<HTMLDivElement> {}
 

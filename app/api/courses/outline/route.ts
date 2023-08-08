@@ -1,6 +1,6 @@
 import { Configuration, OpenAIApi } from 'openai-edge'
 
-import { assert, assertString } from '@/plugins/assert'
+import { assert, assertString } from '@/lib/assert'
 import { generateCoursePrompt } from '@/server/helpers/ai/prompts/generate-course'
 import { withAuth } from '@/server/helpers/auth'
 

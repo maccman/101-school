@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator'
-import { assert } from '@/plugins/assert'
+import { assert } from '@/lib/assert'
 import { getUser } from '@/server/db/users/getters'
 import { authOrRedirect } from '@/server/helpers/auth'
 

@@ -2,8 +2,8 @@
 
 import { SearchIcon } from 'lucide-react'
 
-import { triggerEvent } from '@/plugins/use-event-listener'
-import { cn } from '@/plugins/utils'
+import { triggerEvent } from '@/lib/use-event-listener'
+import { cn } from '@/lib/utils'
 
 interface SearchProps extends React.HTMLAttributes<HTMLDivElement> {}
 

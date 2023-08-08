@@ -1,6 +1,6 @@
 import { renderAsync } from '@react-email/render'
 
-import { assert } from '@/plugins/assert'
+import { assert } from '@/lib/assert'
 import { db } from '@/server/db/db'
 import { CourseUnitEmail } from '@/server/emails/course-unit-email'
 

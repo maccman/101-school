@@ -1,4 +1,4 @@
-import { assert } from '@/plugins/assert'
+import { assert } from '@/lib/assert'
 import { getCourse } from '@/server/db/courses/getters'
 import { updateCourse } from '@/server/db/courses/setters'
 

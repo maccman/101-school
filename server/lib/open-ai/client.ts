@@ -1,4 +1,4 @@
-import { assertString } from '../../../plugins/assert'
+import { assertString } from '../../../lib/assert'
 
 const OPENAI_ENDPOINT = 'https://api.openai.com/v1'
 

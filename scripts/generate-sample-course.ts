@@ -1,5 +1,5 @@
-import { prompt } from '@/plugins/readline'
-import { slugify } from '@/plugins/slugify'
+import { prompt } from '@/lib/readline'
+import { slugify } from '@/lib/slugify'
 import { createCourse, updateCourse } from '@/server/db/courses/setters'
 import { getUsers } from '@/server/db/users/getters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'

@@ -4,7 +4,7 @@ import { ReactNode, Suspense } from 'react'
 import { CourseSidebar } from '@/components/course-sidebar'
 import CourseSidebarWithEnrollment from '@/components/course-sidebar/course-sidebar-with-enrollment'
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import { titlize } from '@/plugins/titlize'
+import { titlize } from '@/lib/titlize'
 import {
   getCourseBySlugOrId,
   getCourseUnitsMap,

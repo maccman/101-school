@@ -1,8 +1,8 @@
 import { renderAsync } from '@react-email/render'
 import { Logger } from 'inngest/middleware/logger'
 
-import { assert } from '@/plugins/assert'
-import { createEmail } from '@/plugins/resend'
+import { assert } from '@/lib/assert'
+import { createEmail } from '@/lib/resend'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
 import { markUnitAsComplete } from '@/server/db/enrollment/setters'
 import { getNextUnit, getUnitAndCourse } from '@/server/db/units/getters'

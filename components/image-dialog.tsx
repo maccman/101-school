@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import { useEventListener } from '@/plugins/use-event-listener'
-import { useKeyboardShortcut } from '@/plugins/use-keyboard-shortcut'
+import { useEventListener } from '@/lib/use-event-listener'
+import { useKeyboardShortcut } from '@/lib/use-keyboard-shortcut'
 
 import {
   Dialog,

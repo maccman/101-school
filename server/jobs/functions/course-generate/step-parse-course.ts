@@ -5,7 +5,7 @@ import { getCourse } from '@/server/db/courses/getters'
 import { updateCourse } from '@/server/db/courses/setters'
 import { generateCourse } from '@/server/helpers/ai/prompts/generate-course'
 import { parseCourse } from '@/server/helpers/ai/prompts/parse-course'
-import { parseCourseCip } from '@/server/helpers/ai/prompts/parse-course-cip'
+import { parseCourseDeweyDecimalClass } from '@/server/helpers/ai/prompts/parse-course-ddc'
 
 export async function stepParseCourse({
   courseId,
@@ -31,28 +31,30 @@ export async function stepParseCourse({
   logger.info('Parsing course', { courseId })
   const parsedContent = await parseCourse(content)
 
-  // Extract CIP code and title from course
-  logger.info('Parsing CIP code and title', { courseId })
-  const { cipCode, cipTitle } = await safeParseCourseCip(content)
+  // Extract DDC code and title from course
+  logger.info('Parsing DDC code and title', { courseId })
+  const { ddcCode, ddcTitle } = await safeParseCourseDdc(
+    parsedContent.headline || course.description,
+  )
 
   // Save course
   logger.info('Saving course', { courseId })
   await updateCourse(course.id, {
     content,
     parsedContent,
-    cipCode,
-    cipTitle,
+    ddcCode,
+    ddcTitle,
   })
 }
 
-function safeParseCourseCip(content: string) {
+function safeParseCourseDdc(content: string) {
   try {
-    return parseCourseCip(content)
+    return parseCourseDeweyDecimalClass(content)
   } catch (error) {
     console.error(error)
     return {
-      cipCode: null,
-      cipTitle: null,
+      ddcCode: null,
+      ddcTitle: null,
     }
   }
 }

@@ -1,10 +1,10 @@
-import { CourseModule } from './types'
-import { db } from '../db'
+import { COURSE_SANS_CONTENT_KEYS, CourseModule } from './types'
+import { db } from '../edge-db'
 
 export async function getCourses() {
   const records = await db
     .selectFrom('courses')
-    .selectAll()
+    .select(COURSE_SANS_CONTENT_KEYS)
     .orderBy('title', 'asc')
     .execute()
 
@@ -132,7 +132,7 @@ export async function getFeaturedCourses() {
   const records = await db
     .selectFrom('courses')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
-    .selectAll(['courses'])
+    .select(COURSE_SANS_CONTENT_KEYS)
     .select(['course_images.image as image'])
     .where('courses.generatedAt', 'is not', null)
     .where('courses.featuredAt', 'is not', null)
@@ -146,7 +146,7 @@ export async function searchCourses(query: string) {
   const records = await db
     .selectFrom('courses')
     .where('title', 'like', `%${query}%`)
-    .selectAll()
+    .select(COURSE_SANS_CONTENT_KEYS)
     .limit(10)
     .execute()
 

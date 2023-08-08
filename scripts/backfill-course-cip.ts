@@ -1,5 +1,7 @@
-import { getCourses } from '@/server/db/courses/getters'
-import { updateCourse } from '@/server/db/courses/setters'
+import { Updateable } from 'kysely'
+
+import { db } from '@/server/db/db'
+import { Course } from '@/server/db/schema'
 import { parseCourseCip } from '@/server/helpers/ai/prompts/parse-course-cip'
 
 async function main() {
@@ -30,6 +32,25 @@ async function main() {
       cipTitle: result.cipTitle || null,
     })
   }
+}
+
+async function getCourses() {
+  const records = await db
+    .selectFrom('courses')
+    .selectAll()
+    .orderBy('title', 'asc')
+    .execute()
+
+  return records
+}
+
+async function updateCourse(id: string, values: Updateable<Course>) {
+  await db
+    .updateTable('courses')
+    .set(values)
+    .where('id', '=', id)
+    .returning('id')
+    .executeTakeFirstOrThrow()
 }
 
 main()

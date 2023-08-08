@@ -1,4 +1,4 @@
-import { db } from '../db'
+import { db } from '../edge-db'
 
 export async function getCourseEnrollment({
   userId,

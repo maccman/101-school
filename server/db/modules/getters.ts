@@ -1,4 +1,4 @@
-import { db } from '../db'
+import { db } from '../edge-db'
 
 export async function getModulesByCourse(courseId: string) {
   const records = await db

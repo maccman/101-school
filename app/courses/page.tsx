@@ -20,9 +20,12 @@ export default async function CoursesPage() {
           <CoursesGrid />
         </Suspense>
 
-        <footer className="my-8 flex justify-end">
-          <Link href={'/courses/new'} className={cn(buttonVariants())}>
-            Or generate your own course
+        <footer className="my-8 flex justify-center">
+          <Link
+            href="/courses/new"
+            className={cn(buttonVariants({ variant: 'outline' }))}
+          >
+            Or generate your own course...
           </Link>
         </footer>
       </div>

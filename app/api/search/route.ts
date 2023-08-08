@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { SearchResult } from '@/app/types'
 import { getCourses, searchCourses } from '@/server/db/courses/getters'
-import { Course } from '@/server/db/courses/types'
+import { CourseSansContent } from '@/server/db/courses/types'
 import { getUnitsByCourse, searchUnits } from '@/server/db/units/getters'
 import { CourseModuleUnit } from '@/server/db/units/types'
 import { getParams } from '@/server/helpers/params'
@@ -65,7 +65,7 @@ function unitToSearchResult(unit: CourseModuleUnit): SearchResult {
   }
 }
 
-function courseToSearchResult(course: Course): SearchResult {
+function courseToSearchResult(course: CourseSansContent): SearchResult {
   return {
     type: 'course',
     id: course.id,

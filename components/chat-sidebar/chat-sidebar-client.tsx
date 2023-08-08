@@ -87,6 +87,7 @@ export function ChatSidebarClient({
             placeholder="Type your message..."
             onChange={handleInputChange}
             value={input}
+            disabled={promptAuth}
           />
         </form>
       </div>

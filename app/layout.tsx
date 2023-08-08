@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: '101.school',
     description: 'Teach yourself anything.',
     card: 'summary',
-    images: [`${baseUrl}/public/static/logo.png`],
+    images: [`${baseUrl}/static/logo.png`],
   },
 }
 

@@ -24,26 +24,30 @@ async function main() {
       continue
     }
 
-    await retry(
-      async () => {
-        const result = await parseCourseDeweyDecimalClass(headline)
+    try {
+      await retry(
+        async () => {
+          const result = await parseCourseDeweyDecimalClass(headline)
 
-        if (!result.ddcCode) {
-          console.warn(`No DDC code for course ${course.id}`)
-          return
-        }
+          if (!result.ddcCode) {
+            console.warn(`No DDC code for course ${course.id}`)
+            return
+          }
 
-        console.log(
-          `Updating course ${course.id}/${course.title} with ddc ${result.ddcCode} / ${result.ddcTitle}`,
-        )
+          console.log(
+            `Updating course ${course.id}/${course.title} with ddc ${result.ddcCode} / ${result.ddcTitle}`,
+          )
 
-        await updateCourse(course.id, {
-          ddcCode: result.ddcCode || null,
-          ddcTitle: result.ddcTitle || null,
-        })
-      },
-      { maxTry: 5, delay: 5000 },
-    )
+          await updateCourse(course.id, {
+            ddcCode: result.ddcCode || null,
+            ddcTitle: result.ddcTitle || null,
+          })
+        },
+        { maxTry: 5, delay: 5000 },
+      )
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 

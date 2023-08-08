@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/plugins/utils'
 import { CourseModuleUnit } from '@/server/db/units/types'
 
 import { EditButton } from './edit-button'

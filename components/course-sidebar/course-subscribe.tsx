@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
-import { jsonFetch } from '@/lib/json-fetch'
+import { jsonFetch } from '@/plugins/json-fetch'
 
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'

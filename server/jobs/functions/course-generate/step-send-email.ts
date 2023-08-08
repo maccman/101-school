@@ -1,7 +1,7 @@
 import { renderAsync } from '@react-email/render'
 
-import { assert } from '@/lib/assert'
-import { createEmail } from '@/lib/resend'
+import { assert } from '@/plugins/assert'
+import { createEmail } from '@/plugins/resend'
 import { getCourse } from '@/server/db/courses/getters'
 import { getUser } from '@/server/db/users/getters'
 import { CourseCreatedEmail } from '@/server/emails/course-created-email'

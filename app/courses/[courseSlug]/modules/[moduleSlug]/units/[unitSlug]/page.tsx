@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
-import { titlize } from '@/lib/titlize'
+import { titlize } from '@/plugins/titlize'
 import { getCourseContext } from '@/server/helpers/params-getters'
 
 export async function generateMetadata({

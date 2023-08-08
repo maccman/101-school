@@ -1,6 +1,6 @@
 import { Logger } from 'inngest/middleware/logger'
 
-import { assert } from '@/lib/assert'
+import { assert } from '@/plugins/assert'
 import { getCourse } from '@/server/db/courses/getters'
 import { setModule } from '@/server/db/modules/setters'
 import { CourseParsedModule } from '@/server/db/schema'

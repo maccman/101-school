@@ -3,7 +3,7 @@
 import { ChevronsDown } from 'lucide-react'
 import React, { useState } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/plugins/utils'
 import { Course, CourseUnits } from '@/server/db/courses/types'
 import { CourseEnrollment } from '@/server/db/enrollment/types'
 

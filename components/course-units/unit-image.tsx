@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import { titlize } from '@/lib/titlize'
-import { cn } from '@/lib/utils'
+import { titlize } from '@/plugins/titlize'
+import { cn } from '@/plugins/utils'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   image: {

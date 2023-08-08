@@ -1,4 +1,4 @@
-import { assertString } from '@/lib/assert'
+import { assertString } from '@/plugins/assert'
 import { fetchCompletion } from '@/server/lib/open-ai'
 import { ChatMessage } from '@/server/lib/open-ai/types'
 

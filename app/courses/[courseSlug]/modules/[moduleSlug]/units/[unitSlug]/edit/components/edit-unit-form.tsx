@@ -17,8 +17,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
-import { jsonFetch } from '@/lib/json-fetch'
-import { useLoading } from '@/lib/use-loading'
+import { jsonFetch } from '@/plugins/json-fetch'
+import { useLoading } from '@/plugins/use-loading'
 
 const formSchema = z.object({
   title: z.string().min(2).max(100),

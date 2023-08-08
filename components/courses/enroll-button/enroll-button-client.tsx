@@ -4,7 +4,7 @@ import { CheckCircle, CircleDashed } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/plugins/utils'
 
 import { Button, ButtonProps } from '../../ui/button'
 

@@ -14,8 +14,8 @@ import {
   CommandList,
   CommandDialog as UiCommandDialog,
 } from '@/components/ui/command'
-import { useEventListener } from '@/lib/use-event-listener'
-import { useKeyboardShortcut } from '@/lib/use-keyboard-shortcut'
+import { useEventListener } from '@/plugins/use-event-listener'
+import { useKeyboardShortcut } from '@/plugins/use-keyboard-shortcut'
 
 import { FetchResultsOptions, fetchResults, sortSearchResults } from './utils'
 

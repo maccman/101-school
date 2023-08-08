@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils'
+import { cn } from '@/plugins/utils'
 import { CourseWithImage } from '@/server/db/courses/types'
 
 export function CourseItem({ course }: { course: CourseWithImage }) {

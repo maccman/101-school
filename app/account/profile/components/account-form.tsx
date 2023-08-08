@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
-import { jsonFetch } from '@/lib/json-fetch'
+import { jsonFetch } from '@/plugins/json-fetch'
 
 const accountFormSchema = z.object({
   name: z.string().min(2, {

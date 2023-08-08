@@ -1,4 +1,4 @@
-import { assert } from '@/lib/assert'
+import { assert } from '@/plugins/assert'
 import { getCourseSubscription } from '@/server/db/course_subscriptions/getters'
 import { getCourse, getCourseUnits } from '@/server/db/courses/getters'
 

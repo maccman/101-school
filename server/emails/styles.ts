@@ -44,6 +44,7 @@ export const styles: Record<string, React.CSSProperties> = {
     lineHeight: '1.25',
     marginTop: '1em',
     marginBottom: '0.5em',
+    padding: 0,
   },
 
   text: {

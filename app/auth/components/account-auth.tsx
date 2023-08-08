@@ -16,7 +16,7 @@ export default function AccountAuth({ redirect = '' }: { redirect?: string }) {
     const url = new URL('/auth/complete', window.location.href)
 
     if (redirect) {
-      url.searchParams.set('redirect', redirect)
+      url.searchParams.set('redirect', redirect === 'back' ? document.referrer : redirect)
     }
 
     router.replace(url.toString())

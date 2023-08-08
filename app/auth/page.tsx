@@ -6,7 +6,11 @@ import { auth } from '@/server/helpers/auth'
 
 import { AccountAuth } from './components/account-auth-dynamic'
 
-export default async function AuthenticationPage() {
+export default async function AuthenticationPage({
+  searchParams,
+}: {
+  searchParams?: { redirect?: string }
+}) {
   const userId = await auth()
 
   if (userId) {
@@ -23,7 +27,9 @@ export default async function AuthenticationPage() {
               Enter your email below to create your account
             </p>
           </div>
-          <AccountAuth />
+
+          <AccountAuth redirect={searchParams?.redirect} />
+
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{' '}
             <Link

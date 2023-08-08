@@ -19,8 +19,8 @@ export function uncachedAuth() {
 
 export const auth = cache(uncachedAuth)
 
-export function authRedirect(redirectBack: string = ''): never {
-  redirect(`/auth${redirectBack ? `?redirect=${redirectBack}` : ''}`)
+export function authRedirect(redirectTo = 'back'): never {
+  redirect(`/auth?redirect=${redirectTo}`)
 }
 
 /**

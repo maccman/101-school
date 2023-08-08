@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-// import { baseUrl } from '@/server/helpers/base-url'
+import { baseUrl } from '@/server/helpers/base-url'
 
 export const metadata: Metadata = {
   title: '101.school',
@@ -15,11 +15,10 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
+  icons: [`${baseUrl}/static/logo.png`],
   twitter: {
     title: '101.school',
     description: 'Teach yourself anything.',
-    // card: 'summary',
-    // images: [`${baseUrl}/static/logo.png`],
   },
 }
 

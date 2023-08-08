@@ -153,12 +153,24 @@ export async function searchCourses(query: string) {
   return records
 }
 
-export async function getCoursesByUser(userId: string) {
+export async function getCoursesByEnrolledUser(userId: string) {
   const records = await db
     .selectFrom('courses')
     .innerJoin('course_enrollments', 'courses.id', 'course_enrollments.courseId')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
     .where('course_enrollments.userId', '=', userId)
+    .selectAll(['courses'])
+    .select(['course_images.image as image'])
+    .execute()
+
+  return records
+}
+
+export async function getCoursesByOwner(userId: string) {
+  const records = await db
+    .selectFrom('courses')
+    .leftJoin('course_images', 'courses.id', 'course_images.courseId')
+    .where('courses.ownerId', '=', userId)
     .selectAll(['courses'])
     .select(['course_images.image as image'])
     .execute()

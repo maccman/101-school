@@ -1,16 +1,16 @@
-import { getCoursesByEnrolledUser } from '@/server/db/courses/getters'
+import { getCoursesByOwner } from '@/server/db/courses/getters'
 import { authOrRedirect } from '@/server/helpers/auth'
 
 import { CourseItem } from './components/course-item'
 
-export default async function AccountCourses() {
+export default async function AccountCreatedCourses() {
   const userId = await authOrRedirect()
-  const courses = await getCoursesByEnrolledUser(userId)
+  const courses = await getCoursesByOwner(userId)
 
   return (
     <div className="p-5 flex-1 overflow-auto">
       {courses.length === 0 && (
-        <p className="text-gray-500">You haven&apos;t enrolled in any courses yet.</p>
+        <p className="text-gray-500">You haven&apos;t created any courses yet.</p>
       )}
 
       <div className="space-y-5">

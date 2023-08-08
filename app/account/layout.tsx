@@ -5,8 +5,12 @@ import { SidebarNav } from './components/sidebar-nav'
 
 const sidebarNavItems = [
   {
-    title: 'Courses',
+    title: 'Enrolled courses',
     href: '/account/courses',
+  },
+  {
+    title: 'Created courses',
+    href: '/account/owned-courses',
   },
   {
     title: 'Profile',
@@ -35,7 +39,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           <aside className="-mx-4 lg:w-1/5">
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          <div className="flex-1 lg:max-w-2xl overflow-auto">{children}</div>
+          <div className="flex-1 lg:max-w-3xl overflow-auto">{children}</div>
         </div>
       </div>
     </HeaderLayout>

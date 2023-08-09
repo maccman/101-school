@@ -30,7 +30,7 @@ export async function CoursesLayout({ categorySlug }: CoursesLayout) {
         <Separator className="my-6" />
 
         <div className="flex-1 flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 overflow-hidden">
-          <aside className="lg:w-1/5 flex flex-col flex-none">
+          <aside className="lg:w-1/5 flex-col flex-none hidden lg:flex">
             <CoursesNav />
 
             <footer className="my-8 flex justify-center">

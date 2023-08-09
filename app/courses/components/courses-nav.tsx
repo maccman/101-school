@@ -30,7 +30,7 @@ export function CoursesNav() {
   return (
     <nav
       className={cn(
-        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 flex-grow flex-shrink-0 overflow-hidden overflow-x-auto lg:overflow-y-auto lg:overflow-x-hidden',
+        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 flex-grow flex-shrink-0',
       )}
     >
       {links.map((item) => (
@@ -42,7 +42,7 @@ export function CoursesNav() {
             pathname === item.href
               ? 'bg-muted hover:bg-muted'
               : 'hover:bg-transparent hover:underline',
-            'lg:justify-start lg:text-sm text-xs',
+            'lg:justify-start',
           )}
         >
           {item.title}

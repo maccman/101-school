@@ -17,8 +17,8 @@ interface CoursesLayout {
 export async function CoursesLayout({ categorySlug }: CoursesLayout) {
   return (
     <HeaderLayout>
-      <div className="space-y-6 p-10 pb-0 flex-1 flex flex-col overflow-hidden">
-        <div className="space-y-0.5 flex-none">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="space-y-0.5 flex-none px-10 pt-10">
           <h2 className="text-2xl font-bold tracking-tight">
             What would you like to teach yourself?
           </h2>
@@ -27,9 +27,9 @@ export async function CoursesLayout({ categorySlug }: CoursesLayout) {
           </p>
         </div>
 
-        <Separator className="my-6" />
+        <Separator className="mt-6" />
 
-        <div className="flex-1 flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 overflow-hidden">
+        <div className="flex-1 flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 overflow-hidden p-10">
           <aside className="lg:w-1/5 flex-col flex-none hidden lg:flex">
             <CoursesNav />
 

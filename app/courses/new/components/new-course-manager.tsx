@@ -39,7 +39,7 @@ export function NewCourseManager() {
     defaultValues: {
       title: '',
       description: '',
-      weekCount: 13,
+      weekCount: 4,
     },
   })
 

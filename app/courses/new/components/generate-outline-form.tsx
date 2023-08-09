@@ -88,7 +88,7 @@ export function GenerateOutlineForm({
                 <SelectContent>
                   <SelectItem value="4">4 weeks</SelectItem>
                   <SelectItem value="8">8 weeks</SelectItem>
-                  <SelectItem value="13">13 weeks (recommended)</SelectItem>
+                  <SelectItem value="13">13 weeks</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

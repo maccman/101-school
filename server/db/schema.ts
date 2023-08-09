@@ -73,6 +73,7 @@ export interface Course {
   cipTitle: string | null
   ddcCode: string | null
   ddcTitle: string | null
+  stripePaymentIntentId: string | null
   generatedAt: Timestamp | null
   featuredAt: Timestamp | null
   ownerId: string
@@ -118,6 +119,7 @@ export interface User {
   emails: Generated<string[]>
   lastSignInAt: Timestamp | null
   name: string | null
+  stripeCustomerId: string | null
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }

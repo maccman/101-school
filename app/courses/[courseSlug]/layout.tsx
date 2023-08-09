@@ -11,7 +11,7 @@ import {
   getFirstCourseUnit,
 } from '@/server/db/courses/getters'
 
-import { CourseGenerating } from './components/course-generating'
+import { CourseGenerating } from '../../../components/courses/course-generating'
 
 export async function generateMetadata({
   params,

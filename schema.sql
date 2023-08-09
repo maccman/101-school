@@ -28,7 +28,7 @@ CREATE TABLE users (
   last_sign_in_at TIMESTAMP,
 
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW() 
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE courses (
@@ -50,6 +50,8 @@ CREATE TABLE courses (
 
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
+
+  stripe_payment_intent_id TEXT,
 
   owner_id UUID REFERENCES users(id),
 

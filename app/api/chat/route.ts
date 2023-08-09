@@ -22,7 +22,7 @@ async function createChat(req: Request, { userId }: { userId: string }) {
   const strippedMessages = messages.map((message) => omit(message, 'id', 'createdAt'))
 
   const response = await openai.createChatCompletion({
-    model: 'gpt-4',
+    model: 'gpt-3.5-turbo',
     stream: true,
     messages: strippedMessages,
   })

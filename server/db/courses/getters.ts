@@ -1,3 +1,5 @@
+import { CIP_CATEGORIES } from '@/lib/cip-category'
+
 import { COURSE_SANS_CONTENT_KEYS, CourseModule } from './types'
 import { db } from '../edge-db'
 
@@ -140,6 +142,34 @@ export async function getFeaturedCourses() {
     .execute()
 
   return records
+}
+
+export async function getFeaturedCoursesByCategoryCodes(categoryCodes: string[]) {
+  const records = await db
+    .selectFrom('courses')
+    .leftJoin('course_images', 'courses.id', 'course_images.courseId')
+    .select(COURSE_SANS_CONTENT_KEYS)
+    .select(['course_images.image as image'])
+    .where('courses.generatedAt', 'is not', null)
+    .where('courses.featuredAt', 'is not', null)
+    .where((eb) =>
+      eb.or(categoryCodes.map((code) => eb('courses.cipCode', 'like', `${code}%`))),
+    )
+    .orderBy('courses.featuredAt', 'desc')
+    .execute()
+
+  return records
+}
+
+export async function getFeaturedCoursesByCategorySlug(categorySlug: string) {
+  const codes =
+    CIP_CATEGORIES.find((category) => category.slug === categorySlug)?.codes ?? []
+
+  if (codes.length === 0) {
+    return []
+  }
+
+  return getFeaturedCoursesByCategoryCodes(codes)
 }
 
 export async function searchCourses(query: string) {

@@ -18,15 +18,18 @@ export function CourseCard({ course, ...props }: Props) {
             <img
               src={course.image.source}
               alt={course.title}
-              className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105"
+              className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
             />
           </div>
         )}
 
         <div>
-          <h3 className="text-lg">{course.title}</h3>
+          <h3 className="truncate font-medium tracking-tight">{course.title}</h3>
           {course.description && (
-            <h4 className="text-sm truncate" title={course.description}>
+            <h4
+              className="text-sm text-muted-foreground truncate"
+              title={course.description}
+            >
               {course.description}
             </h4>
           )}

@@ -30,6 +30,13 @@ export interface CourseParsedRecommendedReading {
   title: string
 }
 
+export interface UnitChatMessage {
+  id?: string
+  content?: string
+  role: string
+  createdAt?: string
+}
+
 // Semi-generated types:
 
 // Update process
@@ -129,21 +136,19 @@ export interface CourseEnrollment {
   unitCount: number
 }
 
-export interface UnitMessage {
-  id: Generated<string>
-  userId: string
-  unitId: string
-  content: string
-  role: string
-  createdAt: Generated<Timestamp>
-}
-
 export interface CourseSubscription {
   id: Generated<string>
   userId: string | null
   courseId: string
   daysInterval: number
   email: string
+  createdAt: Generated<Timestamp>
+}
+
+export interface UnitChat {
+  userId: string
+  unitId: string
+  messages: UnitChatMessage[]
   createdAt: Generated<Timestamp>
 }
 
@@ -155,6 +160,6 @@ export interface DB {
   users: User
   course_images: CourseImage
   course_enrollments: CourseEnrollment
-  unit_messages: UnitMessage
   course_subscriptions: CourseSubscription
+  unit_chats: UnitChat
 }

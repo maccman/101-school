@@ -2,9 +2,9 @@
 
 import { useChat } from 'ai/react'
 import Link from 'next/link'
-import React from 'react'
 
 import { cn } from '@/lib/utils'
+import { uuid } from '@/lib/uuid'
 
 import { ChatMessage } from './chat-message'
 import { Message } from './types'
@@ -14,19 +14,26 @@ import { buttonVariants } from '../ui/button'
 import { Input } from '../ui/input'
 
 interface ChatSidebarProps {
+  userId: string | null
+  unitId: string
   initialMessages?: Message[]
   className?: string
-  promptAuth?: boolean
 }
 
 export function ChatSidebarClient({
+  userId,
+  unitId,
   initialMessages,
   className,
-  promptAuth = false,
 }: ChatSidebarProps) {
-  const { append, messages, input, handleInputChange, handleSubmit, isLoading } = useChat(
+  const { append, messages, input, handleSubmit, handleInputChange, isLoading } = useChat(
     {
+      id: `${unitId}-${userId ?? 'anonymous'}`,
       initialMessages,
+      sendExtraMessageFields: true,
+      body: {
+        unitId,
+      },
     },
   )
 
@@ -34,10 +41,13 @@ export function ChatSidebarClient({
 
   function addUserMessage(content: string) {
     append({
+      id: uuid(),
       role: 'user',
       content,
     })
   }
+
+  const promptAuth = !userId
 
   return (
     <div

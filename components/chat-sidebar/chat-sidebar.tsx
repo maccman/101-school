@@ -2,7 +2,7 @@ import { Message } from 'ai'
 import sample from 'lodash/sample'
 import { notFound } from 'next/navigation'
 
-import { getUnitMessages } from '@/server/db/messages/getters'
+import { getUnitChat } from '@/server/db/unit_chats/getters'
 import { getUnit } from '@/server/db/units/getters'
 import { auth } from '@/server/helpers/auth'
 
@@ -29,7 +29,8 @@ export async function ChatSidebar({ unitId, className }: ChatSidebarProps) {
 
   return (
     <ChatSidebarClient
-      promptAuth={!userId}
+      unitId={unitId}
+      userId={userId}
       initialMessages={initialMessages}
       className={className}
     />
@@ -45,12 +46,14 @@ async function getInitialMessages({
   unitId: string
   unitContent: string
 }): Promise<Message[]> {
-  const unitMessages = userId ? await getUnitMessages({ userId, unitId }) : []
+  const unitChat = userId ? await getUnitChat({ userId, unitId }) : null
+  const unitMessages = unitChat?.messages ?? []
 
-  return [
-    ...getSystemMessages(unitContent),
-    ...unitMessages.map(unitMessageToChatMessage),
-  ]
+  if (unitChat) {
+    return unitMessages.map(unitMessageToChatMessage)
+  } else {
+    return getDefaultMessages(unitContent)
+  }
 }
 
 const assistantOpenerOptions = [
@@ -62,7 +65,7 @@ const assistantOpenerOptions = [
   'Good morning my good sir, any questions for me?',
 ]
 
-function getSystemMessages(unitContent: string): Message[] {
+function getDefaultMessages(unitContent: string): Message[] {
   return [
     {
       id: 'system-1',

@@ -1,7 +1,6 @@
 import { HeaderLayout } from '@/components/layouts/header-layout'
+import { SidebarNav } from '@/components/sidebar-nav'
 import { Separator } from '@/components/ui/separator'
-
-import { SidebarNav } from '../../components/sidebar-nav'
 
 const sidebarNavItems = [
   {

@@ -8,8 +8,14 @@ async function main() {
   const courses = await getCourses()
 
   for (const course of courses) {
+    if (course.cipCode) {
+      continue
+    }
+
     const headline =
-      course.parsedContent.headline || course.parsedContent.outline || course.description
+      course.parsedContent?.headline ||
+      course.parsedContent?.outline ||
+      course.description
 
     if (!headline) {
       console.warn(`No headline for course ${course.id}`)

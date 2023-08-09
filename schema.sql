@@ -193,3 +193,13 @@ CREATE TABLE course_subscriptions (
 
   UNIQUE (course_id, email)
 );
+
+CREATE TABLE unit_chats (
+  user_id UUID REFERENCES users(id) NOT NULL,
+  unit_id UUID REFERENCES course_module_units(id) NOT NULL,
+
+  messages JSONB[] DEFAULT '{}'::JSONB[] NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+  UNIQUE (user_id, unit_id)
+);

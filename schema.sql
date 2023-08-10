@@ -50,7 +50,7 @@ CREATE TABLE courses (
 
   language TEXT,
   targeting TEXT,
-  weekCount INT,
+  week_count INT,
 
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
@@ -204,4 +204,3 @@ CREATE TABLE unit_chats (
 
   UNIQUE (user_id, unit_id)
 );
-

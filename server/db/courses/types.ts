@@ -34,6 +34,8 @@ export const COURSE_SANS_CONTENT_KEYS = [
   'courses.ddcCode',
   'courses.ddcTitle',
   'courses.language',
+  'courses.targeting',
+  'courses.weekCount',
   'courses.generatedAt',
   'courses.featuredAt',
   'courses.ownerId',

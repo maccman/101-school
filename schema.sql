@@ -48,6 +48,8 @@ CREATE TABLE courses (
   ddc_code TEXT,
   ddc_title TEXT,
 
+  language TEXT,
+
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
 

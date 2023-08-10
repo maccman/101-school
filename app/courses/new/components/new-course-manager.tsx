@@ -40,6 +40,7 @@ export function NewCourseManager() {
       title: '',
       description: '',
       weekCount: 4,
+      language: 'English',
     },
   })
 
@@ -66,7 +67,7 @@ export function NewCourseManager() {
   }
 
   async function handleSubmit() {
-    const { title, description } = generateOutlineForm.getValues()
+    const { title, description, language } = generateOutlineForm.getValues()
     const { content } = confirmOutlineForm.getValues()
 
     await withLoading(async () => {
@@ -74,6 +75,7 @@ export function NewCourseManager() {
         title,
         description,
         content,
+        language,
       })
 
       if (error) {
@@ -90,8 +92,9 @@ export function NewCourseManager() {
   useEffect(() => {
     if (generatedContent) {
       // Sync the generated content to the confirm form
-      const normalizedGeneratedContent = stripTripleBackticks(generatedContent)
-      confirmOutlineForm.setValue('content', normalizedGeneratedContent, {
+      const content = stripTripleBackticks(generatedContent)
+
+      confirmOutlineForm.setValue('content', content, {
         shouldDirty: true,
         shouldTouch: true,
         shouldValidate: true,
@@ -153,7 +156,12 @@ async function fetchCourseOutlineStream(
   return stream
 }
 
-function createCourse(values: { title: string; description: string; content: string }) {
+function createCourse(values: {
+  title: string
+  description: string
+  content: string
+  language: string
+}) {
   return jsonFetch<{ id: string }>('/api/courses', {
     method: 'POST',
     data: values,

@@ -74,6 +74,8 @@ export interface Course {
   ddcCode: string | null
   ddcTitle: string | null
   language: string | null
+  targeting: string | null
+  weekCount: number | null
   generatedAt: Timestamp | null
   featuredAt: Timestamp | null
   ownerId: string

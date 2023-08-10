@@ -67,16 +67,13 @@ export function NewCourseManager() {
   }
 
   async function handleSubmit() {
-    const { title, description, language } = generateOutlineForm.getValues()
-    const { content } = confirmOutlineForm.getValues()
+    const values = {
+      ...generateOutlineForm.getValues(),
+      ...confirmOutlineForm.getValues(),
+    }
 
     await withLoading(async () => {
-      const { error, response } = await createCourse({
-        title,
-        description,
-        content,
-        language,
-      })
+      const { error, response } = await createCourse(values)
 
       if (error) {
         alert('Sorry, something went wrong. Please try again.')
@@ -156,12 +153,15 @@ async function fetchCourseOutlineStream(
   return stream
 }
 
-function createCourse(values: {
+interface CreateCourseRequest {
   title: string
   description: string
   content: string
   language: string
-}) {
+  weekCount: number
+}
+
+function createCourse(values: CreateCourseRequest) {
   return jsonFetch<{ id: string }>('/api/courses', {
     method: 'POST',
     data: values,

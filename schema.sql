@@ -49,6 +49,8 @@ CREATE TABLE courses (
   ddc_title TEXT,
 
   language TEXT,
+  targeting TEXT,
+  week_count INT,
 
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
@@ -202,4 +204,3 @@ CREATE TABLE unit_chats (
 
   UNIQUE (user_id, unit_id)
 );
-

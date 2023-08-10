@@ -10,7 +10,8 @@ import { inngest } from '@/server/jobs/client'
 
 const ApiSchema = z.object({
   title: z.string().min(2).max(100),
-  language: z.string().optional(),
+  language: z.string().optional().default('English'),
+  weekCount: z.number().default(4),
   description: z.string().min(10).max(5000),
   content: z.string().min(10).max(5000),
 })
@@ -21,7 +22,7 @@ export const POST = withAuth(
   withApiBuilder<ApiRequestParams, { userId: string }>(
     ApiSchema,
     async (request, { data, userId }) => {
-      const { title, description, content, language = 'English' } = data
+      const { title, description, content, language, weekCount } = data
 
       const slug = await generateUniqueCourseSlug(slugify(title))
 
@@ -29,6 +30,7 @@ export const POST = withAuth(
         ownerId: userId,
         title,
         language,
+        weekCount,
         description,
         content,
         slug,

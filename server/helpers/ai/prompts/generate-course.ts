@@ -42,7 +42,7 @@ export function generateCoursePrompt(
       - Subject matter: ${description}
       - Target audience: ${targeting}
       - Number of weeks: ${weekCount}
-      - Language: ${language}
+      - Outline and course language: ${language}
 
       Each week will cover one module.
       Each module will be split into three to four units.

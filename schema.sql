@@ -49,6 +49,8 @@ CREATE TABLE courses (
   ddc_title TEXT,
 
   language TEXT,
+  targeting TEXT,
+  weekCount INT,
 
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,

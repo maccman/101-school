@@ -15,6 +15,7 @@ interface Params {
 interface Options {
   weekCount?: number
   targeting?: string
+  language?: string
 }
 
 export async function generateUnit(params: Params, options: Options = {}) {

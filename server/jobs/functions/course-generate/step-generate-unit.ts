@@ -32,13 +32,20 @@ export async function stepGenerateUnit({
     unitNumber: parsedUnit.number,
   })
 
-  const unitContent = await generateUnit({
-    courseDescription: course.description,
-    courseBody: course.content,
-    moduleBody: courseModule.content,
-    moduleNumber: parsedModule.week,
-    unitNumber: extractUnitNumber(parsedUnit.number),
-  })
+  const unitContent = await generateUnit(
+    {
+      courseDescription: course.description,
+      courseBody: course.content,
+      moduleBody: courseModule.content,
+      moduleNumber: parsedModule.week,
+      unitNumber: extractUnitNumber(parsedUnit.number),
+    },
+    {
+      targeting: course.targeting ?? undefined,
+      weekCount: course.weekCount ?? undefined,
+      language: course.language ?? undefined,
+    },
+  )
 
   const wikipediaUrls = await safeGenerateWikipediaUrls(unitContent)
 

@@ -27,8 +27,8 @@ async function createCheckoutSession(
         quantity: 1,
       },
     ],
-    success_url: `${origin}/payments/success`,
-    cancel_url: `${origin}/payments/cancel`,
+    success_url: `${origin}/payments/success?courseId=${courseId}`,
+    cancel_url: `${origin}/payments/failure?courseId=${courseId}`,
   }
 
   console.log('[stripe] Creating session', { sessionParams })

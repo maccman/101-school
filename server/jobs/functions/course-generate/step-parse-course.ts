@@ -35,7 +35,9 @@ export async function stepParseCourse({
 
   // Extract structured data from course
   logger.info('Parsing course', { courseId })
-  const parsedContent = await parseCourse(content)
+  const parsedContent = await parseCourse(content, {
+    language: course.language ?? undefined,
+  })
 
   // Extract CIP code and title from course
   logger.info('Parsing CIP code and title', { courseId })

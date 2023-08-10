@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation'
 
 import { CourseUnit } from '@/components/course-units/course-unit'
-import { getCourseBySlug, getFirstCourseUnit } from '@/server/db/courses/getters'
+import { getCourseBySlugOrId, getFirstCourseUnit } from '@/server/db/courses/getters'
 import { getModule } from '@/server/db/modules/getters'
 
 export default async function CoursePage({ params }: { params: { courseSlug: string } }) {
-  const course = await getCourseBySlug(params.courseSlug)
+  const course = await getCourseBySlugOrId(params.courseSlug)
 
   if (!course) {
     return notFound()

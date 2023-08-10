@@ -73,6 +73,7 @@ export interface Course {
   cipTitle: string | null
   ddcCode: string | null
   ddcTitle: string | null
+  language: string | null
   generatedAt: Timestamp | null
   featuredAt: Timestamp | null
   ownerId: string

@@ -33,6 +33,7 @@ export const COURSE_SANS_CONTENT_KEYS = [
   'courses.cipTitle',
   'courses.ddcCode',
   'courses.ddcTitle',
+  'courses.language',
   'courses.generatedAt',
   'courses.featuredAt',
   'courses.ownerId',

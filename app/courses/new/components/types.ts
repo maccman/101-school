@@ -4,6 +4,7 @@ export const generateOutlineFormSchema = z.object({
   title: z.string().min(2).max(100),
   description: z.string().min(10).max(5000),
   weekCount: z.coerce.number().int().min(1).max(13),
+  language: z.string(),
 })
 
 export type GenerateOutlineFormValues = z.infer<typeof generateOutlineFormSchema>

@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
+import { LanguageSelect } from './language-select'
 import { GenerateOutlineFormValues } from './types'
 
 interface GenerateOutlineFormProps {
@@ -91,6 +92,21 @@ export function GenerateOutlineForm({
                   <SelectItem value="13">13 weeks</SelectItem>
                 </SelectContent>
               </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="language"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Course language</FormLabel>
+              <LanguageSelect
+                onValueChange={field.onChange}
+                defaultValue={field.value + ''}
+              />
               <FormMessage />
             </FormItem>
           )}

@@ -48,6 +48,8 @@ CREATE TABLE courses (
   ddc_code TEXT,
   ddc_title TEXT,
 
+  language TEXT,
+
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
 
@@ -71,7 +73,7 @@ CREATE TABLE course_modules (
 
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  course_id UUID REFERENCES courses(id) NOT NULL ON DELETE CASCADE,
+  course_id UUID REFERENCES courses(id) NOT NULL,
   
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -85,7 +87,7 @@ CREATE TABLE course_module_units (
   number INT NOT NULL,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  module_id UUID REFERENCES course_modules(id) NOT NULL ON DELETE CASCADE,
+  module_id UUID REFERENCES course_modules(id) NOT NULL,
 
   wikipedia_urls TEXT[] DEFAULT '{}'::TEXT[] NOT NULL,
 
@@ -102,8 +104,8 @@ CREATE INDEX course_module_units_content_index ON course_module_units USING GIN 
 
 CREATE TABLE course_enrollments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES users(id) NOT NULL ON DELETE CASCADE,
-  course_id UUID REFERENCES courses(id) NOT NULL ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) NOT NULL,
+  course_id UUID REFERENCES courses(id) NOT NULL,
 
   enrolled_at TIMESTAMP NOT NULL DEFAULT NOW(),
 
@@ -152,10 +154,8 @@ WITH ordered_units AS (
       course_module_units.number AS unit_number, 
       course_modules.number AS module_number,
       course_modules.course_id AS course_id
-  FROM 
-      course_module_units 
-  JOIN 
-      course_modules ON course_module_units.module_id = course_modules.id 
+  FROM course_module_units 
+  JOIN course_modules ON course_module_units.module_id = course_modules.id 
   ORDER BY 
       course_modules.course_id,
       course_modules.number, 
@@ -167,9 +167,9 @@ SELECT
     module_id,
     LEAD(id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_id,
     LEAD(module_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_module_id,
-    LEAD(course_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_course_id,
+    LEAD(course_id) OVER (PARTITION BY course_id ORDER BY module_number, unit_number) AS next_course_id
 FROM 
-    ordered_units
+    ordered_units;
 
 CREATE TABLE unit_messages (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -202,3 +202,4 @@ CREATE TABLE unit_chats (
 
   UNIQUE (user_id, unit_id)
 );
+

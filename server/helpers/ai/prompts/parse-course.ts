@@ -38,7 +38,7 @@ interface ParseCourseOptions {
 
 export async function parseCourse(
   courseBody: string,
-  options: ParseCourseOptions,
+  options: ParseCourseOptions = {},
 ): Promise<Parsed> {
   const result = await fetchCompletion({
     messages: getChatMessages(courseBody, options),

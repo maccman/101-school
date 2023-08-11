@@ -15,7 +15,7 @@ const categoryLinks = CIP_CATEGORIES.map((category) => ({
 const links = [
   {
     href: '/courses',
-    title: 'All Courses',
+    title: 'Featured Courses',
   },
   ...categoryLinks,
 ]

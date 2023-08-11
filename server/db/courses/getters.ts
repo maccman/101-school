@@ -177,6 +177,7 @@ export async function searchCourses(query: string) {
     .selectFrom('courses')
     .where('title', 'like', `%${query}%`)
     .where('featuredAt', 'is not', null)
+    .where('generatedAt', 'is not', null)
     .select(COURSE_SANS_CONTENT_KEYS)
     .limit(10)
     .execute()

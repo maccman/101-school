@@ -176,6 +176,7 @@ export async function searchCourses(query: string) {
   const records = await db
     .selectFrom('courses')
     .where('title', 'like', `%${query}%`)
+    .where('featuredAt', 'is not', null)
     .select(COURSE_SANS_CONTENT_KEYS)
     .limit(10)
     .execute()

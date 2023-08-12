@@ -11,7 +11,7 @@ import { inngest } from '@/server/jobs/client'
 const ApiSchema = z.object({
   title: z.string().min(2).max(100),
   language: z.string().optional().default('English'),
-  weekCount: z.number().default(4),
+  weekCount: z.coerce.number().default(4),
   description: z.string().min(10).max(5000),
   content: z.string().min(10).max(5000),
 })

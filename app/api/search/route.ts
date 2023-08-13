@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 import { SearchResult } from '@/app/types'
-import { getCourses, searchCourses } from '@/server/db/courses/getters'
+import { getFeaturedCourses, searchCourses } from '@/server/db/courses/getters'
 import { CourseSansContent } from '@/server/db/courses/types'
 import { getUnitsByCourse, searchUnits } from '@/server/db/units/getters'
 import { CourseModuleUnit } from '@/server/db/units/types'
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
 
 async function getAllSearchResults(courseId: string | null): Promise<SearchResult[]> {
   const allUnits = courseId ? await getUnitsByCourse(courseId) : []
-  const allCourses = await getCourses()
+  const allCourses = await getFeaturedCourses()
 
   return [...allUnits.map(unitToSearchResult), ...allCourses.map(courseToSearchResult)]
 }

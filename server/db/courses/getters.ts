@@ -140,6 +140,7 @@ export async function getFeaturedCourses() {
     .where('courses.generatedAt', 'is not', null)
     .where('courses.featuredAt', 'is not', null)
     .orderBy('courses.featuredAt', 'desc')
+    .orderBy('courses.title', 'asc')
     .execute()
 
   return records

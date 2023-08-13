@@ -5,11 +5,14 @@ interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     slug: string
     title: string
     headline: string
+    description: string
     image: { source: string } | null
   }
 }
 
 export function CourseCard({ course, ...props }: Props) {
+  const headline = course.headline || course.description
+
   return (
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
@@ -25,12 +28,9 @@ export function CourseCard({ course, ...props }: Props) {
 
         <div>
           <h3 className="truncate font-medium tracking-tight">{course.title}</h3>
-          {course.headline && (
-            <h4
-              className="text-sm text-muted-foreground truncate"
-              title={course.headline}
-            >
-              {course.headline}
+          {headline && (
+            <h4 className="text-sm text-muted-foreground truncate" title={headline}>
+              {headline}
             </h4>
           )}
         </div>

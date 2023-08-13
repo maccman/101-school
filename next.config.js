@@ -17,6 +17,11 @@ const nextConfig = {
         destination: '/account/courses',
         permanent: false,
       },
+      {
+        source: '/api/redirects/:path*',
+        destination: '/api/redirect/:path*',
+        permanent: false,
+      },
     ]
   },
 }

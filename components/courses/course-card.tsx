@@ -4,7 +4,7 @@ interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   course: {
     slug: string
     title: string
-    description: string
+    headline: string
     image: { source: string } | null
   }
 }
@@ -25,12 +25,12 @@ export function CourseCard({ course, ...props }: Props) {
 
         <div>
           <h3 className="truncate font-medium tracking-tight">{course.title}</h3>
-          {course.description && (
+          {course.headline && (
             <h4
               className="text-sm text-muted-foreground truncate"
-              title={course.description}
+              title={course.headline}
             >
-              {course.description}
+              {course.headline}
             </h4>
           )}
         </div>

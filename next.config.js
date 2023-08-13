@@ -19,6 +19,16 @@ const nextConfig = {
       },
     ]
   },
+
+  rewrites: async () => {
+    return [
+      // Alias for plural route
+      {
+        source: '/api/redirects/:path*',
+        destination: '/api/redirect/:path*',
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig

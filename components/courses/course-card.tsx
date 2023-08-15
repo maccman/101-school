@@ -1,7 +1,7 @@
 'use client'
 
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import Link from 'next/link'
-import { useState } from 'react'
 
 import { Skeleton } from '../ui/skeleton'
 
@@ -16,26 +16,21 @@ interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function CourseCard({ course, ...props }: Props) {
-  const [imageError, setImageError] = useState(false)
-
   const headline = course.headline || course.description
-
-  const imageSrc = imageError ? null : course.image?.source
 
   return (
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
         <div className="rounded-md overflow-hidden max-w-[500px]">
-          {imageSrc ? (
-            <img
-              src={imageSrc}
-              alt={course.title}
-              className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
-              onError={() => setImageError(true)}
+          <Avatar>
+            <AvatarImage
+              src={course.image?.source}
+              className="h-full w-full min-h-[150px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
             />
-          ) : (
-            <Skeleton className="h-20 w-full" />
-          )}
+            <AvatarFallback>
+              <Skeleton className="min-h-[150px] w-full" />
+            </AvatarFallback>
+          </Avatar>
         </div>
 
         <div>

@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { useState } from 'react'
+
+import { Skeleton } from '../ui/skeleton'
 
 interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   course: {
@@ -11,19 +14,26 @@ interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function CourseCard({ course, ...props }: Props) {
+  const [imageError, setImageError] = useState(false)
+
   const headline = course.headline || course.description
+
+  const imgSrc = imageError ? null : course.image?.source
 
   return (
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
-        {course.image?.source && (
+        {imgSrc ? (
           <div className="rounded-md overflow-hidden max-w-[500px]">
             <img
-              src={course.image.source}
+              src={imgSrc}
               alt={course.title}
               className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
+              onError={() => setImageError(true)}
             />
           </div>
+        ) : (
+          <Skeleton className="h-20 w-full" />
         )}
 
         <div>

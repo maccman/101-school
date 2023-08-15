@@ -35,7 +35,7 @@ export function CourseCard({ course, ...props }: Props) {
             />
           </div>
         ) : (
-          <Skeleton className="h-20 w-full" />
+          <Skeleton className="h-20 w-full max-w-[500px] rounded-md" />
         )}
 
         <div>

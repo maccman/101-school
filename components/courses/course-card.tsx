@@ -25,18 +25,18 @@ export function CourseCard({ course, ...props }: Props) {
   return (
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
-        {imageSrc ? (
-          <div className="rounded-md overflow-hidden max-w-[500px]">
+        <div className="rounded-md overflow-hidden max-w-[500px]">
+          {imageSrc ? (
             <img
               src={imageSrc}
               alt={course.title}
               className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
               onError={() => setImageError(true)}
             />
-          </div>
-        ) : (
-          <Skeleton className="h-20 w-full max-w-[500px] rounded-md" />
-        )}
+          ) : (
+            <Skeleton className="h-20 w-full" />
+          )}
+        </div>
 
         <div>
           <h3 className="truncate font-medium tracking-tight">{course.title}</h3>

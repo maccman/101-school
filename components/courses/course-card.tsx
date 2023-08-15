@@ -20,15 +20,15 @@ export function CourseCard({ course, ...props }: Props) {
 
   const headline = course.headline || course.description
 
-  const imgSrc = imageError ? null : course.image?.source
+  const imageSrc = imageError ? null : course.image?.source
 
   return (
     <Link href={`/courses/${course.slug}`} {...props}>
       <div className="space-y-2">
-        {imgSrc ? (
+        {imageSrc ? (
           <div className="rounded-md overflow-hidden max-w-[500px]">
             <img
-              src={imgSrc}
+              src={imageSrc}
               alt={course.title}
               className="h-full w-full min-h-[20px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
               onError={() => setImageError(true)}

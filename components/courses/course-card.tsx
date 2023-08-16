@@ -1,7 +1,9 @@
 'use client'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
+import Image from 'next/image'
 import Link from 'next/link'
+import { use, useEffect, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -26,16 +28,16 @@ export function CourseCard({ course, className, ...props }: Props) {
       className={cn('flex flex-col space-y-2', className)}
       {...props}
     >
-      <div className="rounded-md overflow-hidden max-w-[500px] flex-1 flex flex-col">
-        <Avatar className="flex flex-1 flex-col">
-          <AvatarImage
+      <div className="rounded-md overflow-hidden max-w-[500px] min-h-[150px] flex-1 flex flex-col relative bg-muted">
+        {course.image?.source ? (
+          <Image
+            alt={course.title}
             src={course.image?.source}
-            className="h-full w-full min-h-[150px] object-cover aspect-video transition-all hover:scale-105 bg-muted"
+            fill={true}
+            className=" object-cover aspect-video transition-all hover:scale-105"
+            priority
           />
-          <AvatarFallback className="flex-1 flex flex-col">
-            <Skeleton className="min-h-[150px] h-full w-full" />
-          </AvatarFallback>
-        </Avatar>
+        ) : null}
       </div>
 
       <div className="flex-none">

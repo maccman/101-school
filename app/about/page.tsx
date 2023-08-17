@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { HeaderLayout } from '@/components/layouts/header-layout'
 
 export default function About() {
@@ -26,6 +28,16 @@ export default function About() {
         <p>
           An <a href="https://alexmaccaw.com">Alex MacCaw</a> project.
         </p>
+
+        <footer className="text-sm text-muted-foreground mt-10">
+          <Link prefetch={false} href="/terms">
+            Terms of Service
+          </Link>{' '}
+          and{' '}
+          <Link prefetch={false} href="/privacy">
+            Privacy Policy
+          </Link>
+        </footer>
       </div>
     </HeaderLayout>
   )

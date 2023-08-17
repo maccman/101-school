@@ -36,9 +36,7 @@ export async function safeGetUserIdFromSessionToken(token: string) {
   }
 }
 
-export const getEmailsFromSessionToken = async (
-  token: string,
-): Promise<null | string[]> => {
+export async function getEmailsFromSessionToken(token: string): Promise<null | string[]> {
   const request = await fetch(`${hankoApiUrl}/emails`, {
     headers: {
       Authorization: `Bearer ${token}`,

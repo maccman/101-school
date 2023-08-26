@@ -41,4 +41,5 @@ export const COURSE_SANS_CONTENT_KEYS = [
   'courses.ownerId',
   'courses.createdAt',
   'courses.updatedAt',
+  'courses.deletedAt',
 ] as const

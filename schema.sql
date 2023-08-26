@@ -54,6 +54,7 @@ CREATE TABLE courses (
 
   generated_at TIMESTAMP,
   featured_at TIMESTAMP,
+  deleted_at TIMESTAMP,
 
   owner_id UUID REFERENCES users(id),
 
@@ -66,6 +67,7 @@ CREATE INDEX courses_title_index ON courses USING GIN (to_tsvector('english', ti
 CREATE INDEX courses_description_index ON courses USING GIN (to_tsvector('english', description));
 CREATE INDEX courses_cip_title_index ON courses (cip_title);
 CREATE INDEX courses_ddc_title_index ON courses (ddc_title);
+CREATE INDEX courses_deleted_at_index ON courses (deleted_at);
 
 CREATE TABLE course_modules (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

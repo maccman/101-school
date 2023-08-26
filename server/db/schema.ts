@@ -79,6 +79,7 @@ export interface Course {
   generatedAt: Timestamp | null
   featuredAt: Timestamp | null
   ownerId: string
+  deletedAt: Timestamp | null
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }

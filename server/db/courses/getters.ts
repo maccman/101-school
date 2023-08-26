@@ -7,28 +7,19 @@ export async function getCourses() {
   const records = await db
     .selectFrom('courses')
     .select(COURSE_SANS_CONTENT_KEYS)
+    .where('deletedAt', 'is not', null)
     .orderBy('title', 'asc')
     .execute()
 
   return records
 }
 
-export async function getCourseByTitle(courseTitle: string) {
-  const record = await db
-    .selectFrom('courses')
-    .selectAll()
-    .where('title', '=', courseTitle)
-    .executeTakeFirst()
-
-  return record ?? null
-}
-
 export async function getCourseBySlug(courseSlug: string) {
   const record = await db
-
     .selectFrom('courses')
     .selectAll()
     .where('slug', '=', courseSlug)
+    .where('deletedAt', 'is not', null)
     .executeTakeFirst()
 
   return record ?? null
@@ -43,6 +34,7 @@ export async function getCourse(courseId: string) {
     .selectFrom('courses')
     .selectAll()
     .where('id', '=', courseId)
+    .where('deletedAt', 'is not', null)
     .executeTakeFirst()
 
   return record ?? null
@@ -139,6 +131,7 @@ export async function getFeaturedCourses() {
     .select(({ ref }) => ref('parsedContent', '->>').key('headline').as('headline'))
     .where('courses.generatedAt', 'is not', null)
     .where('courses.featuredAt', 'is not', null)
+    .where('courses.deletedAt', 'is not', null)
     .orderBy('courses.featuredAt', 'desc')
     .orderBy('courses.title', 'asc')
     .execute()
@@ -181,6 +174,7 @@ export async function searchCourses(query: string) {
     .where('title', 'like', `%${query}%`)
     .where('featuredAt', 'is not', null)
     .where('generatedAt', 'is not', null)
+    .where('deletedAt', 'is not', null)
     .select(COURSE_SANS_CONTENT_KEYS)
     .limit(10)
     .execute()
@@ -194,6 +188,7 @@ export async function getCoursesByEnrolledUser(userId: string) {
     .innerJoin('course_enrollments', 'courses.id', 'course_enrollments.courseId')
     .leftJoin('course_images', 'courses.id', 'course_images.courseId')
     .where('course_enrollments.userId', '=', userId)
+    .where('courses.deletedAt', 'is not', null)
     .selectAll(['courses'])
     .select(['course_images.image as image'])
     .execute()

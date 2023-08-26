@@ -8,9 +8,9 @@ export default async function TermsPage() {
           <h1>Terms of Service</h1>
           <p>
             <strong>Acceptance of Terms:</strong> By accessing and using the{' '}
-            <a href="http://101.school">101.school</a> website (&aquot;Service&aquot;),
-            you agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do
-            not agree with any part of these Terms, you must not use the Service.
+            <a href="https://101.school">101.school</a> website (&quot;Service&quot;), you
+            agree to be bound by these Terms of Service (&quot;Terms&quot;). If you do not
+            agree with any part of these Terms, you must not use the Service.
           </p>
           <p>
             <strong>Description of Service:</strong> 101 School is AI course generator.
@@ -39,8 +39,8 @@ export default async function TermsPage() {
           </p>
           <p>
             <strong>User-Generated Content and Intellectual Property Rights:</strong> By
-            uploading OpenAPI specifications or any other content to the Service, you
-            agree to license such content under the{' '}
+            uploading course descriptions or any other content to the Service, you agree
+            to license such content under the{' '}
             <a href="https://opensource.org/licenses/MIT">MIT license</a>. You represent
             and warrant that you have the necessary rights to license your content in this
             manner.

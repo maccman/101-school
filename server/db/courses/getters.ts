@@ -7,7 +7,7 @@ export async function getCourses() {
   const records = await db
     .selectFrom('courses')
     .select(COURSE_SANS_CONTENT_KEYS)
-    .where('deletedAt', 'is not', null)
+    .where('deletedAt', 'is', null)
     .orderBy('title', 'asc')
     .execute()
 
@@ -19,7 +19,7 @@ export async function getCourseBySlug(courseSlug: string) {
     .selectFrom('courses')
     .selectAll()
     .where('slug', '=', courseSlug)
-    .where('deletedAt', 'is not', null)
+    .where('deletedAt', 'is', null)
     .executeTakeFirst()
 
   return record ?? null
@@ -34,7 +34,7 @@ export async function getCourse(courseId: string) {
     .selectFrom('courses')
     .selectAll()
     .where('id', '=', courseId)
-    .where('deletedAt', 'is not', null)
+    .where('deletedAt', 'is', null)
     .executeTakeFirst()
 
   return record ?? null
@@ -174,7 +174,7 @@ export async function searchCourses(query: string) {
     .where('title', 'like', `%${query}%`)
     .where('featuredAt', 'is not', null)
     .where('generatedAt', 'is not', null)
-    .where('deletedAt', 'is not', null)
+    .where('deletedAt', 'is', null)
     .select(COURSE_SANS_CONTENT_KEYS)
     .limit(10)
     .execute()

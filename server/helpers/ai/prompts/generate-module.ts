@@ -13,6 +13,7 @@ interface Params {
 interface Options {
   weekCount?: number
   targeting?: string
+  language?: string
 }
 
 export async function generateModule(params: Params, options: Options = {}) {

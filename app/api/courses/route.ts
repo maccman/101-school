@@ -1,29 +1,50 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 
 import { slugify } from '@/lib/slugify'
 import { generateUniqueCourseSlug } from '@/server/db/courses/getters'
 import { createCourse } from '@/server/db/courses/setters'
+import { withApiBuilder } from '@/server/helpers/api-builder'
 import { withAuth } from '@/server/helpers/auth'
-import { error } from '@/server/helpers/error'
+import { inngest } from '@/server/jobs/client'
 
-async function handleCreateCourse(request: Request, { userId }: { userId: string }) {
-  const { title, description, content } = await request.json()
+const ApiSchema = z.object({
+  title: z.string().min(2).max(100),
+  language: z.string().optional().default('English'),
+  weekCount: z.coerce.number().default(4),
+  description: z.string().min(10).max(5000),
+  content: z.string().min(10).max(5000),
+})
 
-  if (!title || !description || !content) {
-    return error('Please fill in all fields')
-  }
+type ApiRequestParams = z.infer<typeof ApiSchema>
 
-  const slug = await generateUniqueCourseSlug(slugify(title))
+export const POST = withAuth(
+  withApiBuilder<ApiRequestParams, { userId: string }>(
+    ApiSchema,
+    async (request, { data, userId }) => {
+      const { title, description, content, language, weekCount } = data
 
-  const courseId = await createCourse({
-    ownerId: userId,
-    title,
-    description,
-    content,
-    slug,
-  })
+      const slug = await generateUniqueCourseSlug(slugify(title))
 
-  return NextResponse.redirect(`/api/course/${courseId}/checkout`, { status: 303 })
-}
+      const courseId = await createCourse({
+        ownerId: userId,
+        title,
+        language,
+        weekCount,
+        description,
+        content,
+        slug,
+      })
 
-export const POST = withAuth(handleCreateCourse)
+      await inngest.send({
+        id: `course-generate-${courseId}`,
+        name: 'course/generate',
+        data: {
+          courseId,
+        },
+      })
+
+      return NextResponse.redirect(`/api/course/${courseId}/checkout`, { status: 303 })
+    },
+  ),
+)

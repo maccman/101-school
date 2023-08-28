@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   twitter: {
     title: '101.school',
     description: 'Teach yourself anything.',
+    card: 'summary',
+    images: [`${baseUrl}/static/twitter.png`],
   },
 }
 

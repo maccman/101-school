@@ -24,12 +24,20 @@ export async function stepParseCourse({
 
   // Generate course if not already generated
   logger.info('Generating course if required', { courseId })
-  const content = course.content || (await generateCourse(course.description))
+  const content =
+    course.content ||
+    (await generateCourse(course.description, {
+      targeting: course.targeting ?? undefined,
+      weekCount: course.weekCount ?? undefined,
+      language: course.language ?? undefined,
+    }))
   assertString(content, 'Course content not found')
 
   // Extract structured data from course
   logger.info('Parsing course', { courseId })
-  const parsedContent = await parseCourse(content)
+  const parsedContent = await parseCourse(content, {
+    language: course.language ?? undefined,
+  })
 
   // Extract CIP code and title from course
   logger.info('Parsing CIP code and title', { courseId })

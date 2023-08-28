@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { UseFormReturn } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -20,6 +21,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 
+import { LanguageSelect } from './language-select'
 import { GenerateOutlineFormValues } from './types'
 
 interface GenerateOutlineFormProps {
@@ -96,27 +98,56 @@ export function GenerateOutlineForm({
           )}
         />
 
-        <footer className="flex justify-end">
-          {isPending ? (
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={(event) => {
-                event.preventDefault()
-                onCancel()
-              }}
-            >
-              Cancel...
-            </Button>
-          ) : (
-            <Button
-              disabled={!isDirty || !isValid}
-              type="submit"
-              variant={isPrimary ? 'default' : 'secondary'}
-            >
-              {isPrimary ? 'Generate outline' : 'Re-generate outline'}
-            </Button>
+        <FormField
+          control={form.control}
+          name="language"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Course language</FormLabel>
+              <LanguageSelect
+                onValueChange={field.onChange}
+                defaultValue={field.value + ''}
+              />
+              <FormMessage />
+            </FormItem>
           )}
+        />
+
+        <footer>
+          <p className="text-muted-foreground prose prose-sm dark:prose-invert">
+            By submitting this form, you agree to our{' '}
+            <Link prefetch={false} href="/terms">
+              Terms of Service
+            </Link>{' '}
+            and{' '}
+            <Link prefetch={false} href="/privacy">
+              Privacy Policy
+            </Link>
+            .
+          </p>
+
+          <div className="flex justify-end mt-5">
+            {isPending ? (
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={(event) => {
+                  event.preventDefault()
+                  onCancel()
+                }}
+              >
+                Cancel...
+              </Button>
+            ) : (
+              <Button
+                disabled={!isDirty || !isValid}
+                type="submit"
+                variant={isPrimary ? 'default' : 'secondary'}
+              >
+                {isPrimary ? 'Generate outline' : 'Re-generate outline'}
+              </Button>
+            )}
+          </div>
         </footer>
       </form>
     </Form>

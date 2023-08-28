@@ -33,9 +33,13 @@ export const COURSE_SANS_CONTENT_KEYS = [
   'courses.cipTitle',
   'courses.ddcCode',
   'courses.ddcTitle',
+  'courses.language',
+  'courses.targeting',
+  'courses.weekCount',
   'courses.generatedAt',
   'courses.featuredAt',
   'courses.ownerId',
   'courses.createdAt',
   'courses.updatedAt',
+  'courses.deletedAt',
 ] as const

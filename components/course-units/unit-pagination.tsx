@@ -32,7 +32,7 @@ export async function UnitPagination({ unitId }: { unitId: string }) {
       })}
     >
       <Button variant="ghost" asChild>
-        <span>Skip to: {nextUnit.title}</span>
+        <span>Next up: {nextUnit.title}</span>
       </Button>
     </Link>
   )

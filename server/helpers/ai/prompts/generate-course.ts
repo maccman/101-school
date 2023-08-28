@@ -5,6 +5,7 @@ import { ChatMessage } from '@/server/lib/open-ai/types'
 interface Options {
   weekCount?: number
   targeting?: string
+  language?: string
 }
 
 export async function generateCourse(
@@ -21,7 +22,11 @@ export async function generateCourse(
 
 export function generateCoursePrompt(
   description: string,
-  { weekCount = 13, targeting = 'adults late in their career' }: Options = {},
+  {
+    weekCount = 13,
+    targeting = 'adults late in their career',
+    language = 'English',
+  }: Options = {},
 ): ChatMessage[] {
   return [
     {
@@ -37,6 +42,7 @@ export function generateCoursePrompt(
       - Subject matter: ${description}
       - Target audience: ${targeting}
       - Number of weeks: ${weekCount}
+      - Outline and course language: ${language}
 
       Each week will cover one module.
       Each module will be split into three to four units.

@@ -32,9 +32,16 @@ const schema = z.object({
 
 type Parsed = z.infer<typeof schema>
 
-export async function parseCourse(courseBody: string): Promise<Parsed> {
+interface ParseCourseOptions {
+  language?: string
+}
+
+export async function parseCourse(
+  courseBody: string,
+  options: ParseCourseOptions = {},
+): Promise<Parsed> {
   const result = await fetchCompletion({
-    messages: getChatMessages(courseBody),
+    messages: getChatMessages(courseBody, options),
     functions: getChatFunctions(),
   })
 
@@ -43,7 +50,10 @@ export async function parseCourse(courseBody: string): Promise<Parsed> {
   return parseChatFunctionArgs(result.function_call.arguments, schema)
 }
 
-function getChatMessages(description: string): ChatMessage[] {
+function getChatMessages(
+  description: string,
+  { language = 'English' }: ParseCourseOptions,
+): ChatMessage[] {
   return [
     {
       role: 'system',
@@ -57,7 +67,7 @@ function getChatMessages(description: string): ChatMessage[] {
     
       ${description}
 
-      Parse it into sections.
+      Parse it into sections. Use the ${language} language.
   `.trim(),
     },
   ]

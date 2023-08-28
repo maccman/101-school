@@ -22,11 +22,18 @@ export async function stepGenerateModule({
     courseId: course.id,
     moduleNumber: parsedModule.week,
   })
-  const moduleContent = await generateModule({
-    courseDescription: course.description,
-    courseBody: course.content,
-    moduleNumber: parsedModule.week,
-  })
+  const moduleContent = await generateModule(
+    {
+      courseDescription: course.description,
+      courseBody: course.content,
+      moduleNumber: parsedModule.week,
+    },
+    {
+      targeting: course.targeting ?? undefined,
+      weekCount: course.weekCount ?? undefined,
+      language: course.language ?? undefined,
+    },
+  )
 
   logger.info('Saving module', { courseId: course.id, moduleNumber: parsedModule.week })
   await setModule({

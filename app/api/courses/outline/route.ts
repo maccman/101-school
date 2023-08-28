@@ -18,11 +18,11 @@ const openai = new OpenAIApi(config)
 export const runtime = 'edge'
 
 async function generateOutline(req: Request) {
-  const { description, weekCount = 13 } = await req.json()
+  const { description, weekCount = 13, language = 'English' } = await req.json()
 
   assertString(description, 'description must be a string')
 
-  const responseMessages = generateCoursePrompt(description, { weekCount })
+  const responseMessages = generateCoursePrompt(description, { weekCount, language })
 
   const response = await openai.createChatCompletion({
     model: 'gpt-4',

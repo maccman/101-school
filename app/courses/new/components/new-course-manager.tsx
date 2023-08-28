@@ -39,7 +39,8 @@ export function NewCourseManager() {
     defaultValues: {
       title: '',
       description: '',
-      weekCount: 4,
+      weekCount: 13,
+      language: 'English',
     },
   })
 
@@ -66,15 +67,13 @@ export function NewCourseManager() {
   }
 
   async function handleSubmit() {
-    const { title, description } = generateOutlineForm.getValues()
-    const { content } = confirmOutlineForm.getValues()
+    const values = {
+      ...generateOutlineForm.getValues(),
+      ...confirmOutlineForm.getValues(),
+    }
 
     await withLoading(async () => {
-      const { error, response } = await createCourse({
-        title,
-        description,
-        content,
-      })
+      const { error, response } = await createCourse(values)
 
       if (error) {
         alert('Sorry, something went wrong. Please try again.')
@@ -90,8 +89,9 @@ export function NewCourseManager() {
   useEffect(() => {
     if (generatedContent) {
       // Sync the generated content to the confirm form
-      const normalizedGeneratedContent = stripTripleBackticks(generatedContent)
-      confirmOutlineForm.setValue('content', normalizedGeneratedContent, {
+      const content = stripTripleBackticks(generatedContent)
+
+      confirmOutlineForm.setValue('content', content, {
         shouldDirty: true,
         shouldTouch: true,
         shouldValidate: true,
@@ -153,7 +153,15 @@ async function fetchCourseOutlineStream(
   return stream
 }
 
-function createCourse(values: { title: string; description: string; content: string }) {
+interface CreateCourseRequest {
+  title: string
+  description: string
+  content: string
+  language: string
+  weekCount: number
+}
+
+function createCourse(values: CreateCourseRequest) {
   return jsonFetch<{ id: string }>('/api/courses', {
     method: 'POST',
     data: values,

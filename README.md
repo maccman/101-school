@@ -39,6 +39,9 @@ Forge is an online system for creating and attending courses. It's essentially a
 - [x] Subscribe to emails
 - [x] styling emails
 - [x] Bug where you can't restart a course generation
+- [x] Add stripe env vars
+- [ ] Setup and test stripe webhook
+- [x] Setup plans and prices
 
 # Future TODO
 

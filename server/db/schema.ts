@@ -123,7 +123,6 @@ export interface User {
   emails: Generated<string[]>
   lastSignInAt: Timestamp | null
   name: string | null
-  stripeCustomerId: string | null
   createdAt: Generated<Timestamp>
   updatedAt: Generated<Timestamp>
 }

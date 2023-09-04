@@ -42,4 +42,4 @@ async function createCheckoutSession(
   return NextResponse.redirect(checkoutSession.url, { status: 303 })
 }
 
-export default withAuth(createCheckoutSession)
+export const POST = withAuth(createCheckoutSession)

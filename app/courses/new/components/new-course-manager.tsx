@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -23,7 +22,6 @@ import {
 import { stripTripleBackticks } from './utils'
 
 export function NewCourseManager() {
-  const router = useRouter()
   const { loading, withLoading } = useLoading()
   const [stream, setStream] = useState<ReadableStream | null>(null)
   const { createSignal, abort: abortRequest } = useAbortController()

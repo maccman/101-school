@@ -42,4 +42,5 @@ export const COURSE_SANS_CONTENT_KEYS = [
   'courses.createdAt',
   'courses.updatedAt',
   'courses.deletedAt',
+  'courses.stripePaymentIntentId',
 ] as const

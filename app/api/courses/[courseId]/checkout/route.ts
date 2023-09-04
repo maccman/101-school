@@ -39,7 +39,10 @@ async function createCheckoutSession(
 
   assertString(checkoutSession.url)
 
-  return NextResponse.redirect(checkoutSession.url, { status: 303 })
+  console.log('[stripe] Created session', { checkoutSession })
+  console.log('[stripe] Redirecting to checkout session', { url: checkoutSession.url })
+
+  return NextResponse.json({ checkoutUrl: checkoutSession.url })
 }
 
 export const POST = withAuth(createCheckoutSession)

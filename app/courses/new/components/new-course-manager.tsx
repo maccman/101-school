@@ -80,7 +80,7 @@ export function NewCourseManager() {
         return
       }
 
-      router.push(`/courses/${response.id}`)
+      window.location.href = response.checkoutUrl
 
       await sleep(1000)
     })
@@ -162,7 +162,7 @@ interface CreateCourseRequest {
 }
 
 function createCourse(values: CreateCourseRequest) {
-  return jsonFetch<{ id: string }>('/api/courses', {
+  return jsonFetch<{ checkoutUrl: string }>('/api/courses', {
     method: 'POST',
     data: values,
   })

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 import { slugify } from '@/lib/slugify'
@@ -35,7 +35,7 @@ export const POST = withAuth(
         slug,
       })
 
-      return NextResponse.redirect(`/api/course/${courseId}/checkout`, { status: 303 })
+      return redirect(`/api/courses/${courseId}/checkout`)
     },
   ),
 )

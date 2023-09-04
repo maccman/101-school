@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 import { slugify } from '@/lib/slugify'
@@ -6,7 +6,6 @@ import { generateUniqueCourseSlug } from '@/server/db/courses/getters'
 import { createCourse } from '@/server/db/courses/setters'
 import { withApiBuilder } from '@/server/helpers/api-builder'
 import { withAuth } from '@/server/helpers/auth'
-import { inngest } from '@/server/jobs/client'
 
 const ApiSchema = z.object({
   title: z.string().min(2).max(100),
@@ -36,15 +35,7 @@ export const POST = withAuth(
         slug,
       })
 
-      await inngest.send({
-        id: `course-generate-${courseId}`,
-        name: 'course/generate',
-        data: {
-          courseId,
-        },
-      })
-
-      return NextResponse.json({ id: courseId })
+      return redirect(`/api/courses/${courseId}/checkout`)
     },
   ),
 )

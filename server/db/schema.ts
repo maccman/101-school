@@ -73,6 +73,7 @@ export interface Course {
   cipTitle: string | null
   ddcCode: string | null
   ddcTitle: string | null
+  stripePaymentIntentId: string | null
   language: string | null
   targeting: string | null
   weekCount: number | null

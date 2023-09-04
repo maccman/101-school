@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   const payload = await (await request.blob()).text()
 
   try {
-    event = stripe.webhooks.constructEvent(payload, signature, webhookSecret)
+    event = await stripe.webhooks.constructEventAsync(payload, signature, webhookSecret)
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
     console.error(err)

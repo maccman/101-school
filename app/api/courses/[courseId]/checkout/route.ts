@@ -18,8 +18,10 @@ async function createCheckoutSession(
   const sessionParams: Stripe.Checkout.SessionCreateParams = {
     mode: 'payment',
     client_reference_id: userId,
-    metadata: {
-      courseId,
+    payment_intent_data: {
+      metadata: {
+        courseId,
+      },
     },
     line_items: [
       {

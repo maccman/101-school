@@ -25,7 +25,7 @@ async function generateOutline(req: Request) {
   const responseMessages = generateCoursePrompt(description, { weekCount, language })
 
   const response = await openai.createChatCompletion({
-    model: 'gpt-4',
+    model: 'gpt-4-1106-preview',
     stream: true,
     messages: responseMessages,
   })

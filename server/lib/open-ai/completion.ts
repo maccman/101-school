@@ -22,7 +22,7 @@ export async function fetchCompletion({
   functions,
   functionCall,
   apiKey,
-  model = 'gpt-4',
+  model = 'gpt-4-1106-preview',
   temperature = 0,
 }: Options): Promise<ChatResponse> {
   const response = await fetchApi<OpenAIChatCompletion>(`/chat/completions`, {

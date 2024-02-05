@@ -1,6 +1,10 @@
 # 101.school
 
-101.school is an innovative platform designed to leverage AI technology, specifically GPT-4, to generate comprehensive and engaging course content based on user inputs. This project aims to revolutionize the way educational content is created, making it faster and more accessible to a wide audience.
+101.school is an innovative platform designed to leverage AI technology, specifically GPT-4, to generate comprehensive and engaging course content based on user inputs.
+
+This project aims to revolutionize the way educational content is created, making it faster and more accessible to a wide audience.
+
+![101.school screenshot](https://github.com/maccman/101-school/assets/2142/50bbc75d-2c99-4701-875a-cdc976de73aa)
 
 ## Features
 

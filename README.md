@@ -1,53 +1,70 @@
-# forge
+# 101.school
 
-Forge is an online system for creating and attending courses. It's essentially an online university. Students can enroll in various subjects and learn about them.
+101.school is an innovative platform designed to leverage AI technology, specifically GPT-4, to generate comprehensive and engaging course content based on user inputs. This project aims to revolutionize the way educational content is created, making it faster and more accessible to a wide audience.
 
-# Resources
+## Features
 
-- https://flowbite.com/
-- https://lucide.dev/
-- https://ui.shadcn.com/
-- https://feather.so/355129393901732429/dashboard
-- duolingo
-- https://phosphoricons.com/
-- https://github.com/vercel-labs/ai-chatbot
-- https://www.radix-ui.com/
+- AI-generated course outlines and content
+- User account management for accessing certain features
+- Email notifications for course updates
+- Publicly accessible generated courses
+- Interactive AI chat for inquiries on course units
 
-# TODO
+## Technologies Used
 
-- [x] Prompt: Generate a course
-- [x] Prompt: Parse a course
-- [x] Prompt: Generate a session (teach week 1)
-- [x] Prompt: Generate a list of suggested readings
-- [x] Pull in Assets
-- [x] Create course in db
-- [x] Navigations
-- [x] Course slugs
-- [x] Markdown
-- [x] Search
-- [x] Chat. Should transcript follow units?
-- [x] Pagination (next)
-- [x] Initial design
-- [x] Auth / accounts
-- [x] Track course progress
-- [x] Mobile
-- [ ] Open course where left off
-- [ ] Dedupe images
-- [x] Course creation client-side (need a queue - cloudflare?)
-- [x] Automatic course classification
-- [ ] Download a pdf
-- [x] Subscribe to emails
-- [x] styling emails
-- [x] Bug where you can't restart a course generation
-- [x] Add stripe env vars
-- [ ] Setup and test stripe webhook
-- [x] Setup plans and prices
+- Next.js for the frontend and backend framework
+- TypeScript for type-safe code
+- OpenAI's GPT-4 for generating course content
+- PostgreSQL for database management
+- Vite for frontend tooling
+- Tailwind CSS for styling
 
-# Future TODO
+## Getting Started
 
-- [ ] Translation?
-- [x] Dark mode
+To run this project locally, you need to have Node.js (version 18) installed on your machine.
 
-# Prompt
+1. Clone the repository:
 
-- You are a helpful tutor. You give good, accurate, careful responses to student's questions. Think step by step.
+```bash
+git clone https://github.com/maccman/101-school.git
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Set up your environment variables by copying the `.env.example` file to `.env.local` and filling in your details.
+
+4. Start the development server:
+
+```bash
+pnpm run dev
+```
+
+## Environment Variables
+
+| Environment Variable      | Description                                                                                        |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| NEXT_PUBLIC_HANKO_API_URL | The URL for the Hanko API, obtainable from your [Hanko account dashboard](https://www.hanko.io/).  |
+| DATABASE_URL              | Your PostgreSQL database connection string. We recommend [Neon](https://neon.tech/).               |
+| OPENAI_API_KEY            | The API key for OpenAI, available from the [OpenAI API dashboard](https://openai.com/).            |
+| RESEND_API_KEY            | API key for the Resend service, available from the [Resend service dashboard](https://resend.io/). |
+| APP_HOST                  | The hostname of your application, typically defined by your hosting service.                       |
+| VERCEL_URL                | Automatically provided by [Vercel](https://vercel.com/) when deploying, no action needed.          |
+| STRIPE_SECRET_KEY         | Your Stripe secret key, available from the [Stripe dashboard](https://stripe.com/).                |
+| STRIPE_PRICE_ID           | The price ID for your Stripe product, available from the [Stripe dashboard](https://stripe.com/).  |
+| STRIPE_WEBHOOK_SECRET     | The webhook secret for Stripe, available from the [Stripe dashboard](https://stripe.com/).         |
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue if you have any suggestions or find any bugs.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to OpenAI for providing the GPT-4 API.

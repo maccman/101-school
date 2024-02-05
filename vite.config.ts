@@ -7,7 +7,7 @@ export default defineConfig(() => {
     plugins: [react()],
 
     // All environment variable prefixes that should be exposed to the testing environment.
-    envPrefix: ['FIREBASE_', 'FIRESTORE_', 'NEXT_PUBLIC_', 'VITE_PUBLIC_'],
+    envPrefix: ['NEXT_PUBLIC_', 'VITE_PUBLIC_'],
 
     test: {
       environment: 'jsdom',
@@ -19,7 +19,6 @@ export default defineConfig(() => {
         components: '/components',
       },
       globals: true,
-      setupFiles: ['./tests/vitest-global-setup.mjs'],
     },
   }
 })

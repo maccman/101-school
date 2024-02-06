@@ -1,8 +1,8 @@
 # 101.school
 
-101.school is an innovative platform designed to leverage AI technology, specifically GPT-4, to generate comprehensive and engaging course content based on user inputs.
+101.school is a platform that utilizes AI, particularly GPT-4, to create detailed and captivating course materials tailored to user inputs.
 
-This project aims to revolutionize the way educational content is created, making it faster and more accessible to a wide audience.
+This project's goal is to explore how AI can be used to assist learning and education.
 
 ![101.school screenshot](https://github.com/maccman/101-school/assets/2142/50bbc75d-2c99-4701-875a-cdc976de73aa)
 
@@ -49,17 +49,17 @@ pnpm run dev
 
 ## Environment Variables
 
-| Environment Variable      | Description                                                                                        |
-| ------------------------- | -------------------------------------------------------------------------------------------------- |
-| NEXT_PUBLIC_HANKO_API_URL | The URL for the Hanko API, obtainable from your [Hanko account dashboard](https://www.hanko.io/).  |
-| DATABASE_URL              | Your PostgreSQL database connection string. We recommend [Neon](https://neon.tech/).               |
-| OPENAI_API_KEY            | The API key for OpenAI, available from the [OpenAI API dashboard](https://openai.com/).            |
-| RESEND_API_KEY            | API key for the Resend service, available from the [Resend service dashboard](https://resend.io/). |
-| APP_HOST                  | The hostname of your application, typically defined by your hosting service.                       |
-| VERCEL_URL                | Automatically provided by [Vercel](https://vercel.com/) when deploying, no action needed.          |
-| STRIPE_SECRET_KEY         | Your Stripe secret key, available from the [Stripe dashboard](https://stripe.com/).                |
-| STRIPE_PRICE_ID           | The price ID for your Stripe product, available from the [Stripe dashboard](https://stripe.com/).  |
-| STRIPE_WEBHOOK_SECRET     | The webhook secret for Stripe, available from the [Stripe dashboard](https://stripe.com/).         |
+| Environment Variable      | Description                                                                                         |
+| ------------------------- | --------------------------------------------------------------------------------------------------- |
+| NEXT_PUBLIC_HANKO_API_URL | The URL for the Hanko API, obtainable from your [Hanko account dashboard](https://www.hanko.io/).   |
+| DATABASE_URL              | Your PostgreSQL database connection string. We recommend [Neon](https://neon.tech/).                |
+| OPENAI_API_KEY            | The API key for OpenAI, available from the [OpenAI API dashboard](https://openai.com/).             |
+| RESEND_API_KEY            | API key for the Resend service, available from the [Resend service dashboard](https://resend.com/). |
+| APP_HOST                  | The hostname of your application, typically defined by your hosting service.                        |
+| VERCEL_URL                | Automatically provided by [Vercel](https://vercel.com/) when deploying, no action needed.           |
+| STRIPE_SECRET_KEY         | Your Stripe secret key, available from the [Stripe dashboard](https://stripe.com/).                 |
+| STRIPE_PRICE_ID           | The price ID for your Stripe product, available from the [Stripe dashboard](https://stripe.com/).   |
+| STRIPE_WEBHOOK_SECRET     | The webhook secret for Stripe, available from the [Stripe dashboard](https://stripe.com/).          |
 
 ## Contributing
 

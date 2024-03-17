@@ -385,8 +385,10 @@ export function extractFunctionCalls(result: string): FunctionCall[] {
   //
   // But also might have other stuff before and after it.
 
-  // Find the function_calls tag and extract everything inside it (including the tags)
-  const strippedResult = result.match(/<function_calls>([\s\S]+?)<\/function_calls>/)?.[0]
+  // Find the last function_calls tag and extract everything inside it (including the tags)
+  const strippedResult = result.match(
+    /<function_calls>([\s\S]+?)<\/function_calls>(?![\s\S]*<function_calls>)/,
+  )?.[0]
 
   if (!strippedResult) {
     return []

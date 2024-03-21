@@ -1,5 +1,3 @@
-import { JSONSchema7 } from 'json-schema'
-
 export type SupportedModels = 'claude-3-opus-20240229'
 
 export interface MessageContent {

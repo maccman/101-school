@@ -1,6 +1,6 @@
 import { assertString } from '../../../lib/assert'
 
-const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com/v1'
+const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com'
 
 type AnthropicVersions = '2023-01-01' | '2023-06-01'
 

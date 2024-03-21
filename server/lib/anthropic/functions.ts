@@ -305,8 +305,9 @@
 // Typescript version of the above code
 
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
-import { FunctionCall, FunctionCallResult, Tool } from './types'
+
 import { CompletionOptions, fetchCompletion } from './completion'
+import { FunctionCall, FunctionCallResult, Tool } from './types'
 
 function toXmlString(data: any) {
   const builder = new XMLBuilder()
@@ -383,20 +384,35 @@ export function extractFunctionCalls(result: string): FunctionCall[] {
   // </invoke>
   // </function_calls>
   //
-  // But also might have other stuff before and after it.
-
+  // But also might have other stuff before and after it
+  
   // Find the last function_calls tag and extract everything inside it (including the tags)
-  const strippedResult = result.match(
-    /<function_calls>([\s\S]+?)<\/function_calls>(?![\s\S]*<function_calls>)/,
+  let strippedResult = result.match(
+    /<function_calls>([\s\S]*)/,
   )?.[0]
 
   if (!strippedResult) {
     return []
   }
 
+  if (!strippedResult.endsWith('</function_calls>')) {
+    // This can get stripped off if it's a stop sequence
+    strippedResult += '</function_calls>'
+  }
+
   const parsedResult = parseXmlString(strippedResult)
 
-  return parsedResult.function_calls.invoke as FunctionCall[]
+  const invoke = parsedResult?.function_calls?.invoke
+
+  if (!invoke) {
+    return []
+  }
+
+  if (Array.isArray(invoke)) {
+    return invoke as FunctionCall[]
+  }
+
+  return [invoke] as FunctionCall[]
 }
 
 export function getFunctionResultsPrompt(results: FunctionCallResult[]): string {
@@ -408,12 +424,13 @@ export function getFunctionResultsPrompt(results: FunctionCallResult[]): string 
 export async function fetchFunctionCalls({
   tools,
   ...completionOptions
-}: CompletionOptions & { tools: Tool[] }): Promise<FunctionCall[]> {
+}: CompletionOptions & { tools: Tool[] }) {
   const systemPrompt = getToolsSystemPrompt(tools)
 
   const response = await fetchCompletion({
     ...completionOptions,
     systemPrompt,
+    stopSequences: ["\n\nHuman:", "\n\nAssistant", "</function_calls>"]
   })
 
   const [firstMessageContent] = response.content
@@ -424,5 +441,8 @@ export async function fetchFunctionCalls({
 
   const functionCalls = extractFunctionCalls(firstMessageContent.text)
 
-  return functionCalls
+  return {
+    response,
+    functionCalls,
+  }
 }

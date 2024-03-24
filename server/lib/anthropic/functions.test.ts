@@ -1,62 +1,11 @@
-import { extractFunctionCalls, fetchFunctionCalls } from './functions'
+import { z } from 'zod'
 
-describe('fetchFunctionCalls', () => {
-  it('should fetch function calls', async () => {
-    const result = await fetchFunctionCalls({
-      tools: [
-        {
-          tool_name: 'calculator',
-          parameters: [
-            {
-              name: 'expression',
-              description: 'The expression to evaluate',
-              type: 'string',
-            },
-          ],
-          description: 'Evaluate a mathematical expression',
-        },
-      ],
-      messages: [
-        {
-          role: 'user',
-          content: 'Add 2 and 2',
-        },
-      ],
-      temperature: 0.5,
-      maxTokens: 1024,
-    })
-
-    expect(result).toEqual(
-      expect.objectContaining({
-        functionCalls: [
-          {
-            parameters: {
-              expression: '2 + 2',
-            },
-            tool_name: 'calculator',
-          },
-        ],
-        response: expect.objectContaining({
-          content: expect.arrayContaining([
-            expect.objectContaining({
-              text: expect.any(String),
-              type: 'text',
-            }),
-          ]),
-          model: 'claude-3-opus-20240229',
-          role: 'assistant',
-          stop_reason: 'stop_sequence',
-          stop_sequence: '</function_calls>',
-          type: 'message',
-          usage: expect.objectContaining({
-            input_tokens: expect.any(Number),
-            output_tokens: expect.any(Number),
-          }),
-        }),
-      }),
-    )
-  })
-})
+import {
+  extractFunctionCalls,
+  fetchFunctionCompletion,
+  fetchWithTools,
+} from './functions'
+import { Message, Tool } from './types'
 
 describe('extractFunctionCalls', () => {
   it('should extract function calls', () => {
@@ -119,5 +68,61 @@ describe('extractFunctionCalls', () => {
         },
       ]
     `)
+  })
+})
+
+describe('fetchWithTools', () => {
+  it('returns a valid response', async () => {
+    const tools: Tool[] = [
+      {
+        tool_name: 'calculator',
+        description: 'Calculator for basic arithmetic',
+        parameters: [
+          { name: 'operand1', type: 'int', description: 'First operand' },
+          { name: 'operand2', type: 'int', description: 'Second operand' },
+          { name: 'operator', type: 'string', description: 'Arithmetic operator' },
+        ],
+      },
+    ]
+
+    const messages: Message[] = [
+      {
+        role: 'user',
+        content: 'Calculate 2 + 2',
+      },
+    ]
+
+    const response = await fetchWithTools({ tools, messages })
+
+    expect(response).toBeDefined()
+
+    expect(response.content).toHaveLength(1)
+    expect(response.content[0].type).toBe('text')
+    expect(typeof response.content[0].text).toBe('string')
+    expect(response.content[0].text).toContain('<function_calls>')
+  })
+})
+
+test('fetchFunctionCompletion calls fetchCompletion with the correct arguments and returns the parsed parameters', async () => {
+  const schema = z.object({
+    a: z.number(),
+    b: z.number(),
+  })
+
+  const result = await fetchFunctionCompletion({
+    toolName: 'calculate',
+    toolDescription: 'Adds two numbers',
+    schema,
+    messages: [
+      {
+        role: 'user',
+        content: 'Calculate 1 + 2',
+      },
+    ],
+  })
+
+  expect(result.parameters).toEqual({
+    a: 1,
+    b: 2,
   })
 })

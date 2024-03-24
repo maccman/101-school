@@ -45,7 +45,9 @@ export interface Tool {
 
 export interface FunctionCall {
   tool_name: string
-  parameters?: ToolParameter[]
+  parameters?: {
+    [key: string]: string
+  }
 }
 
 export interface FunctionCallResult {

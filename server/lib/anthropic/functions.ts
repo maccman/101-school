@@ -307,7 +307,8 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
 
 import { CompletionOptions, fetchCompletion } from './completion'
-import { FunctionCall, FunctionCallResult, Tool } from './types'
+import { FunctionCall, FunctionCallResult, Tool, ToolParameter } from './types'
+import { z } from 'zod'
 
 function toXmlString(data: any) {
   const builder = new XMLBuilder()
@@ -324,30 +325,26 @@ function parseXmlString(xmlString: string) {
 }
 
 export function getToolsSystemPrompt(tools: Tool[]): string {
-  const systemPrompt = {
-    text: [
-      "In this environment you have access to a set of tools you can use to answer the user's question.",
-      '',
-      'You may call them like this:',
-      toXmlString({
-        function_calls: {
-          invoke: {
-            tool_name: '$TOOL_NAME',
-            parameters: {
-              $PARAMETER_NAME: '$PARAMETER_VALUE',
-            },
+  const text = [
+    "In this environment you have access to a set of tools you can use to answer the user's question.",
+    '',
+    'You may call them like this:',
+    toXmlString({
+      function_calls: {
+        invoke: {
+          tool_name: '$TOOL_NAME',
+          parameters: {
+            $PARAMETER_NAME: '$PARAMETER_VALUE',
           },
         },
-      }),
-      '',
-      'Here are the tools available:',
-      {
-        tools: tools.map((tool) => getToolInterfacePrompt(tool)),
       },
-    ],
-  }
+    }),
+    '',
+    'Here are the tools available:',
+    ...tools.map((tool) => getToolInterfacePrompt(tool)),
+  ]
 
-  return systemPrompt.text.join('\n')
+  return text.join('\n')
 }
 
 function getToolInterfacePrompt(tool: Tool): string {
@@ -370,7 +367,7 @@ function getToolInterfacePrompt(tool: Tool): string {
   })
 }
 
-export function extractFunctionCalls(result: string): FunctionCall[] {
+export function extractFunctionCalls(result: string): FunctionCall[] | undefined {
   // Claude's response looks like this:
   //
   // <function_calls>
@@ -385,14 +382,12 @@ export function extractFunctionCalls(result: string): FunctionCall[] {
   // </function_calls>
   //
   // But also might have other stuff before and after it
-  
+
   // Find the last function_calls tag and extract everything inside it (including the tags)
-  let strippedResult = result.match(
-    /<function_calls>([\s\S]*)/,
-  )?.[0]
+  let strippedResult = result.match(/<function_calls>[\s\S]*?(?=<function_calls>|$)/)?.[0]
 
   if (!strippedResult) {
-    return []
+    return
   }
 
   if (!strippedResult.endsWith('</function_calls>')) {
@@ -402,17 +397,27 @@ export function extractFunctionCalls(result: string): FunctionCall[] {
 
   const parsedResult = parseXmlString(strippedResult)
 
-  const invoke = parsedResult?.function_calls?.invoke
+  const parameterSchema = z.record(z.any())
 
-  if (!invoke) {
-    return []
-  }
+  const ensureArray = <T>(schema: z.ZodType<T, any, any>) =>
+    z
+      .union([schema, z.array(schema)])
+      .transform((value) => (Array.isArray(value) ? value : [value]))
 
-  if (Array.isArray(invoke)) {
-    return invoke as FunctionCall[]
-  }
+  const invokeSchema = z.object({
+    tool_name: z.string(),
+    parameters: parameterSchema.optional(),
+  })
 
-  return [invoke] as FunctionCall[]
+  const functionCallSchema = z.object({
+    function_calls: z.object({
+      invoke: ensureArray(invokeSchema),
+    }),
+  })
+
+  const parsedInvoke = functionCallSchema.parse(parsedResult)
+
+  return parsedInvoke.function_calls.invoke
 }
 
 export function getFunctionResultsPrompt(results: FunctionCallResult[]): string {
@@ -421,7 +426,7 @@ export function getFunctionResultsPrompt(results: FunctionCallResult[]): string 
   })
 }
 
-export async function fetchFunctionCalls({
+export async function fetchWithTools({
   tools,
   ...completionOptions
 }: CompletionOptions & { tools: Tool[] }) {
@@ -430,19 +435,78 @@ export async function fetchFunctionCalls({
   const response = await fetchCompletion({
     ...completionOptions,
     systemPrompt,
-    stopSequences: ["\n\nHuman:", "\n\nAssistant", "</function_calls>"]
+    stopSequences: ['\n\nHuman:', '\n\nAssistant', '</function_calls>'],
   })
 
-  const [firstMessageContent] = response.content
+  return response
+}
 
-  if (!firstMessageContent || !firstMessageContent.text) {
-    throw new Error('Expected response.content to have at least one message')
+export async function fetchFunctionCompletion({
+  toolName,
+  toolDescription,
+  schema,
+  ...completionOptions
+}: CompletionOptions & {
+  toolName: string
+  toolDescription: string
+  schema: z.AnyZodObject
+}) {
+  const tools: Tool[] = [
+    {
+      tool_name: toolName,
+      parameters: zodToFunctionParameters(schema),
+      description: toolDescription,
+    },
+  ]
+
+  const response = await fetchWithTools({ tools, ...completionOptions })
+
+  const [firstMessage] = response.content
+
+  if (typeof firstMessage.text !== 'string') {
+    throw new Error('Expected a text message')
   }
 
-  const functionCalls = extractFunctionCalls(firstMessageContent.text)
+  const functionCalls = extractFunctionCalls(firstMessage.text)
 
-  return {
-    response,
-    functionCalls,
+  if (!functionCalls || functionCalls.length === 0) {
+    throw new Error('No function calls found')
   }
+
+  const [functionCall] = functionCalls
+
+  if (functionCall.tool_name !== toolName) {
+    throw new Error(`Expected function call to ${name}, got ${functionCall.tool_name}`)
+  }
+
+  const parameters = schema.parse(functionCall.parameters)
+
+  return { response, parameters }
+}
+
+function zodToFunctionParameters(schema: z.AnyZodObject): ToolParameter[] {
+  const parameters: ToolParameter[] = []
+
+  for (const [key, value] of Object.entries(schema.shape)) {
+    const name = key
+    let description = ''
+    let type: 'string' | 'int' | 'bool'
+
+    if (value instanceof z.ZodString) {
+      type = 'string'
+      description = value.description ?? ''
+    } else if (value instanceof z.ZodNumber) {
+      type = 'int'
+      description = value.description ?? ''
+    } else if (value instanceof z.ZodBoolean) {
+      type = 'bool'
+      description = (value as z.ZodBoolean).description ?? ''
+    } else {
+      throw new Error(`Unsupported Zod type: ${value}'`)
+    }
+
+    parameters.push({ name, description, type })
+  }
+
+  return parameters
 }

@@ -305,10 +305,10 @@
 // Typescript version of the above code
 
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
+import { z } from 'zod'
 
 import { CompletionOptions, fetchCompletion } from './completion'
 import { FunctionCall, FunctionCallResult, Tool, ToolParameter } from './types'
-import { z } from 'zod'
 
 function toXmlString(data: any) {
   const builder = new XMLBuilder()
@@ -441,16 +441,18 @@ export async function fetchWithTools({
   return response
 }
 
-export async function fetchFunctionCompletion({
+type FetchFunctionCompletionOptions = {
+  toolName: string
+  toolDescription: string
+  schema: z.ZodObject<any>
+} & CompletionOptions
+
+export async function fetchFunctionCompletion<T extends z.ZodObject<any>>({
   toolName,
   toolDescription,
   schema,
   ...completionOptions
-}: CompletionOptions & {
-  toolName: string
-  toolDescription: string
-  schema: z.AnyZodObject
-}) {
+}: FetchFunctionCompletionOptions): Promise<{ response: any; parameters: z.infer<T> }> {
   const tools: Tool[] = [
     {
       tool_name: toolName,
@@ -482,6 +484,22 @@ export async function fetchFunctionCompletion({
   const parameters = schema.parse(functionCall.parameters)
 
   return { response, parameters }
+}
+
+export async function fetchSingleFunctionCompletion<T extends z.ZodObject<any>>({
+  schema,
+  ...completionOptions
+}: {
+  schema: T
+} & CompletionOptions): Promise<z.infer<T>> {
+  const { parameters } = await fetchFunctionCompletion({
+    toolName: 'onResult',
+    toolDescription: 'The function to call when the result is ready',
+    schema,
+    ...completionOptions,
+  })
+
+  return parameters
 }
 
 function zodToFunctionParameters(schema: z.AnyZodObject): ToolParameter[] {

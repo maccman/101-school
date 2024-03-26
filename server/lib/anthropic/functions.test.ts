@@ -5,7 +5,7 @@ import {
   fetchFunctionCompletion,
   fetchWithTools,
 } from './functions'
-import { Message, Tool } from './types'
+import { ChatMessage, Tool } from './types'
 
 describe('extractFunctionCalls', () => {
   it('should extract function calls', () => {
@@ -85,7 +85,7 @@ describe('fetchWithTools', () => {
       },
     ]
 
-    const messages: Message[] = [
+    const messages: ChatMessage[] = [
       {
         role: 'user',
         content: 'Calculate 2 + 2',

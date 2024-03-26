@@ -1,6 +1,6 @@
 import { assertString } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { fetchCompletion } from '@/server/lib/anthropic/completion'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 interface Options {
   weekCount?: number
@@ -30,7 +30,7 @@ export function generateCoursePrompt(
 ): ChatMessage[] {
   return [
     {
-      role: 'system',
+      role: 'user',
       content:
         'You are a university course generator. You are given a description of a course and you have to generate a course outline. Format output as Markdown.',
     },

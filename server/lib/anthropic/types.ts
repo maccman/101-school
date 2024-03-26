@@ -1,6 +1,6 @@
 export type SupportedModels = 'claude-3-opus-20240229'
 
-export interface MessageContent {
+export interface ChatMessageContent {
   type: 'text' | 'image'
   text?: string
   source?: {
@@ -10,9 +10,9 @@ export interface MessageContent {
   }
 }
 
-export interface Message {
+export interface ChatMessage {
   role: 'user' | 'assistant'
-  content: string | MessageContent[]
+  content: string | ChatMessageContent[]
 }
 
 export interface UsageInfo {
@@ -24,7 +24,7 @@ export interface MessageResponse {
   id: string
   type: 'message'
   role: 'assistant'
-  content: MessageContent[]
+  content: ChatMessageContent[]
   model: string
   stop_reason: 'end_turn' | 'max_tokens' | 'stop_sequence'
   stop_sequence: string | null

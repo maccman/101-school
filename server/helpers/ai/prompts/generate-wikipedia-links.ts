@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-import { assert } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { buildChatFunction, parseChatFunctionArgs } from '@/server/lib/open-ai/functions'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { fetchSingleFunctionCompletion } from '@/server/lib/anthropic/functions'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
   wikipediaLinks: z.array(
@@ -14,22 +12,18 @@ const schema = z.object({
 })
 
 export async function generateWikipediaUrls(body: string): Promise<string[]> {
-  const result = await fetchCompletion({
+  const result = await fetchSingleFunctionCompletion({
     messages: generatePrompt(body),
-    functions: getChatFunctions(),
+    schema,
   })
 
-  assert(result.function_call, 'No function call found')
-
-  const parsed = parseChatFunctionArgs(result.function_call.arguments, schema)
-
-  return parsed.wikipediaLinks.map((link) => link.url)
+  return result.wikipediaLinks.map((link) => link.url)
 }
 
 function generatePrompt(body: string): ChatMessage[] {
   return [
     {
-      role: 'system',
+      role: 'user',
       content:
         'You are an advanced and accurate search bot that can find relevant Wikipedia links for any body of text',
     },
@@ -41,15 +35,5 @@ function generatePrompt(body: string): ChatMessage[] {
       ${body}
   `.trim(),
     },
-  ]
-}
-
-function getChatFunctions() {
-  return [
-    buildChatFunction({
-      name: 'onResult',
-      description: 'The function to call when the result is ready',
-      schema,
-    }),
   ]
 }

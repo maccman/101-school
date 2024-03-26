@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-import { assertString } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { buildChatFunction, parseChatFunctionArgs } from '@/server/lib/open-ai/functions'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { fetchSingleFunctionCompletion } from '@/server/lib/anthropic/functions'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
   cip_code: z.string().describe("The course's CIP code"),
@@ -11,28 +9,23 @@ const schema = z.object({
 })
 
 export async function parseCourseCip(description: string) {
-  const result = await fetchCompletion({
+  const result = await fetchSingleFunctionCompletion({
     messages: getChatMessages(description),
-    functions: getChatFunctions(),
+    schema,
   })
 
   // Sometimes GPT-4 just returns the result as a string
-  const resultJson = result.function_call?.arguments || result.content
-
-  assertString(resultJson, 'Expected result to be a string')
-
-  const resultParsed = parseChatFunctionArgs(resultJson, schema)
 
   return {
-    cipCode: resultParsed.cip_code,
-    cipTitle: resultParsed.cip_title,
+    cipCode: result.cip_code,
+    cipTitle: result.cip_title,
   }
 }
 
 function getChatMessages(description: string): ChatMessage[] {
   return [
     {
-      role: 'system',
+      role: 'user',
       content: 'You are a helpful and accurate assistant.',
     },
     {
@@ -43,15 +36,5 @@ function getChatMessages(description: string): ChatMessage[] {
       ${description}
   `.trim(),
     },
-  ]
-}
-
-function getChatFunctions() {
-  return [
-    buildChatFunction({
-      name: 'onResult',
-      description: 'The function to call with the result',
-      schema,
-    }),
   ]
 }

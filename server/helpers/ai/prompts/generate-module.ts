@@ -1,6 +1,6 @@
 import { assertString } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { fetchCompletion } from '@/server/lib/anthropic/completion'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 import { generateCoursePrompt } from './generate-course'
 

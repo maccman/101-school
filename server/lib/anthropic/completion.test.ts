@@ -1,9 +1,9 @@
 import { fetchCompletion } from './completion'
-import { Message } from './types'
+import { ChatMessage } from './types'
 
 describe('fetchCompletion', () => {
   it('should fetch completion', async () => {
-    const messages: Message[] = [
+    const messages: ChatMessage[] = [
       {
         role: 'user',
         content: 'hello',

@@ -1,8 +1,8 @@
 import { fetchApi } from './client'
-import { Message, MessageResponse, SupportedModels } from './types'
+import { ChatMessage, MessageResponse, SupportedModels } from './types'
 
 export interface CompletionOptions {
-  messages: Message[]
+  messages: ChatMessage[]
   model?: SupportedModels
   temperature?: number
   apiKey?: string

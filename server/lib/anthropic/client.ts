@@ -20,6 +20,10 @@ export async function fetchApi<T>(
 ): Promise<T> {
   assertString(apiKey, 'No Anthropic API Key provided')
 
+  // Log requests to the Anthropic API
+  console.log(`Anthropic API request: ${method} ${path}`)
+  console.log('Anthropic API request body:', JSON.stringify(body, null, 2))
+
   const response = await fetch(`${ANTHROPIC_ENDPOINT}${path}`, {
     method,
     body: body ? JSON.stringify(body) : undefined,
@@ -37,6 +41,9 @@ export async function fetchApi<T>(
   }
 
   const json = await response.json()
+
+  // Log responses from the Anthropic API
+  console.log('Anthropic API response:', JSON.stringify(json, null, 2))
 
   return json as T
 }

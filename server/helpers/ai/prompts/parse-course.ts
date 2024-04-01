@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
-import { fetchSingleFunctionCompletion } from '@/server/lib/anthropic/functions'
+import { getPrediction } from '@/server/lib/anthropic/completion'
 import { ChatMessage } from '@/server/lib/anthropic/types'
+import { zodToFunctionParameters } from '@/server/lib/zod-fns'
 
 const schema = z.object({
   outline: z.string().describe('The course outline and objectives'),
@@ -38,32 +39,33 @@ export async function parseCourse(
   courseBody: string,
   options: ParseCourseOptions = {},
 ): Promise<Parsed> {
-  const result = await fetchSingleFunctionCompletion({
+  const result = await getPrediction({
     messages: getChatMessages(courseBody, options),
-    schema,
   })
 
-  return result
+  return schema.parse(JSON.parse(result))
 }
 
 function getChatMessages(
   description: string,
   { language = 'English' }: ParseCourseOptions,
 ): ChatMessage[] {
+  const jsonSchema = zodToFunctionParameters(schema)
+
   return [
     {
       role: 'user',
-      content:
-        'You are a parsing bot. You are given a course description and you have to parse it into a course outline.',
-    },
-    {
-      role: 'user',
       content: `
+      You are a parsing bot. You are given a course description and you have to parse it into a course outline.
       Here's a course description:
     
       ${description}
 
       Parse it into sections. Use the ${language} language.
+
+      Respond only with JSON conforming to this schema:
+
+      ${JSON.stringify(jsonSchema, null, 2)}
   `.trim(),
     },
   ]

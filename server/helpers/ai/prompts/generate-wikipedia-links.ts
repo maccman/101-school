@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { fetchSingleFunctionCompletion } from '@/server/lib/anthropic/functions'
+import { getFunctionPrediction } from '@/server/lib/anthropic/functions'
 import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
@@ -12,7 +12,7 @@ const schema = z.object({
 })
 
 export async function generateWikipediaUrls(body: string): Promise<string[]> {
-  const result = await fetchSingleFunctionCompletion({
+  const result = await getFunctionPrediction({
     messages: generatePrompt(body),
     schema,
   })
@@ -25,12 +25,9 @@ function generatePrompt(body: string): ChatMessage[] {
     {
       role: 'user',
       content:
-        'You are an advanced and accurate search bot that can find relevant Wikipedia links for any body of text',
-    },
-    {
-      role: 'user',
-      content: `
-      List up to five relevant Wikipedia links for this body of text. Put the most relevant links first:
+        `You are an advanced and accurate search bot that can find relevant Wikipedia links for any body of text',
+
+        List up to five relevant Wikipedia links for this body of text. Put the most relevant links first:
 
       ${body}
   `.trim(),

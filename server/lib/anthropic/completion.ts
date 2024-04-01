@@ -11,7 +11,7 @@ export interface CompletionOptions {
   systemPrompt?: string
 }
 
-export async function fetchCompletion({
+export async function getPredictedMessages({
   messages,
   model = 'claude-3-opus-20240229',
   temperature = 0.5,
@@ -34,4 +34,40 @@ export async function fetchCompletion({
   })
 
   return response
+}
+
+export async function getPrediction({
+  messages,
+  model = 'claude-3-opus-20240229',
+  temperature = 0.5,
+  maxTokens = 1024,
+  stopSequences = [],
+  systemPrompt,
+  apiKey,
+}: CompletionOptions): Promise<string> {
+  const response = await getPredictedMessages({
+    messages,
+    model,
+    temperature,
+    maxTokens,
+    stopSequences,
+    systemPrompt,
+    apiKey,
+  })
+
+  const [firstMessage] = response.content
+
+  if (!firstMessage) {
+    throw new Error('Expected first message')
+  }
+
+  if (firstMessage.type !== 'text') {
+    throw new Error('Expected first message to be text')
+  }
+
+  if (!firstMessage.text) {
+    throw new Error('Expected first message to have text')
+  }
+
+  return firstMessage.text
 }

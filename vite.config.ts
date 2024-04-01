@@ -13,10 +13,13 @@ export default defineConfig(() => {
       environment: 'jsdom',
       alias: {
         app: '/app',
+        '@/app': '/app',
         lib: '/lib',
         '@/lib': '/lib',
         server: '/server',
+        '@/server': '/server',
         components: '/components',
+        '@/components': '/components',
       },
       globals: true,
     },

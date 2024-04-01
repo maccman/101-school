@@ -1,4 +1,4 @@
-import { fetchCompletion } from './completion'
+import { getPredictedMessages } from './completion'
 import { ChatMessage } from './types'
 
 describe('fetchCompletion', () => {
@@ -10,7 +10,7 @@ describe('fetchCompletion', () => {
       },
     ]
 
-    const result = await fetchCompletion({
+    const result = await getPredictedMessages({
       messages,
       temperature: 0.5,
       maxTokens: 1024,

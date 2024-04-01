@@ -4,6 +4,7 @@ import {
   extractFunctionCalls,
   fetchFunctionCompletion,
   fetchWithTools,
+  zodToFunctionParameters,
 } from './functions'
 import { ChatMessage, Tool } from './types'
 
@@ -69,6 +70,25 @@ describe('extractFunctionCalls', () => {
       ]
     `)
   })
+
+  it('should extract function call from example', () => {
+    const example =
+      'Let me see if I can determine the most likely CIP code for this computer science fundamentals course:\n<function_calls>\n<invoke>\n<tool_name>onResult</tool_name>\n<parameters>\n<cip_code>11.0701</cip_code>\n<cip_title>Computer Science</cip_title>\n</parameters>\n</invoke>\n'
+
+    const result = extractFunctionCalls(example)
+
+    expect(result).toMatchInlineSnapshot(`
+      [
+        {
+          "parameters": {
+            "cip_code": 11.0701,
+            "cip_title": "Computer Science",
+          },
+          "tool_name": "onResult",
+        },
+      ]
+    `)
+  })
 })
 
 describe('fetchWithTools', () => {
@@ -124,5 +144,67 @@ test('fetchFunctionCompletion calls fetchCompletion with the correct arguments a
   expect(result.parameters).toEqual({
     a: 1,
     b: 2,
+  })
+})
+
+describe('zodToFunctionParameters', () => {
+  it('should convert Zod schema to function parameters', () => {
+    const schema = z.object({
+      name: z.string().describe('The name of the user'),
+      age: z.number().describe('The age of the user'),
+      isAdmin: z.boolean().describe('Whether the user is an admin'),
+    })
+
+    const parameters = zodToFunctionParameters(schema)
+
+    expect(parameters).toEqual([
+      {
+        name: 'name',
+        description: 'The name of the user',
+        type: 'string',
+      },
+      {
+        name: 'age',
+        description: 'The age of the user',
+        type: 'int',
+      },
+      {
+        name: 'isAdmin',
+        description: 'Whether the user is an admin',
+        type: 'bool',
+      },
+    ])
+  })
+
+  it('should handle optional descriptions', () => {
+    const schema = z.object({
+      name: z.string(),
+      age: z.number(),
+    })
+
+    const parameters = zodToFunctionParameters(schema)
+
+    expect(parameters).toEqual([
+      {
+        name: 'name',
+        description: '',
+        type: 'string',
+      },
+      {
+        name: 'age',
+        description: '',
+        type: 'int',
+      },
+    ])
+  })
+
+  it('should throw an error for unsupported Zod types', () => {
+    const schema = z.object({
+      date: z.date(),
+    })
+
+    expect(() => zodToFunctionParameters(schema)).toThrowError(
+      'Unsupported Zod type: ZodDate',
+    )
   })
 })

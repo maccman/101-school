@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { fetchSingleFunctionCompletion } from '@/server/lib/anthropic/functions'
+import { getFunctionPrediction } from '@/server/lib/anthropic/functions'
 import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
@@ -13,7 +13,7 @@ const schema = z.object({
 })
 
 export async function parseCourseDeweyDecimalClass(description: string) {
-  const result = await fetchSingleFunctionCompletion({
+  const result = await getFunctionPrediction({
     messages: getChatMessages(description),
     schema,
   })
@@ -29,11 +29,7 @@ function getChatMessages(description: string): ChatMessage[] {
     {
       role: 'user',
       // content: 'You are a helpful and accurate parsing bot. You parse and process data.',
-      content: 'You are a helpful and accurate assistant.',
-    },
-    {
-      role: 'user',
-      content: `
+      content: `You are a helpful and accurate assistant.
       Parse the Dewey Decimal class (DDC) of the university course described below. If you don't know make your best guess.
     
       ${description}

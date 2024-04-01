@@ -307,7 +307,7 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
 import { z } from 'zod'
 
-import { CompletionOptions, fetchCompletion } from './completion'
+import { CompletionOptions, getPredictedMessages } from './completion'
 import { FunctionCall, FunctionCallResult, Tool, ToolParameter } from './types'
 
 function toXmlString(data: any) {
@@ -432,7 +432,7 @@ export async function fetchWithTools({
 }: CompletionOptions & { tools: Tool[] }) {
   const systemPrompt = getToolsSystemPrompt(tools)
 
-  const response = await fetchCompletion({
+  const response = await getPredictedMessages({
     ...completionOptions,
     systemPrompt,
     stopSequences: ['\n\nHuman:', '\n\nAssistant', '</function_calls>'],
@@ -486,7 +486,7 @@ export async function fetchFunctionCompletion<T extends z.ZodObject<any>>({
   return { response, parameters }
 }
 
-export async function fetchSingleFunctionCompletion<T extends z.ZodObject<any>>({
+export async function getFunctionPrediction<T extends z.ZodObject<any>>({
   schema,
   ...completionOptions
 }: {
@@ -502,7 +502,7 @@ export async function fetchSingleFunctionCompletion<T extends z.ZodObject<any>>(
   return parameters
 }
 
-function zodToFunctionParameters(schema: z.AnyZodObject): ToolParameter[] {
+export function zodToFunctionParameters(schema: z.AnyZodObject): ToolParameter[] {
   const parameters: ToolParameter[] = []
 
   for (const [key, value] of Object.entries(schema.shape)) {
@@ -520,7 +520,9 @@ function zodToFunctionParameters(schema: z.AnyZodObject): ToolParameter[] {
       type = 'bool'
       description = (value as z.ZodBoolean).description ?? ''
     } else {
-      throw new Error(`Unsupported Zod type: ${value}'`)
+      throw new Error(
+        `Unsupported Zod type: ${(value as z.ZodType<any>).constructor.name}`,
+      )
     }
 
     parameters.push({ name, description, type })

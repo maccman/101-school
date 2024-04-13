@@ -11,11 +11,13 @@ export async function fetchApi<T>(
     body,
     apiKey = getApiKey(),
     version = '2023-06-01',
+    betaVersion = 'tools-2024-04-04',
   }: {
     method?: 'GET' | 'POST'
     body?: Record<string, unknown>
     apiKey?: string
     version?: AnthropicVersions
+    betaVersion?: string
   },
 ): Promise<T> {
   assertString(apiKey, 'No Anthropic API Key provided')
@@ -30,6 +32,7 @@ export async function fetchApi<T>(
     headers: {
       'x-api-key': apiKey,
       'anthropic-version': version,
+      ...(betaVersion ? { 'anthropic-beta': betaVersion } : {}),
       ...(body ? { 'Content-Type': 'application/json' } : {}),
     },
   })

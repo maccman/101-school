@@ -56,7 +56,6 @@
     "cookie": "^0.5.0",
     "date-fns": "^2.30.0",
     "encoding": "^0.1.13",
-    "fast-xml-parser": "^4.3.5",
     "inngest": "^2.7.2",
     "jose": "^4.15.4",
     "json-schema": "^0.4.0",

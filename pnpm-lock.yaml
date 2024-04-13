@@ -104,9 +104,6 @@ dependencies:
   encoding:
     specifier: ^0.1.13
     version: 0.1.13
-  fast-xml-parser:
-    specifier: ^4.3.5
-    version: 4.3.6
   inngest:
     specifier: ^2.7.2
     version: 2.7.2(encoding@0.1.13)(typescript@5.1.6)
@@ -5349,13 +5346,6 @@ packages:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
 
-  /fast-xml-parser@4.3.6:
-    resolution: {integrity: sha512-M2SovcRxD4+vC493Uc2GZVcZaj66CCJhWurC4viynVSTvrpErCShNcDz1lAho6n9REQKvL/ll4A4/fw6Y9z8nw==}
-    hasBin: true
-    dependencies:
-      strnum: 1.0.5
-    dev: false
-
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
@@ -8711,10 +8701,6 @@ packages:
     dependencies:
       '@types/node': 20.4.9
       qs: 6.11.2
-    dev: false
-
-  /strnum@1.0.5:
-    resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
     dev: false
 
   /style-to-js@1.1.3:

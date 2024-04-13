@@ -1,5 +1,5 @@
 import { fetchApi } from './client'
-import { ChatMessage, MessageResponse, SupportedModels } from './types'
+import { ChatMessage, MessageResponse, SupportedModels, Tool } from './types'
 
 export interface CompletionOptions {
   messages: ChatMessage[]
@@ -9,6 +9,7 @@ export interface CompletionOptions {
   maxTokens?: number
   stopSequences?: string[]
   systemPrompt?: string
+  tools?: Tool[]
 }
 
 export async function getPredictedMessages({
@@ -19,6 +20,7 @@ export async function getPredictedMessages({
   stopSequences = [],
   systemPrompt,
   apiKey,
+  tools,
 }: CompletionOptions): Promise<MessageResponse> {
   const response = await fetchApi<MessageResponse>(`/v1/messages`, {
     method: 'POST',
@@ -29,6 +31,7 @@ export async function getPredictedMessages({
       max_tokens: maxTokens,
       stop_sequences: stopSequences,
       system: systemPrompt,
+      tools,
     },
     apiKey,
   })

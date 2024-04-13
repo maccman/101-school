@@ -1,14 +1,35 @@
-export type SupportedModels = 'claude-3-opus-20240229'
+import { JSONSchema7 } from 'json-schema'
 
-export interface ChatMessageContent {
-  type: 'text' | 'image'
-  text?: string
-  source?: {
+export type SupportedModels =
+  | 'claude-3-opus-20240229'
+  | 'claude-3-sonnet-20240229'
+  | 'claude-3-haiku-20240307'
+
+export interface ChatMessageContentText {
+  type: 'text'
+  text: string
+}
+
+export interface ChatMessageContentImage {
+  type: 'image'
+  source: {
     type: 'base64'
     media_type: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
     data: string
   }
 }
+
+export interface ChatMessageContentToolUse {
+  type: 'tool_use'
+  id: string
+  name: string
+  input: unknown
+}
+
+export type ChatMessageContent =
+  | ChatMessageContentText
+  | ChatMessageContentImage
+  | ChatMessageContentToolUse
 
 export interface ChatMessage {
   role: 'user' | 'assistant'
@@ -31,16 +52,10 @@ export interface MessageResponse {
   usage: UsageInfo
 }
 
-export interface ToolParameter {
+export interface Tool {
   name: string
   description: string
-  type: 'string' | 'int' | 'bool'
-}
-
-export interface Tool {
-  tool_name: string
-  description: string
-  parameters: ToolParameter[]
+  input_schema: JSONSchema7
 }
 
 export interface FunctionCall {

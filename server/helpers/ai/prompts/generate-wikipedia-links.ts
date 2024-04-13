@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { getFunctionPrediction } from '@/server/lib/anthropic/functions'
+import { getPredictionForToolResult } from '@/server/lib/anthropic/functions'
 import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
@@ -12,7 +12,7 @@ const schema = z.object({
 })
 
 export async function generateWikipediaUrls(body: string): Promise<string[]> {
-  const result = await getFunctionPrediction({
+  const result = await getPredictionForToolResult({
     messages: generatePrompt(body),
     schema,
   })

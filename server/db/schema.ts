@@ -34,7 +34,7 @@ export interface UnitChatMessage {
   id?: string
   content?: string
   role: string
-  createdAt?: string
+  createdAt: string
 }
 
 // Semi-generated types:
@@ -44,9 +44,10 @@ export interface UnitChatMessage {
 // - Update table names to be singular
 // - Update JSON types to be interface
 
-export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
-  ? ColumnType<S, I | undefined, U>
-  : ColumnType<T, T | undefined, T>
+export type Generated<T> =
+  T extends ColumnType<infer S, infer I, infer U>
+    ? ColumnType<S, I | undefined, U>
+    : ColumnType<T, T | undefined, T>
 
 export type Json = ColumnType<JsonValue, string, string>
 

@@ -23,6 +23,7 @@
     "scripts:parse-sample-course-cip": "env-cmd -f .env.local tsx scripts/parse-sample-course-cip.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.4",
     "@heroicons/react": "^2.1.3",
     "@hookform/resolvers": "^3.3.4",
     "@neondatabase/serverless": "^0.9.0",

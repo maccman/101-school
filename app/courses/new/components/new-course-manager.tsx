@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 
 import { assert } from '@/lib/assert'
 import { jsonFetch } from '@/lib/json-fetch'
-import { sleep } from '@/lib/sleep'
 import { useAbortController } from '@/lib/use-abort-controller'
 import { useLoading } from '@/lib/use-loading'
 import { useReadTextStream } from '@/lib/use-read-text-stream'
@@ -20,9 +19,10 @@ import {
   generateOutlineFormSchema,
 } from './types'
 import { stripTripleBackticks } from './utils'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export function NewCourseManager() {
+  const router = useRouter()
   const { loading, withLoading } = useLoading()
   const [stream, setStream] = useState<ReadableStream | null>(null)
   const { createSignal, abort: abortRequest } = useAbortController()
@@ -79,7 +79,7 @@ export function NewCourseManager() {
         return
       }
 
-      redirect(`/courses/${response.id}`)
+      router.push(`/courses/${response.id}`)
     })
   }
 

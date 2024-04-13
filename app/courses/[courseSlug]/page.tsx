@@ -14,12 +14,14 @@ export default async function CoursePage({ params }: { params: { courseSlug: str
   const courseUnit = await getFirstCourseUnit(course.id)
 
   if (!courseUnit) {
+    console.error(`Course with slug "${params.courseSlug}" has no units`)
     return notFound()
   }
 
   const courseModule = await getModule(courseUnit.moduleId)
 
   if (!courseModule) {
+    console.error(`Course with slug "${params.courseSlug}" has no module`)
     return notFound()
   }
 

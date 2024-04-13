@@ -1,11 +1,13 @@
-import compareAsc from 'date-fns/compareAsc'
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
-import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths'
-import differenceInCalendarYears from 'date-fns/differenceInCalendarYears'
-import differenceInSeconds from 'date-fns/differenceInSeconds'
-import getDaysInMonth from 'date-fns/getDaysInMonth'
-import isSameDay from 'date-fns/isSameDay'
-import toDate from 'date-fns/toDate'
+import {
+  compareAsc,
+  differenceInCalendarDays,
+  differenceInCalendarMonths,
+  differenceInCalendarYears,
+  differenceInSeconds,
+  getDaysInMonth,
+  isSameDay,
+  toDate,
+} from 'date-fns'
 
 export function formatDistanceToNow<DateType extends Date>(
   dirtyDate: DateType | number,

@@ -7,6 +7,7 @@ import { createCourse } from '@/server/db/courses/setters'
 import { withApiBuilder } from '@/server/helpers/api-builder'
 import { withAuth } from '@/server/helpers/auth'
 import { inngest } from '@/server/jobs/client'
+import { NextResponse } from 'next/server'
 
 const ApiSchema = z.object({
   title: z.string().min(2).max(100),
@@ -44,7 +45,7 @@ export const POST = withAuth(
         },
       })
 
-      return redirect(`/courses/${courseId}`)
+      return NextResponse.json({ id: courseId })
     },
   ),
 )

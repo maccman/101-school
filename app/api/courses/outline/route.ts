@@ -1,19 +1,13 @@
-import { Configuration, OpenAIApi } from 'openai-edge'
-
 import { assert, assertString } from '@/lib/assert'
 import { generateCoursePrompt } from '@/server/helpers/ai/prompts/generate-course'
 import { withAuth } from '@/server/helpers/auth'
 
-import { PredictDecoderStream } from './helpers/predict-decoder-stream'
+import { AnthropicPredictDecoderStream } from './helpers/predict-decoder-stream'
 import { SSEDecoderStream } from './helpers/sse-decoder-stream'
-import { SSEJSONDecoderStream } from './helpers/sse-json-decoder-stream'
+import { AnthropicSSEJSONDecoderStream } from './helpers/sse-json-decoder-stream'
 import { TextDecoderStream } from './helpers/text-decoder-stream'
 import { PredictResponse } from './helpers/types'
-
-const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-const openai = new OpenAIApi(config)
+import { getStreamingPredictedMessages } from '@/server/lib/anthropic/completion'
 
 export const runtime = 'edge'
 
@@ -24,14 +18,12 @@ async function generateOutline(req: Request) {
 
   const responseMessages = generateCoursePrompt(description, { weekCount, language })
 
-  const response = await openai.createChatCompletion({
-    model: 'gpt-4-1106-preview',
-    stream: true,
+  const response = await getStreamingPredictedMessages({
     messages: responseMessages,
   })
 
   if (!response.ok) {
-    throw new Error('OpenAI API error: ' + (await response.text()))
+    throw new Error('Opus API error: ' + (await response.text()))
   }
 
   assert(response.body, 'response.body must be defined')
@@ -39,8 +31,8 @@ async function generateOutline(req: Request) {
   const stream = response.body
     .pipeThrough(new TextDecoderStream())
     .pipeThrough(new SSEDecoderStream())
-    .pipeThrough(new SSEJSONDecoderStream<PredictResponse>())
-    .pipeThrough(new PredictDecoderStream())
+    .pipeThrough(new AnthropicSSEJSONDecoderStream<PredictResponse>())
+    .pipeThrough(new AnthropicPredictDecoderStream())
     .pipeThrough(new TextEncoderStream())
 
   return new Response(stream, {

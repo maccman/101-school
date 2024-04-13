@@ -7,7 +7,7 @@ import { inngest } from '../../client'
 
 export const courseSubscribe = inngest.createFunction(
   {
-    name: 'Course Subscribe',
+    id: 'course-subscribe',
     cancelOn: [{ event: 'course/unsubscribe', match: 'data.courseSubscriptionId' }],
   },
   { event: 'course/subscribe' },
@@ -50,7 +50,7 @@ export const courseSubscribe = inngest.createFunction(
         })
       })
 
-      await step.sleep(`${courseSubscription.daysInterval} days`)
+      await step.sleep('wait-a-moment', `${courseSubscription.daysInterval} days`)
     }
   },
 )

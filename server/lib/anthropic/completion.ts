@@ -1,4 +1,4 @@
-import { fetchApi } from './client'
+import { fetchApi, fetchApiJson } from './client'
 import { ChatMessage, MessageResponse, SupportedModels, Tool } from './types'
 
 export interface CompletionOptions {
@@ -10,19 +10,23 @@ export interface CompletionOptions {
   stopSequences?: string[]
   systemPrompt?: string
   tools?: Tool[]
+  stream?: boolean
 }
+
+const DEFAULT_MODEL = 'claude-3-opus-20240229'
 
 export async function getPredictedMessages({
   messages,
-  model = 'claude-3-opus-20240229',
+  model = DEFAULT_MODEL,
   temperature = 0,
   maxTokens = 4096,
   stopSequences = [],
   systemPrompt,
   apiKey,
   tools,
+  stream,
 }: CompletionOptions): Promise<MessageResponse> {
-  const response = await fetchApi<MessageResponse>(`/v1/messages`, {
+  return fetchApiJson<MessageResponse>(`/v1/messages`, {
     method: 'POST',
     body: {
       model,
@@ -32,16 +36,41 @@ export async function getPredictedMessages({
       stop_sequences: stopSequences,
       system: systemPrompt,
       tools,
+      stream,
     },
     apiKey,
   })
+}
 
-  return response
+export async function getStreamingPredictedMessages({
+  messages,
+  model = DEFAULT_MODEL,
+  temperature = 0,
+  maxTokens = 4096,
+  stopSequences = [],
+  systemPrompt,
+  apiKey,
+  tools,
+}: CompletionOptions) {
+  return fetchApi(`/v1/messages`, {
+    method: 'POST',
+    body: {
+      model,
+      temperature,
+      messages,
+      max_tokens: maxTokens,
+      stop_sequences: stopSequences,
+      system: systemPrompt,
+      tools,
+      stream: true,
+    },
+    apiKey,
+  })
 }
 
 export async function getPrediction({
   messages,
-  model = 'claude-3-opus-20240229',
+  model = DEFAULT_MODEL,
   temperature = 0,
   maxTokens = 4096,
   stopSequences = [],

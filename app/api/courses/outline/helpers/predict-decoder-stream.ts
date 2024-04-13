@@ -1,14 +1,17 @@
 import { PredictResponse } from './types'
 
-export class PredictDecoderStream extends TransformStream {
+export class AnthropicPredictDecoderStream extends TransformStream {
   constructor() {
     super({
       transform: (chunk: PredictResponse, controller) => {
-        const firstChoice = (chunk.choices ?? [])[0]
-        const text = firstChoice?.delta?.content ?? ''
+        if (chunk.type === 'content_block_delta' && chunk.delta?.text) {
+          controller.enqueue(chunk.delta.text)
+          return
+        }
 
-        if (text) {
-          controller.enqueue(text)
+        if (chunk.type === 'message_stop') {
+          controller.terminate()
+          return
         }
       },
     })

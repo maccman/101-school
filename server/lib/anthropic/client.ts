@@ -4,7 +4,15 @@ const ANTHROPIC_ENDPOINT = 'https://api.anthropic.com'
 
 type AnthropicVersions = '2023-01-01' | '2023-06-01'
 
-export async function fetchApi<T>(
+type FetchApiOptions = {
+  method?: 'GET' | 'POST'
+  body?: Record<string, unknown>
+  apiKey?: string
+  version?: AnthropicVersions
+  betaVersion?: string
+}
+
+export async function fetchApi(
   path: string,
   {
     method,
@@ -12,14 +20,8 @@ export async function fetchApi<T>(
     apiKey = getApiKey(),
     version = '2023-06-01',
     betaVersion = 'tools-2024-04-04',
-  }: {
-    method?: 'GET' | 'POST'
-    body?: Record<string, unknown>
-    apiKey?: string
-    version?: AnthropicVersions
-    betaVersion?: string
-  },
-): Promise<T> {
+  }: FetchApiOptions,
+) {
   assertString(apiKey, 'No Anthropic API Key provided')
 
   // Log requests to the Anthropic API
@@ -42,6 +44,12 @@ export async function fetchApi<T>(
       `Anthropic API responded with ${response.status}: ${await response.text()}}`,
     )
   }
+
+  return response
+}
+
+export async function fetchApiJson<T>(path: string, options: FetchApiOptions) {
+  const response = await fetchApi(path, options)
 
   const json = await response.json()
 

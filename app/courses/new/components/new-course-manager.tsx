@@ -20,6 +20,7 @@ import {
   generateOutlineFormSchema,
 } from './types'
 import { stripTripleBackticks } from './utils'
+import { redirect } from 'next/navigation'
 
 export function NewCourseManager() {
   const { loading, withLoading } = useLoading()
@@ -78,9 +79,7 @@ export function NewCourseManager() {
         return
       }
 
-      window.location.href = response.checkoutUrl
-
-      await sleep(1000)
+      redirect(`/courses/${response.id}`)
     })
   }
 
@@ -160,7 +159,7 @@ interface CreateCourseRequest {
 }
 
 function createCourse(values: CreateCourseRequest) {
-  return jsonFetch<{ checkoutUrl: string }>('/api/courses', {
+  return jsonFetch<{ id: string }>('/api/courses', {
     method: 'POST',
     data: values,
   })

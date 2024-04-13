@@ -1,25 +1,34 @@
-export class SSEJSONDecoderStream<T> extends TransformStream {
+export class AnthropicSSEJSONDecoderStream<T> extends TransformStream {
   constructor() {
     super({
       transform: (chunk: string, controller) => {
-        const colonIndex = chunk.indexOf(':')
-        const type = chunk.slice(0, colonIndex)
-        const data = chunk.slice(colonIndex + 1).trim()
+        const lines = chunk.split('\n')
 
-        if (type !== 'data') {
-          return
-        }
+        for (const line of lines) {
+          if (line === '') {
+            continue
+          }
 
-        if (data === '[DONE]') {
-          controller.terminate()
-          return
-        }
+          const colonIndex = line.indexOf(':')
+          const key = line.slice(0, colonIndex)
+          const value = line.slice(colonIndex + 1).trim()
 
-        try {
-          const json = JSON.parse(data) as T
-          controller.enqueue(json)
-        } catch (error) {
-          throw new Error('Error parsing JSON: ' + data + ' ' + error)
+          if (key === 'event') {
+            // We ignore events
+            continue
+          }
+
+          if (key === 'data') {
+            try {
+              const json = JSON.parse(value) as T
+              controller.enqueue(json)
+              continue
+            } catch (error) {
+              throw new Error('Error parsing JSON: ' + value + ' ' + error)
+            }
+          }
+
+          console.warn('Unknown key:', { key, value })
         }
       },
     })

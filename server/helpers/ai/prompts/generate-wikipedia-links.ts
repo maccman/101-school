@@ -27,7 +27,7 @@ function generatePrompt(body: string): ChatMessage[] {
       content:
         `You are an advanced and accurate search bot that can find relevant Wikipedia links for any body of text',
 
-        List up to five relevant Wikipedia links for this body of text. Put the most relevant links first:
+        Call onResult() with up to five relevant Wikipedia links for this body of text. Put the most relevant links first.
 
       ${body}
   `.trim(),

@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
-import { getPrediction } from '@/server/lib/anthropic/completion'
+import { getPredictionForToolResult } from '@/server/lib/anthropic/functions'
 import { ChatMessage } from '@/server/lib/anthropic/types'
-import { zodToFunctionParameters } from '@/server/lib/zod-fns'
 
 const schema = z.object({
   outline: z.string().describe('The course outline and objectives'),
@@ -39,19 +38,18 @@ export async function parseCourse(
   courseBody: string,
   options: ParseCourseOptions = {},
 ): Promise<Parsed> {
-  const result = await getPrediction({
+  const result = await getPredictionForToolResult({
+    schema,
     messages: getChatMessages(courseBody, options),
   })
 
-  return schema.parse(JSON.parse(result))
+  return result
 }
 
 function getChatMessages(
   description: string,
   { language = 'English' }: ParseCourseOptions,
 ): ChatMessage[] {
-  const jsonSchema = zodToFunctionParameters(schema)
-
   return [
     {
       role: 'user',
@@ -61,11 +59,8 @@ function getChatMessages(
     
       ${description}
 
-      Parse it into sections. Use the ${language} language.
-
-      Respond only with JSON conforming to this schema:
-
-      ${JSON.stringify(jsonSchema, null, 2)}
+      Use the ${language} language.
+      Call onResult() with the parsed course. 
   `.trim(),
     },
   ]

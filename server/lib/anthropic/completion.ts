@@ -15,8 +15,8 @@ export interface CompletionOptions {
 export async function getPredictedMessages({
   messages,
   model = 'claude-3-opus-20240229',
-  temperature = 0.5,
-  maxTokens = 1024,
+  temperature = 0,
+  maxTokens = 4096,
   stopSequences = [],
   systemPrompt,
   apiKey,
@@ -42,8 +42,8 @@ export async function getPredictedMessages({
 export async function getPrediction({
   messages,
   model = 'claude-3-opus-20240229',
-  temperature = 0.5,
-  maxTokens = 1024,
+  temperature = 0,
+  maxTokens = 4096,
   stopSequences = [],
   systemPrompt,
   apiKey,

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { CourseUnit } from '@/components/course-units/course-unit'
 import { titlize } from '@/lib/titlize'
 import { getCourseContext } from '@/server/helpers/params-getters'
+import CourseSidebarLayout from '@/components/layouts/course-sidebar-layout'
 
 export async function generateMetadata({
   params,
@@ -55,6 +56,8 @@ export default async function CourseModuleUnitPage({
   }
 
   return (
-    <CourseUnit course={course} courseModule={courseModule} courseUnit={courseUnit} />
+    <CourseSidebarLayout courseSlug={params.courseSlug}>
+      <CourseUnit course={course} courseModule={courseModule} courseUnit={courseUnit} />
+    </CourseSidebarLayout>
   )
 }

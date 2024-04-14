@@ -4,6 +4,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/ca
 import { getCourseBySlugOrId } from '@/server/db/courses/getters'
 
 import { CourseUnsubscribeForm } from './components/course-unsubscribe-form'
+import CourseSidebarLayout from '@/components/layouts/course-sidebar-layout'
 
 export default async function CourseUnsubscribePage({
   params,
@@ -19,18 +20,20 @@ export default async function CourseUnsubscribePage({
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center">
-      <Card className="text-center">
-        <CardHeader className="space-y-5">
-          <CardTitle>Unsubscribe from course</CardTitle>
-          <CardDescription className="text-lg">
-            <CourseUnsubscribeForm
-              courseId={course.id}
-              defaultEmail={searchParams?.email}
-            />
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    </div>
+    <CourseSidebarLayout courseSlug={params.courseSlug}>
+      <div className="flex-1 flex items-center justify-center">
+        <Card className="text-center">
+          <CardHeader className="space-y-5">
+            <CardTitle>Unsubscribe from course</CardTitle>
+            <CardDescription className="text-lg">
+              <CourseUnsubscribeForm
+                courseId={course.id}
+                defaultEmail={searchParams?.email}
+              />
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    </CourseSidebarLayout>
   )
 }

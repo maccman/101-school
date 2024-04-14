@@ -1,4 +1,4 @@
-import { Link } from '@react-email/components'
+import { Link } from '@react-email/link'
 import * as React from 'react'
 
 import { styles } from '../styles'

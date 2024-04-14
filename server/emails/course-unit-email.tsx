@@ -1,5 +1,11 @@
-import { Body, Head, Heading, Html, Img, Link, Section } from '@react-email/components'
+import { Section } from '@react-email/section'
+import { Link } from '@react-email/link'
+import { Img } from '@react-email/img'
+import { Html } from '@react-email/html'
+import { Head } from '@react-email/head'
+import { Body } from '@react-email/body'
 import { Markdown } from '@react-email/markdown'
+import { Heading } from '@react-email/heading'
 
 import { Container } from './components/container'
 import { styles } from './styles'

@@ -50,21 +50,42 @@ dependencies:
   '@radix-ui/react-tooltip':
     specifier: ^1.0.7
     version: 1.0.7(@types/react-dom@18.2.25)(@types/react@18.2.78)(react-dom@18.2.0)(react@18.2.0)
+  '@react-email/body':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
   '@react-email/button':
     specifier: 0.0.14
     version: 0.0.14(react@18.2.0)
-  '@react-email/components':
-    specifier: ^0.0.16
-    version: 0.0.16(@types/react@18.2.78)(react@18.2.0)
+  '@react-email/head':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
+  '@react-email/heading':
+    specifier: ^0.0.11
+    version: 0.0.11(@types/react@18.2.78)(react@18.2.0)
+  '@react-email/html':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
+  '@react-email/img':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
+  '@react-email/link':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
   '@react-email/markdown':
     specifier: 0.0.9
     version: 0.0.9(react@18.2.0)
+  '@react-email/preview':
+    specifier: ^0.0.8
+    version: 0.0.8(react@18.2.0)
   '@react-email/render':
     specifier: 0.0.12
     version: 0.0.12
-  '@react-email/tailwind':
-    specifier: 0.0.15
-    version: 0.0.15(react@18.2.0)
+  '@react-email/section':
+    specifier: ^0.0.11
+    version: 0.0.11(react@18.2.0)
+  '@react-email/text':
+    specifier: ^0.0.7
+    version: 0.0.7(react@18.2.0)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1

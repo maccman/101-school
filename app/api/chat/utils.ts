@@ -8,7 +8,7 @@ export function chatMessageToUnitMessage(message: Message): UnitChatMessage {
     content: message.content ?? '',
     role: message.role ?? 'assistant',
     createdAt: message.createdAt
-      ? message.createdAt.toISOString()
+      ? new Date(message.createdAt).toISOString()
       : new Date().toISOString(),
   }
 }

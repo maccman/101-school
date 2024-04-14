@@ -1,6 +1,5 @@
-import { assertString } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { getPrediction } from '@/server/lib/anthropic/completion'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 import { generateCoursePrompt } from './generate-course'
 
@@ -16,12 +15,10 @@ interface Options {
   language?: string
 }
 
-export async function generateModule(params: Params, options: Options = {}) {
-  const message = await fetchCompletion({
+export function generateModule(params: Params, options: Options = {}) {
+  return getPrediction({
     messages: generateModulePrompt(params, options),
   })
-  assertString(message.content)
-  return message.content
 }
 
 export function generateModulePrompt(

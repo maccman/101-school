@@ -1,43 +1,55 @@
-import { OpenAIStream, StreamingTextResponse } from 'ai'
-import { omit } from 'lodash'
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai-edge'
+import { AnthropicStream, Message, StreamingTextResponse } from 'ai'
+import Anthropic from '@anthropic-ai/sdk'
 
 import { upsertUnitChat } from '@/server/db/unit_chats/setters'
 import { withAuth } from '@/server/helpers/auth'
+import { UnitChatMessage } from '@/server/db/schema'
+import {
+  chatMessageToUnitMessage,
+  getSystemPrompt,
+  messagesToAnthropicMessage,
+} from './utils'
 
-const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY || '',
 })
-const openai = new OpenAIApi(config)
 
 export const runtime = 'edge'
 
 async function createChat(req: Request, { userId }: { userId: string }) {
-  const { messages, unitId } = (await req.json()) as {
-    messages: ChatCompletionRequestMessage[]
+  const { messages: messagesParam, unitId } = (await req.json()) as {
+    messages: Message[]
     unitId: string
   }
 
-  // OpenAI doesn't want these fields
-  const strippedMessages = messages.map((message) => omit(message, 'id', 'createdAt'))
+  const systemPrompt = getSystemPrompt(messagesParam)
 
-  const response = await openai.createChatCompletion({
-    model: 'gpt-4-1106-preview',
+  const anthopicMessages = messagesToAnthropicMessage(messagesParam)
+
+  const response = await anthropic.messages.create({
+    system: systemPrompt,
+    messages: anthopicMessages,
+    model: 'claude-3-opus-20240229',
     stream: true,
-    messages: strippedMessages,
+    max_tokens: 4096,
   })
 
-  const stream = OpenAIStream(response, {
+  const stream = AnthropicStream(response, {
     onCompletion: async (incomingMessageContent) => {
-      const newMessage: ChatCompletionRequestMessage = {
+      const existingMessages: UnitChatMessage[] = messagesParam.map(
+        chatMessageToUnitMessage,
+      )
+
+      const newMessage: UnitChatMessage = {
         content: incomingMessageContent,
         role: 'assistant',
+        createdAt: new Date().toISOString(),
       }
 
       await upsertUnitChat({
         unitId,
         userId,
-        messages: [...messages, newMessage],
+        messages: [...existingMessages, newMessage],
       })
     },
   })

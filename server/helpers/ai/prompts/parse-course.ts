@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-import { assert } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { buildChatFunction, parseChatFunctionArgs } from '@/server/lib/open-ai/functions'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { getPredictionForToolResult } from '@/server/lib/anthropic/functions'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 const schema = z.object({
   outline: z.string().describe('The course outline and objectives'),
@@ -40,14 +38,12 @@ export async function parseCourse(
   courseBody: string,
   options: ParseCourseOptions = {},
 ): Promise<Parsed> {
-  const result = await fetchCompletion({
+  const result = await getPredictionForToolResult({
+    schema,
     messages: getChatMessages(courseBody, options),
-    functions: getChatFunctions(),
   })
 
-  assert(result.function_call, 'No function call found')
-
-  return parseChatFunctionArgs(result.function_call.arguments, schema)
+  return result
 }
 
 function getChatMessages(
@@ -56,29 +52,16 @@ function getChatMessages(
 ): ChatMessage[] {
   return [
     {
-      role: 'system',
-      content:
-        'You are a parsing bot. You are given a course description and you have to parse it into a course outline.',
-    },
-    {
       role: 'user',
       content: `
+      You are a parsing bot. You are given a course description and you have to parse it into a course outline.
       Here's a course description:
     
       ${description}
 
-      Parse it into sections. Use the ${language} language.
+      Use the ${language} language.
+      Call onResult() with the parsed course. 
   `.trim(),
     },
-  ]
-}
-
-function getChatFunctions() {
-  return [
-    buildChatFunction({
-      name: 'onResult',
-      description: 'The function to call when the result is ready',
-      schema,
-    }),
   ]
 }

@@ -1,13 +1,11 @@
-import {
-  Body,
-  Head,
-  Html,
-  Img,
-  Link,
-  Preview,
-  Section,
-  Text,
-} from '@react-email/components'
+import { Section } from '@react-email/section'
+import { Text } from '@react-email/text'
+import { Link } from '@react-email/link'
+import { Img } from '@react-email/img'
+import { Preview } from '@react-email/preview'
+import { Html } from '@react-email/html'
+import { Head } from '@react-email/head'
+import { Body } from '@react-email/body'
 
 import '@/app/globals.css'
 

@@ -62,7 +62,7 @@ async function fetchImageForWikipediaPage(
 
   return {
     source: page.original.source,
-    description: page.terms?.description?.[0] ?? null,
+    description: null,
   }
 }
 
@@ -71,9 +71,10 @@ function getUrlForPageImageQuery(pageName: string, size = 500) {
   url.searchParams.set('action', 'query')
   url.searchParams.set('titles', pageName)
   url.searchParams.set('prop', 'pageimages|pageterms')
-  url.searchParams.set('piprop', 'original')
+  url.searchParams.set('piprop', 'original|name')
   url.searchParams.set('pilicense', 'any')
   url.searchParams.set('format', 'json')
+  url.searchParams.set('formatversion', '2')
   url.searchParams.set('pithumbsize', size.toString())
   return url.toString()
 }

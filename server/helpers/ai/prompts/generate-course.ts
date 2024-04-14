@@ -1,6 +1,5 @@
-import { assertString } from '@/lib/assert'
-import { fetchCompletion } from '@/server/lib/open-ai'
-import { ChatMessage } from '@/server/lib/open-ai/types'
+import { getPrediction } from '@/server/lib/anthropic/completion'
+import { ChatMessage } from '@/server/lib/anthropic/types'
 
 interface Options {
   weekCount?: number
@@ -12,12 +11,10 @@ export async function generateCourse(
   description: string,
   options: Options = {},
 ): Promise<string> {
-  const message = await fetchCompletion({
+  return getPrediction({
     messages: generateCoursePrompt(description, options),
     temperature: 0.1,
   })
-  assertString(message.content)
-  return message.content
 }
 
 export function generateCoursePrompt(
@@ -30,13 +27,10 @@ export function generateCoursePrompt(
 ): ChatMessage[] {
   return [
     {
-      role: 'system',
-      content:
-        'You are a university course generator. You are given a description of a course and you have to generate a course outline. Format output as Markdown.',
-    },
-    {
       role: 'user',
       content: `
+      You are a university course generator. You are given a description of a course and you have to generate a course outline. Format output as Markdown.
+
       Design a university course outline:
       
       - Subject matter: ${description}
@@ -50,7 +44,7 @@ export function generateCoursePrompt(
       There will be no exams so do not include those in the outline.
 
       Put a recommended reading list at the end of the outline.
-  `,
+    `.trim(),
     },
   ]
 }

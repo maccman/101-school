@@ -12,10 +12,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: '101.school',
   description: 'Teach yourself anything.',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
   icons: [`${baseUrl}/static/logo.png`],
   twitter: {
     title: '101.school',

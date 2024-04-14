@@ -10,7 +10,8 @@ export default defineConfig(() => {
     envPrefix: ['NEXT_PUBLIC_', 'VITE_PUBLIC_', 'ANTHROPIC_'],
 
     test: {
-      environment: 'jsdom',
+      // environment: 'jsdom',
+
       alias: {
         app: '/app',
         '@/app': '/app',

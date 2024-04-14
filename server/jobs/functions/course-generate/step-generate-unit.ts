@@ -7,7 +7,7 @@ import { CourseParsedModule, CourseParsedUnit } from '@/server/db/schema'
 import { setUnit } from '@/server/db/units/setters'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
-import { pickImageForWikpediaUrls } from '@/server/lib/wikipedia'
+import { getImageForPageAndTest } from '@/server/lib/wikipedia'
 
 export async function stepGenerateUnit({
   parsedUnit,
@@ -49,7 +49,7 @@ export async function stepGenerateUnit({
 
   const wikipediaUrls = await safeGenerateWikipediaUrls(unitContent)
 
-  const image = await pickImageForWikpediaUrls(wikipediaUrls)
+  const image = await getImageForPageAndTest(wikipediaUrls)
 
   logger.info('Saving unit', {
     courseId: course.id,

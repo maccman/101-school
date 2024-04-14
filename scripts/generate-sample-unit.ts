@@ -14,7 +14,7 @@ import {
 import { setUnit } from '@/server/db/units/setters'
 import { generateUnit } from '@/server/helpers/ai/prompts/generate-unit'
 import { generateWikipediaUrls } from '@/server/helpers/ai/prompts/generate-wikipedia-links'
-import { pickImageForWikpediaUrls } from '@/server/lib/wikipedia'
+import { getImageForPageAndTest } from '@/server/lib/wikipedia'
 
 async function main() {
   const title = await prompt('Course title: ')
@@ -61,7 +61,7 @@ async function generateAndSaveUnit(
 
   const wikipediaUrls = await generateWikipediaUrls(unitContent)
 
-  const image = await pickImageForWikpediaUrls(wikipediaUrls)
+  const image = await getImageForPageAndTest(wikipediaUrls)
 
   await setUnit({
     moduleId: module.id,

@@ -1,18 +1,10 @@
-'use client'
-
 import { XCircle } from 'lucide-react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 
 import { HeaderLayout } from '@/components/layouts/header-layout'
-import { buttonVariants } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { TryAgainButton } from './components/try-again-button'
 
 export default function PaymentsFailure() {
-  const searchParams = useSearchParams()
-  const courseId = searchParams?.get('courseId')
-
   return (
     <HeaderLayout>
       <div className="flex-1 flex items-center justify-center">
@@ -25,14 +17,7 @@ export default function PaymentsFailure() {
             <CardDescription className="text-lg max-w-[350px]">
               <p>Payment failed.</p>
 
-              {courseId && (
-                <Link
-                  href={`/api/courses/${courseId}/checkout`}
-                  className={cn(buttonVariants({ variant: 'outline' }))}
-                >
-                  Try again...
-                </Link>
-              )}
+              <TryAgainButton />
             </CardDescription>
           </CardHeader>
         </Card>

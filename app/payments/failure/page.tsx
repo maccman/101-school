@@ -1,3 +1,5 @@
+'use client'
+
 import { XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'

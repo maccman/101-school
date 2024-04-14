@@ -21,7 +21,9 @@ export function getPageNameFromWikipediaUrl(url: string) {
  * @param size The desired size of the image (default is 500).
  * @returns A promise that resolves to a WikipediaImage object containing the image URL and description, or null if no image is available.
  */
-export async function getImageForPageAndTest(urls: string[]) {
+export async function getBestImageForWikipediaUrls(
+  urls: string[],
+): Promise<WikipediaImage | null> {
   for (const url of urls) {
     try {
       const page = getPageNameFromWikipediaUrl(url)

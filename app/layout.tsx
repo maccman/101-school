@@ -24,6 +24,9 @@ export const metadata: Metadata = {
 export const runtime = 'edge'
 export const preferredRegion = 'iad1'
 
+// Vercel caching does some weird things
+export const fetchCache = 'force-no-store'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
